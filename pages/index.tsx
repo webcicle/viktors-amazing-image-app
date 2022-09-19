@@ -40,7 +40,7 @@ const Home: NextPage<{ images: ModdedImage[] }> = ({ images }) => {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 
-			<h1>Viktor's amazing image app</h1>
+			<h1>Viktor&apos;s amazing image app</h1>
 			<form encType='multipart/form-data' onSubmit={submitForm}>
 				<input
 					type='file'
