@@ -1,16 +1,8 @@
 .container {
-	padding: 0 2rem;
-}
-
-.imagePost {
-	display: flex;
-	flex-direction: column;
-	border: 1px solid black;
-	padding: 0.8em;
-	margin-bottom: 2.5rem;
+	width: clamp(100px, 90vw, 500px);
+	margin-inline: auto;
 }
 
 .imageContainer {
 	margin-top: 2rem;
-	width: clamp(100px, 90vw, 500px);
 }

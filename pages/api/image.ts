@@ -54,7 +54,7 @@ export default async function handler(
 				.resize({
 					height: 500,
 					width: 500,
-					fit: 'cover',
+					fit: req.body.fit,
 				})
 				.toBuffer();
 

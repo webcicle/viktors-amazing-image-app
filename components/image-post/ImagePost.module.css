@@ -1,0 +1,7 @@
+.imagePost {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid white;
+	padding: 0.8em;
+	margin-bottom: 2.5rem;
+}

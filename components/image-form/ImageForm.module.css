@@ -1,0 +1,57 @@
+.main {
+	--row-gap: 0.5em;
+}
+
+.imageUploadForm {
+	display: flex;
+	flex-direction: column;
+	gap: var(--row-gap);
+	font-family: var(--main-font);
+}
+
+.fitButton {
+	padding-block: 0.5em;
+	font-family: var(--main-font);
+	width: 100%;
+	margin-block: var(--row-gap);
+	background-color: var(--brand-color);
+	color: var(--text-color-400);
+}
+
+.fitButton:hover {
+	background-color: var(--brand-color-hover);
+}
+
+.inputElement {
+	width: 100%;
+	font-family: var(--main-font);
+}
+
+.fileInput {
+	background-color: var(--brand-color);
+	color: var(--text-color-400);
+	font-family: var(--main-font);
+}
+
+.previewImage {
+	background-color: var(--bg-grey-400);
+	border: 5px solid var(--bg-grey-400);
+}
+
+.captionInput {
+	resize: none;
+	font-family: var(--main-font);
+	padding: 0.3em;
+	font-family: var(--main-font);
+}
+
+.submitBtn {
+	padding-block: 0.5em;
+	font-family: var(--main-font);
+	background-color: var(--brand-color);
+	color: var(--text-color-400);
+}
+
+.submitBtn:hover {
+	background-color: var(--brand-color-hover);
+}
