@@ -47,6 +47,6 @@
 	animation-name: fadeIn;
 	animation-timing-function: linear;
 	animation-duration: 200ms;
-	animation-delay: var(--animation-delay);
+	animation-delay: 200ms;
 	font-size: 2rem;
 }

@@ -1,17 +1,25 @@
 import axios from 'axios';
 import Image from 'next/image';
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, {
+	ChangeEvent,
+	Dispatch,
+	FormEvent,
+	SetStateAction,
+	useState,
+} from 'react';
 import StatusModule from '../status-modules/StatusModule';
 import styles from './ImageForm.module.css';
 
-type Props = {};
+type Props = {
+	isUploaded: boolean;
+	setIsUploaded: Dispatch<SetStateAction<boolean>>;
+};
 
-const ImageForm: React.FC<Props> = ({}) => {
+const ImageForm: React.FC<Props> = ({ isUploaded, setIsUploaded }) => {
 	const [file, setFile] = useState<File>();
 	const [caption, setCaption] = useState<string>('');
 	const [previewFit, setPreviewFit] = useState<any>('cover' as any);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [isUploaded, setIsUploading] = useState<boolean>(false);
 
 	const changeObjectFit = () => {
 		if (previewFit === 'cover') return setPreviewFit('contain');
@@ -26,6 +34,12 @@ const ImageForm: React.FC<Props> = ({}) => {
 		return setCaption(value);
 	};
 
+	const clearForm = () => {
+		setCaption('');
+		setIsLoading(false);
+		setIsUploaded(false);
+	};
+
 	const submitForm = async (event: FormEvent) => {
 		event.preventDefault();
 		if (file === undefined) return alert('Please select an image to upload');
@@ -37,7 +51,7 @@ const ImageForm: React.FC<Props> = ({}) => {
 		const newImage = await axios.post('/api/image', data);
 		if (newImage.status === 201) {
 			setIsLoading(false);
-			setIsUploading(true);
+			setIsUploaded(true);
 			return;
 		}
 		setIsLoading(false);
@@ -90,14 +104,26 @@ const ImageForm: React.FC<Props> = ({}) => {
 					onChange={handleChange}
 					rows={4}
 					disabled={isLoading || isUploaded}
+					value={caption}
 				/>
-				<button
-					type='submit'
-					className={styles.submitBtn}
-					disabled={isLoading || isUploaded}>
-					Upload
-				</button>
+				{!isUploaded && (
+					<button
+						type='submit'
+						className={styles.submitBtn}
+						disabled={isLoading || isUploaded}>
+						Upload
+					</button>
+				)}
 			</form>
+			{isUploaded && (
+				<button
+					type='button'
+					onClick={clearForm}
+					className={styles.submitBtn}
+					disabled={!isUploaded}>
+					Upload another picture
+				</button>
+			)}
 		</div>
 	);
 };

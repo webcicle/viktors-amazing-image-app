@@ -37,7 +37,7 @@ export default async function handler(
 	res: NextApiResponse<Data | ImageResponse> | any
 ) {
 	switch (req.method) {
-		case 'POST':
+		case 'POST': {
 			await new Promise((resolve) => {
 				const storage = multer.memoryStorage();
 				const upload = multer({ storage: storage });
@@ -71,22 +71,39 @@ export default async function handler(
 
 			res.status(201).send({ data: newImage });
 			break;
+		}
 		case 'GET':
-			const images = (await prisma.image.findMany()) as ModdedImage[];
+			// const images = (await prisma.image.findMany()) as ModdedImage[];
 
-			for (const image of images) {
-				const getObjectParams = {
-					Bucket: envVars.bucketName,
-					Key: image.id,
-				};
+			// for (const image of images) {
+			// 	const getObjectParams = {
+			// 		Bucket: envVars.bucketName,
+			// 		Key: image.id,
+			// 	};
 
-				const command = new GetObjectCommand(getObjectParams);
-				const url = await getSignedUrl(s3, command, {
-					expiresIn: 3600,
-				});
-				image.url = url;
-			}
+			// 	const command = new GetObjectCommand(getObjectParams);
+			// 	const url = await getSignedUrl(s3, command, {
+			// 		expiresIn: 3600,
+			// 	});
+			// 	image.url = url;
+			// }
 
-			res.status(200).send(images);
+			// res.status(200).send(images);
+			const newImage = (await prisma.image.findFirstOrThrow({
+				orderBy: { created: 'desc' },
+			})) as ModdedImage;
+
+			const getObjectParams = {
+				Bucket: envVars.bucketName,
+				Key: newImage.id,
+			};
+
+			const command = new GetObjectCommand(getObjectParams);
+			const url = await getSignedUrl(s3, command, {
+				expiresIn: 3600,
+			});
+			newImage.url = url;
+
+			res.status(200).send(newImage);
 	}
 }

@@ -7,8 +7,27 @@ import { s3, envVars } from '../aws/s3';
 import { GetObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { ImageForm, ImagePost } from '../components';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const Home: NextPage<{ images: ModdedImage[] }> = ({ images }) => {
+	const [isUploaded, setIsUploaded] = useState<boolean>(false);
+	const [updatedImages, setUpdatedImages] = useState<ModdedImage[]>(images);
+
+	console.log(isUploaded);
+
+	useEffect(() => {
+		if (isUploaded === true) {
+			axios
+				.get('/api/image')
+				.then((data) => setUpdatedImages((prev) => [data.data, ...prev]));
+			return;
+		}
+		return;
+	}, [isUploaded]);
+
+	console.log(updatedImages);
+
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -22,10 +41,10 @@ const Home: NextPage<{ images: ModdedImage[] }> = ({ images }) => {
 
 			<h1>Viktor&apos;s amazing image app</h1>
 
-			<ImageForm />
+			<ImageForm isUploaded={isUploaded} setIsUploaded={setIsUploaded} />
 			<div className={styles.imageContainer}>
-				{images?.length > 0 ? (
-					images.map((image, index) => {
+				{updatedImages?.length > 0 ? (
+					updatedImages.map((image, index) => {
 						return <ImagePost key={image.id} index={index} image={image} />;
 					})
 				) : (
