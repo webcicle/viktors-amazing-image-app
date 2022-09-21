@@ -7,6 +7,8 @@ import sharp from 'sharp';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { getSignedUrl as getSignedCloudFrontUrl } from '@aws-sdk/cloudfront-signer';
 import { s3, envVars } from '../../aws/s3';
+import fs from 'fs';
+import path from 'path';
 
 type Data = {
 	message: string;
@@ -94,14 +96,47 @@ export default async function handler(
 				orderBy: { created: 'desc' },
 			})) as ModdedImage;
 
+			const getFileInfo = (filePath: string) => {
+				let pemKey: string = '';
+				return new Promise((resolve, reject) => {
+					const reader = fs.createReadStream(filePath);
+					reader.on('error', (error) => {
+						reject('There was an error');
+					});
+					reader.on('data', (chunk) => {
+						pemKey = chunk.toString();
+						resolve(pemKey);
+					});
+				});
+			};
+
+			const pemKey = await getFileInfo('private_key.pem');
+
 			const cfUrl = `https://d2d5ackrn9fpvj.cloudfront.net/${newImage.id}`;
+
+			// console.log(
+			// 	'PRIVATEKEY',
+			// 	Buffer.from(process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!, 'base64')
+			// );
+
 			const url = getSignedCloudFrontUrl({
 				url: cfUrl,
 				dateLessThan: '2022-12-31',
-				// privateKey: process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!,
-				privateKey: 'private_key.pem',
+				privateKey:
+					process.env.NODE_ENV === 'production'
+						? process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!
+						: (pemKey as string),
 				keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
 			});
+
+			// const cfUrl = `https://d2d5ackrn9fpvj.cloudfront.net/${newImage.id}`;
+			// const url = getSignedCloudFrontUrl({
+			// 	url: cfUrl,
+			// 	dateLessThan: '2022-12-31',
+			// 	// privateKey: process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!,
+			// 	privateKey: 'private_key.pem',
+			// 	keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
+			// });
 
 			// const getObjectParams = {
 			// 	Bucket: envVars.bucketName,
