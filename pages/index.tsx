@@ -9,12 +9,13 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { ImageForm, ImagePost } from '../components';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { getSignedUrl as getSignedCloudFrontUrl } from '@aws-sdk/cloudfront-signer';
+import fs from 'fs';
+import path from 'path';
 
 const Home: NextPage<{ images: ModdedImage[] }> = ({ images }) => {
 	const [isUploaded, setIsUploaded] = useState<boolean>(false);
 	const [updatedImages, setUpdatedImages] = useState<ModdedImage[]>(images);
-
-	console.log(isUploaded);
 
 	useEffect(() => {
 		if (isUploaded === true) {
@@ -25,8 +26,6 @@ const Home: NextPage<{ images: ModdedImage[] }> = ({ images }) => {
 		}
 		return;
 	}, [isUploaded]);
-
-	console.log(updatedImages);
 
 	return (
 		<div className={styles.container}>
@@ -66,11 +65,47 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 			Key: image.id,
 		};
 
-		const command = new GetObjectCommand(getObjectParams);
-		const url = await getSignedUrl(s3, command, {
-			expiresIn: 3600,
+		// const command = new GetObjectCommand(getObjectParams);
+		// const url = await getSignedUrl(s3, command, {
+		// 	expiresIn: 3600,
+		// });
+
+		const getFileInfo = (filePath: string) => {
+			let pemKey: string = '';
+			return new Promise((resolve, reject) => {
+				const reader = fs.createReadStream(filePath);
+				reader.on('error', (error) => {
+					reject('There was an error');
+				});
+				reader.on('data', (chunk) => {
+					pemKey = chunk.toString();
+					resolve(pemKey);
+				});
+			});
+		};
+
+		const pemKey = await getFileInfo('private_key.pem');
+
+		const cfUrl = `https://d2d5ackrn9fpvj.cloudfront.net/${image.id}`;
+
+		// console.log(
+		// 	'PRIVATEKEY',
+		// 	Buffer.from(process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!, 'base64')
+		// );
+
+		const url = getSignedCloudFrontUrl({
+			url: cfUrl,
+			dateLessThan: '2022-12-31',
+			privateKey:
+				process.env.NODE_ENV === 'production'
+					? process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!
+					: (pemKey as string),
+			keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
 		});
+
 		image.url = url;
+		// image.url =
+		// 	'https://d2d5ackrn9fpvj.cloudfront.net/cl88t16cr0014xzvzzim1oiio';
 	}
 
 	res.setHeader(

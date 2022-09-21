@@ -5,6 +5,7 @@ import prisma from '../../prisma/client';
 import { PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { getSignedUrl as getSignedCloudFrontUrl } from '@aws-sdk/cloudfront-signer';
 import { s3, envVars } from '../../aws/s3';
 
 type Data = {
@@ -93,16 +94,26 @@ export default async function handler(
 				orderBy: { created: 'desc' },
 			})) as ModdedImage;
 
-			const getObjectParams = {
-				Bucket: envVars.bucketName,
-				Key: newImage.id,
-			};
-
-			const command = new GetObjectCommand(getObjectParams);
-			const url = await getSignedUrl(s3, command, {
-				expiresIn: 3600,
+			const cfUrl = `https://d2d5ackrn9fpvj.cloudfront.net/${newImage.id}`;
+			const url = getSignedCloudFrontUrl({
+				url: cfUrl,
+				dateLessThan: '2022-12-31',
+				// privateKey: process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!,
+				privateKey: 'private_key.pem',
+				keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
 			});
-			newImage.url = url;
+
+			// const getObjectParams = {
+			// 	Bucket: envVars.bucketName,
+			// 	Key: newImage.id,
+			// };
+
+			// const command = new GetObjectCommand(getObjectParams);
+			// const url = await getSignedUrl(s3, command, {
+			// 	expiresIn: 3600,
+			// });
+			newImage.url = cfUrl;
+			// newImage.url = url;
 
 			res.status(200).send(newImage);
 	}
