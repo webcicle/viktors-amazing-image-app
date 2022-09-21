@@ -17,15 +17,15 @@ const Home: NextPage<{ images: ModdedImage[] }> = ({ images }) => {
 	const [isUploaded, setIsUploaded] = useState<boolean>(false);
 	const [updatedImages, setUpdatedImages] = useState<ModdedImage[]>(images);
 
-	useEffect(() => {
-		if (isUploaded === true) {
-			axios
-				.get('/api/image')
-				.then((data) => setUpdatedImages((prev) => [data.data, ...prev]));
-			return;
-		}
-		return;
-	}, [isUploaded]);
+	// useEffect(() => {
+	// 	if (isUploaded === true) {
+	// 		axios
+	// 			.get('/api/image')
+	// 			.then((data) => setUpdatedImages((prev) => [data.data, ...prev]));
+	// 		return;
+	// 	}
+	// 	return;
+	// }, [isUploaded]);
 
 	return (
 		<div className={styles.container}>

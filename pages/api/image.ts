@@ -76,6 +76,9 @@ export default async function handler(
 			break;
 		}
 		case 'GET':
+			// GET ALL IMAGES FLOW
+			// GET ALL IMAGES FLOW
+			// GET ALL IMAGES FLOW
 			// const images = (await prisma.image.findMany()) as ModdedImage[];
 
 			// for (const image of images) {
@@ -92,6 +95,11 @@ export default async function handler(
 			// }
 
 			// res.status(200).send(images);
+
+			// GET ALL IMAGES FLOW
+			// GET ALL IMAGES FLOW
+			// GET ALL IMAGES FLOW
+
 			const newImage = (await prisma.image.findFirstOrThrow({
 				orderBy: { created: 'desc' },
 			})) as ModdedImage;
@@ -114,11 +122,6 @@ export default async function handler(
 
 			const cfUrl = `https://d2d5ackrn9fpvj.cloudfront.net/${newImage.id}`;
 
-			// console.log(
-			// 	'PRIVATEKEY',
-			// 	Buffer.from(process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!, 'base64')
-			// );
-
 			const url = getSignedCloudFrontUrl({
 				url: cfUrl,
 				dateLessThan: '2022-12-31',
@@ -129,14 +132,9 @@ export default async function handler(
 				keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
 			});
 
-			// const cfUrl = `https://d2d5ackrn9fpvj.cloudfront.net/${newImage.id}`;
-			// const url = getSignedCloudFrontUrl({
-			// 	url: cfUrl,
-			// 	dateLessThan: '2022-12-31',
-			// 	// privateKey: process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!,
-			// 	privateKey: 'private_key.pem',
-			// 	keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
-			// });
+			// GET STRAIGHT FROM S3
+			// GET STRAIGHT FROM S3
+			// GET STRAIGHT FROM S3
 
 			// const getObjectParams = {
 			// 	Bucket: envVars.bucketName,
@@ -147,8 +145,13 @@ export default async function handler(
 			// const url = await getSignedUrl(s3, command, {
 			// 	expiresIn: 3600,
 			// });
-			newImage.url = cfUrl;
 			// newImage.url = url;
+
+			// GET STRAIGHT FROM S3
+			// GET STRAIGHT FROM S3
+			// GET STRAIGHT FROM S3
+
+			newImage.url = url;
 
 			res.status(200).send(newImage);
 	}
