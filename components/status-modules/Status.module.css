@@ -1,8 +1,9 @@
 .wrapper {
-	height: 500px;
+	height: 538px;
 	aspect-ratio: 1/1;
 	display: grid;
 	place-items: center;
+	border-radius: var(--border-radius-main);
 }
 
 @keyframes spinner {

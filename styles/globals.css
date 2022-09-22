@@ -1,6 +1,7 @@
 :root {
 	--main-font: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
 		Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	--border-radius-main: 7px;
 
 	/* COLORS */
 	--text-color-400: #ede5e5;

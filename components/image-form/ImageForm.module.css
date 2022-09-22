@@ -22,6 +22,13 @@
 	background-color: var(--brand-color-hover);
 }
 
+.inputLabel {
+	display: block;
+	margin-bottom: 0.4em;
+	font-size: 0.9em;
+	font-family: var(--main-font);
+}
+
 .inputElement {
 	width: 100%;
 	font-family: var(--main-font);
@@ -31,11 +38,13 @@
 	background-color: var(--brand-color);
 	color: var(--text-color-400);
 	font-family: var(--main-font);
+	border-radius: var(--border-radius-main);
 }
 
 .previewImage {
 	background-color: var(--bg-grey-400);
 	border: 5px solid var(--bg-grey-400);
+	border-radius: var(--border-radius-main);
 }
 
 .captionInput {
@@ -43,6 +52,81 @@
 	font-family: var(--main-font);
 	padding: 0.3em;
 	font-family: var(--main-font);
+	border-radius: var(--border-radius-main);
+}
+
+.tags {
+	--transition-time: 400ms;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	min-height: 35px;
+}
+
+.tagsContainer {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4em;
+	background-color: white;
+	padding: 0.4em 0.2em;
+	border-top-left-radius: var(--border-radius-main);
+	border-top-right-radius: var(--border-radius-main);
+}
+
+.tagWrapper {
+	position: relative;
+	transition: all 200ms ease-in;
+}
+
+.tag {
+	margin-block: 0;
+	padding-inline: 0.2em;
+	background-color: var(--brand-color);
+	border-radius: 100vh;
+	padding: 0.3em 0.5em;
+	font-size: 0.7em;
+	flex-basis: 20px;
+	min-width: 30px;
+	text-align: center;
+	transition: all 200ms ease-in;
+	font-family: var(--main-font);
+}
+
+.deleteTag {
+	position: absolute;
+	border: none;
+	background-color: var(--brand-color);
+	border-radius: 50%;
+	font-size: 0.8em;
+	color: white;
+	top: 0;
+	right: 0;
+	z-index: 222;
+	display: none;
+}
+
+.tagWrapper:hover .deleteTag {
+	display: block;
+}
+
+.tagInput {
+	flex-grow: 10;
+	flex-shrink: 1;
+	background-color: white;
+	border: none;
+	font-size: 75%;
+	font-family: var(--main-font);
+	border-bottom-left-radius: var(--border-radius-main);
+	border-bottom-right-radius: var(--border-radius-main);
+	color: black;
+}
+
+.tagInput:focus {
+	outline: none;
+}
+.tags:focus-within {
+	outline: 2px solid var(--brand-color);
+	border-radius: var(--border-radius-main);
 }
 
 .submitBtn {
@@ -50,6 +134,7 @@
 	font-family: var(--main-font);
 	background-color: var(--brand-color);
 	color: var(--text-color-400);
+	font-family: var(--main-font);
 }
 
 .submitBtn:hover {

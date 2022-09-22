@@ -15,3 +15,8 @@ model Image {
    caption String
    created DateTime @default(now())
 }
+
+model Tag {
+   id String @id @default(cuid())
+   tagName String
+}

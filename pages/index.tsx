@@ -17,15 +17,15 @@ const Home: NextPage<{ images: ModdedImage[] }> = ({ images }) => {
 	const [isUploaded, setIsUploaded] = useState<boolean>(false);
 	const [updatedImages, setUpdatedImages] = useState<ModdedImage[]>(images);
 
-	// useEffect(() => {
-	// 	if (isUploaded === true) {
-	// 		axios
-	// 			.get('/api/image')
-	// 			.then((data) => setUpdatedImages((prev) => [data.data, ...prev]));
-	// 		return;
-	// 	}
-	// 	return;
-	// }, [isUploaded]);
+	useEffect(() => {
+		if (isUploaded === true) {
+			axios
+				.get('/api/image')
+				.then((data) => setUpdatedImages((prev) => [data.data, ...prev]));
+			return;
+		}
+		return;
+	}, [isUploaded]);
 
 	return (
 		<div className={styles.container}>
@@ -95,7 +95,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
 		const url = getSignedCloudFrontUrl({
 			url: cfUrl,
-			dateLessThan: '2022-12-31',
+			dateLessThan: new Date(Date.now() + 1000 * 60 * 60).toString(),
 			privateKey:
 				process.env.NODE_ENV === 'production'
 					? process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!

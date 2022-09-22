@@ -9,6 +9,12 @@ import React, {
 } from 'react';
 import StatusModule from '../status-modules/StatusModule';
 import styles from './ImageForm.module.css';
+import TagInput from './TagInput';
+
+export interface Tag {
+	id: string;
+	tagName: string;
+}
 
 type Props = {
 	isUploaded: boolean;
@@ -18,6 +24,7 @@ type Props = {
 const ImageForm: React.FC<Props> = ({ isUploaded, setIsUploaded }) => {
 	const [file, setFile] = useState<File>();
 	const [caption, setCaption] = useState<string>('');
+	const [tags, setTags] = useState<Tag[]>([] as Tag[]);
 	const [previewFit, setPreviewFit] = useState<any>('cover' as any);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -56,7 +63,6 @@ const ImageForm: React.FC<Props> = ({ isUploaded, setIsUploaded }) => {
 		}
 		setIsLoading(false);
 		alert('There was an error uploading your image, please try again');
-		console.log(newImage);
 	};
 
 	return (
@@ -89,23 +95,37 @@ const ImageForm: React.FC<Props> = ({ isUploaded, setIsUploaded }) => {
 				className={styles.imageUploadForm}
 				encType='multipart/form-data'
 				onSubmit={submitForm}>
-				<input
-					type='file'
-					name='file'
-					accept='image/*'
-					className={`${styles.inputElement} ${styles.fileInput}`}
-					onChange={handleChange}
-					disabled={isLoading || isUploaded}
-				/>
-				<textarea
-					name='caption'
-					className={`${styles.inputElement} ${styles.captionInput}`}
-					placeholder='Enter the caption for your photo here'
-					onChange={handleChange}
-					rows={4}
-					disabled={isLoading || isUploaded}
-					value={caption}
-				/>
+				<div>
+					<label className={styles.inputLabel} htmlFor='file'>
+						Select and image to upload
+					</label>
+					<input
+						type='file'
+						id='file'
+						name='file'
+						accept='image/*'
+						className={`${styles.inputElement} ${styles.fileInput}`}
+						onChange={handleChange}
+						disabled={isLoading || isUploaded}
+					/>
+				</div>
+				<div>
+					<label className={styles.inputLabel} htmlFor='file'>
+						A citchy-catchy caption
+					</label>
+					<textarea
+						name='caption'
+						className={`${styles.inputElement} ${styles.captionInput}`}
+						placeholder='Enter you image caption here'
+						onChange={handleChange}
+						rows={4}
+						disabled={isLoading || isUploaded}
+						value={caption}
+					/>
+				</div>
+
+				<TagInput tags={tags} setTags={setTags} />
+
 				{!isUploaded && (
 					<button
 						type='submit'
