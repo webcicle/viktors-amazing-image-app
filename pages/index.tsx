@@ -93,12 +93,20 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 		// 	Buffer.from(process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!, 'base64')
 		// );
 
+		// const { privateKey } = await JSON.parse(
+		// 	process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!
+		// );
+
+		// const privateKey = process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!;
+
+		// console.log(privateKey);
+
 		const url = getSignedCloudFrontUrl({
 			url: cfUrl,
 			dateLessThan: new Date(Date.now() + 1000 * 60 * 60).toString(),
 			privateKey:
 				process.env.NODE_ENV === 'production'
-					? process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!
+					? process.env.FIREBASE_PRIVATE_KEY!.replace(/\\n/g, '\n')
 					: (pemKey as string),
 			keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
 		});
