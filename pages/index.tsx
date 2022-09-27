@@ -106,7 +106,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 			dateLessThan: new Date(Date.now() + 1000 * 60 * 60).toString(),
 			privateKey:
 				process.env.NODE_ENV === 'production'
-					? process.env.FIREBASE_PRIVATE_KEY!.replace(/\\n/g, '\n')
+					? process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!.replace(/\\n/g, '\n')
 					: (pemKey as string),
 			keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
 		});
