@@ -101,12 +101,22 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
 		// console.log(privateKey);
 
+		const privateKey: string = JSON.parse(
+			process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY_JSON!
+		);
+
+		console.log({
+			node_env: process.env.NODE_ENV,
+			vercel_env: process.env.NEXT_PUBLIC_VERCEL_ENV,
+			cf_PK: privateKey.toString(),
+		});
+
 		const url = getSignedCloudFrontUrl({
 			url: cfUrl,
 			dateLessThan: new Date(Date.now() + 1000 * 60 * 60).toString(),
 			privateKey:
-				process.env.NODE_ENV === 'production'
-					? process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!.replace(/\\n/g, '\n')
+				process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+					? privateKey.toString()
 					: (pemKey as string),
 			keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
 		});
