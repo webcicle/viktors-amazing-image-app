@@ -25,7 +25,7 @@ export default function ImagePost({ image, index }: Props) {
 					<CgProfile />
 				</div>
 				<div className={styles.userNameContainer}>
-					<p>Viktor the Man</p>
+					<p>{`user${image.userId}`}</p>
 					<p>viktoruneland</p>
 				</div>
 			</div>

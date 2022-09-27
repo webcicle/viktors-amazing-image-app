@@ -67,30 +67,6 @@ const ImageForm: React.FC<Props> = ({ isUploaded, setIsUploaded }) => {
 
 	return (
 		<div className={styles.main}>
-			{/* PREVIEW MODAL BELOW */}
-			{file !== undefined && (
-				<div>
-					{!isLoading && !isUploaded && (
-						<>
-							<div className={styles.previewImage}>
-								<Image
-									src={URL.createObjectURL(file)}
-									layout={'responsive'}
-									height={500}
-									width={500}
-									objectFit={previewFit}
-								/>
-							</div>
-							<button className={styles.fitButton} onClick={changeObjectFit}>
-								{previewFit === 'cover' ? 'Fit in frame' : 'Cover frame'}
-							</button>
-						</>
-					)}
-					{isLoading && <StatusModule type='loading' />}
-					{isUploaded && <StatusModule type='success' />}
-				</div>
-			)}
-			{/* PREVIEW MODAL ABOVE */}
 			<form
 				className={styles.imageUploadForm}
 				encType='multipart/form-data'
@@ -144,6 +120,30 @@ const ImageForm: React.FC<Props> = ({ isUploaded, setIsUploaded }) => {
 					Upload another picture
 				</button>
 			)}
+			{/* PREVIEW MODAL BELOW */}
+			{file !== undefined && (
+				<div>
+					{!isLoading && !isUploaded && (
+						<>
+							<div className={styles.previewImage}>
+								<Image
+									src={URL.createObjectURL(file)}
+									layout={'responsive'}
+									height={500}
+									width={500}
+									objectFit={previewFit}
+								/>
+							</div>
+							<button className={styles.fitButton} onClick={changeObjectFit}>
+								{previewFit === 'cover' ? 'Fit in frame' : 'Cover frame'}
+							</button>
+						</>
+					)}
+					{isLoading && <StatusModule type='loading' />}
+					{isUploaded && <StatusModule type='success' />}
+				</div>
+			)}
+			{/* PREVIEW MODAL ABOVE */}
 		</div>
 	);
 };

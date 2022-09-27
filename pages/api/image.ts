@@ -41,6 +41,8 @@ export default async function handler(
 ) {
 	switch (req.method) {
 		case 'POST': {
+			console.log({ req: req.body });
+
 			await new Promise((resolve) => {
 				const storage = multer.memoryStorage();
 				const upload = multer({ storage: storage });
@@ -49,8 +51,13 @@ export default async function handler(
 				parsedBody(req, res, resolve);
 			});
 
+			const { vikAmazimg } = req.cookies;
+
 			const dbEntry = await prisma.image.create({
-				data: { caption: req.body.caption },
+				data: {
+					caption: req.body.caption,
+					userId: vikAmazimg.toString(),
+				},
 			});
 
 			const buffer = await sharp(req.file.buffer)

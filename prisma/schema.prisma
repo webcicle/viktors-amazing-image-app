@@ -9,14 +9,39 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
-
+model User {
+   id String @id @default(cuid())
+   userName String @default(uuid())
+   alias String @default(uuid())
+   likedImages Like[]
+   comments Comment[]
+}
 model Image {
    id String @id @default(cuid())
    caption String
    created DateTime @default(now())
+   userId String
+
+   @@index([userId])
 }
 
 model Tag {
    id String @id @default(cuid())
    tagName String
+
 }
+
+
+model Like {
+   id String @id @default(cuid())
+   user User @relation(fields: [userId], references: [id])
+   userId String
+}
+
+model Comment {
+   id String @id @default(cuid())
+   comment String
+   user User @relation(fields: [userId], references: [id])
+   userId String
+}
+

@@ -1,6 +1,6 @@
 .wrapper {
 	height: 538px;
-	aspect-ratio: 1/1;
+	width: 500px;
 	display: grid;
 	place-items: center;
 	border-radius: var(--border-radius-main);
