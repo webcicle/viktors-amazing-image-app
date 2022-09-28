@@ -42,7 +42,7 @@ const TagInput = ({ tags, setTags }: Props) => {
 		}
 		const newTag = {
 			id: cuid(),
-			tagName: tag.startsWith('#') ? tag : '#' + tag,
+			tagName: tag.startsWith('#') ? tag.trim().split('#').pop()! : tag.trim(),
 		};
 		setTags((prevTags) => [...prevTags, newTag]);
 		setNewTag('');
@@ -99,8 +99,6 @@ const TagInput = ({ tags, setTags }: Props) => {
 		}
 	}, [tags]);
 
-	console.log({ inputHalfFull, inputHalfEmpty });
-
 	const isMobile = useMediaQuery(500, false);
 
 	const tagsContainerDynamicStyles = {
@@ -124,7 +122,7 @@ const TagInput = ({ tags, setTags }: Props) => {
 				style={tagsContainerDynamicStyles}>
 				{tags?.map((tag) => (
 					<div key={tag.id} className={styles.tagWrapper}>
-						<p className={styles.tag}>{tag.tagName}</p>
+						<p className={styles.tag}>#{tag.tagName}</p>
 						<button
 							type='button'
 							onClick={(_) => removeTag(tag.id)}

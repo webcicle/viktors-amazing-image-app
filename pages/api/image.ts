@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import multer from 'multer';
-import { Image } from '@prisma/client';
+import { Comment, Image, Like, Tag, User } from '@prisma/client';
 import prisma from '../../prisma/client';
 import { PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
@@ -14,8 +14,20 @@ type Data = {
 	message: string;
 };
 
+// interface ImageTageExt extends ImageTag {
+// 	tag?: { tagName: string };
+// }
+
 export interface ModdedImage extends Image {
 	url: string;
+	uploadedBy: User;
+	comments: Comment[] | undefined;
+	likes: Like[] | undefined;
+	tags: Tag[];
+}
+
+export interface TagWithImageIds extends Tag {
+	imageId: string;
 }
 
 interface ImageResponse {}
@@ -51,12 +63,22 @@ export default async function handler(
 				parsedBody(req, res, resolve);
 			});
 
+			const bodyTags: Tag[] = JSON.parse(req.body.tags);
+
 			const { vikAmazimg } = req.cookies;
 
 			const dbEntry = await prisma.image.create({
 				data: {
 					caption: req.body.caption,
 					userId: vikAmazimg.toString(),
+					tags: {
+						connectOrCreate: bodyTags.map((tag) => {
+							return {
+								where: { tagName: tag.tagName },
+								create: { id: tag.id, tagName: tag.tagName },
+							};
+						}),
+					},
 				},
 			});
 
@@ -108,6 +130,12 @@ export default async function handler(
 			// GET ALL IMAGES FLOW
 
 			const newImage = (await prisma.image.findFirstOrThrow({
+				include: {
+					comments: true,
+					likes: true,
+					uploadedBy: true,
+					tags: true,
+				},
 				orderBy: { created: 'desc' },
 			})) as ModdedImage;
 

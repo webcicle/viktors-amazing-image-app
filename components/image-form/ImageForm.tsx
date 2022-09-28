@@ -54,6 +54,7 @@ const ImageForm: React.FC<Props> = ({ isUploaded, setIsUploaded }) => {
 		data.append('image', file as File);
 		data.append('caption', caption);
 		data.append('fit', previewFit);
+		data.append('tags', JSON.stringify(tags));
 		setIsLoading(true);
 		const newImage = await axios.post('/api/image', data);
 		if (newImage.status === 201) {

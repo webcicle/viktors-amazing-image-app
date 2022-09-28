@@ -1,0 +1,19 @@
+.header {
+	padding: 0.3em;
+	background-color: var(--brand-color);
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+	justify-content: right;
+	border-bottom-right-radius: var(--border-radius-main);
+	border-bottom-left-radius: var(--border-radius-main);
+}
+
+.headerBtn {
+	background-color: transparent;
+	color: var(--bg-grey-400);
+}
+
+.headerBtn:hover {
+	color: var(--brand-color-hover);
+}

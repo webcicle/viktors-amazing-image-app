@@ -6,14 +6,20 @@ import type { ModdedImage } from './api/image';
 import { s3, envVars } from '../aws/s3';
 import { GetObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { ImageForm, ImagePost } from '../components';
+import { Header, ImageForm, ImagePost } from '../components';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getSignedUrl as getSignedCloudFrontUrl } from '@aws-sdk/cloudfront-signer';
 import fs from 'fs';
 import path from 'path';
+import MainLayout from '../layouts/main';
 
-const Home: NextPage<{ images: ModdedImage[] }> = ({ images }) => {
+interface PageProps {
+	images: ModdedImage[];
+	cookie: string;
+}
+
+const Home: NextPage<PageProps> = ({ images, cookie }) => {
 	const [isUploaded, setIsUploaded] = useState<boolean>(false);
 	const [updatedImages, setUpdatedImages] = useState<ModdedImage[]>(images);
 
@@ -28,16 +34,7 @@ const Home: NextPage<{ images: ModdedImage[] }> = ({ images }) => {
 	}, [isUploaded]);
 
 	return (
-		<div className={styles.container}>
-			<Head>
-				<title>Viktor&apos;s Amazing Image App</title>
-				<meta
-					name='description'
-					content='Upload your amazzzzzing images for the world to see!'
-				/>
-				<link rel='icon' href='/favicon.ico' />
-			</Head>
-
+		<MainLayout cookie={cookie}>
 			<h1>Viktor&apos;s amazing image app</h1>
 
 			<ImageForm isUploaded={isUploaded} setIsUploaded={setIsUploaded} />
@@ -50,12 +47,34 @@ const Home: NextPage<{ images: ModdedImage[] }> = ({ images }) => {
 					<p>No images yet</p>
 				)}
 			</div>
-		</div>
+		</MainLayout>
 	);
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+	const cookie = req.cookies.vikAmazimg;
+
+	const user = await prisma.user.findFirst({
+		where: {
+			id: cookie,
+		},
+	});
+
+	if (!user) {
+		await prisma.user.create({
+			data: {
+				id: cookie,
+			},
+		});
+	}
+
 	const images = (await prisma.image.findMany({
+		include: {
+			comments: true,
+			likes: true,
+			uploadedBy: true,
+			tags: true,
+		},
 		orderBy: { created: 'desc' },
 	})) as ModdedImage[];
 
@@ -88,28 +107,9 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
 		const cfUrl = `https://d2d5ackrn9fpvj.cloudfront.net/${image.id}`;
 
-		// console.log(
-		// 	'PRIVATEKEY',
-		// 	Buffer.from(process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!, 'base64')
-		// );
-
-		// const { privateKey } = await JSON.parse(
-		// 	process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!
-		// );
-
-		// const privateKey = process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!;
-
-		// console.log(privateKey);
-
 		const privateKey: string = JSON.parse(
 			process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY_JSON!
 		);
-
-		console.log({
-			node_env: process.env.NODE_ENV,
-			vercel_env: process.env.NEXT_PUBLIC_VERCEL_ENV,
-			cf_PK: privateKey.toString(),
-		});
 
 		const url = getSignedCloudFrontUrl({
 			url: cfUrl,
@@ -134,6 +134,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 	return {
 		props: {
 			images: JSON.parse(JSON.stringify(images)),
+			cookie,
 		},
 	};
 };

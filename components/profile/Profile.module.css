@@ -1,0 +1,62 @@
+.profile {
+	padding: 1.4rem;
+}
+
+.profileDetails {
+	display: flex;
+	gap: 2rem;
+}
+
+.profileImgContainer {
+	height: 100px;
+	border-radius: 50%;
+	overflow: hidden;
+	aspect-ratio: 1/1;
+}
+
+.profileInfo {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3em;
+}
+
+.profileName {
+	margin: 0;
+	font-size: 1.1rem;
+	font-family: var(--main-font);
+}
+
+.profileUsername {
+	margin: 0;
+	font-size: 0.7em;
+	font-family: var(--main-font);
+}
+
+.profileButtons {
+	display: flex;
+	gap: 0.3em;
+}
+
+.statBoxes {
+	display: flex;
+	gap: 0.4em;
+	width: 100%;
+	margin-top: 0.8em;
+}
+
+.statBox {
+	border-block: 1px solid var(--bg-grey-400);
+	text-align: center;
+	padding-block: 0.5em;
+	font-size: 0.8em;
+	font-family: var(--main-font);
+	min-width: 60px;
+	aspect-ratio: 1/1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.statBox p {
+	margin: 0;
+	margin-bottom: 0.5em;
+}

@@ -22,13 +22,17 @@
 
 .userNameContainer {
 	display: flex;
-	gap: 0.5rem;
+	flex-direction: column;
+	gap: 0.2rem;
 	font-size: 0.8em;
 	padding-bottom: 0.5em;
 }
 
 .userNameContainer p {
 	margin: 0;
+}
+.userNameContainer p:last-child {
+	font-size: 0.65em;
 }
 
 .imageContainer {
@@ -52,6 +56,29 @@
 
 .imageButton:hover {
 	color: var(--brand-color-hover);
+}
+
+.tagContainer {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	gap: 0.3em;
+	font-size: 0.8em;
+	margin-bottom: 0.4em;
+}
+
+.imageTag {
+	margin-block: 0;
+	margin-bottom: 0.4em;
+}
+
+.imageTag:hover {
+	color: var(--brand-color);
+}
+
+.commentLink {
+	font-size: 0.8em;
+	color: var(--bg-grey-400);
 }
 
 .imageDate {
