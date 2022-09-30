@@ -32,7 +32,7 @@ const UpdateForm = ({
 	setUpdatedUserProfile,
 	id,
 }: Props) => {
-	const [isClaimProfile, setIsClaimProfile] = useState<boolean>();
+	const [isClaimProfile, setIsClaimProfile] = useState<boolean>(false);
 	const [alias, setAlias] = useState<string>('');
 	const [username, setUsername] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
@@ -44,6 +44,8 @@ const UpdateForm = ({
 		password: '',
 		passwordTwo: '',
 	});
+
+	console.log({ isClaimProfile });
 
 	const regex =
 		/[a-zA-Z0-9]{8}\b-[a-zA-Z0-9]{4}\b-[a-zA-Z0-9]{4}\b-[a-zA-Z0-9]{4}\b-[a-zA-Z0-9]{12}/;
@@ -59,10 +61,11 @@ const UpdateForm = ({
 		try {
 			setIsLoading(true);
 			const updateRes = await axios.put('/api/user', data);
-			setIsLoading(false);
-			setIsSuccess(true);
 
 			if (updateRes.data.success === false && updateRes.data.error) {
+				setIsLoading(false);
+				console.log('error');
+
 				updateRes.data.error.issues.forEach(
 					(err: typeof updateRes.data.error[0]) => {
 						console.log(err);
@@ -73,6 +76,8 @@ const UpdateForm = ({
 				);
 				return;
 			}
+			setIsLoading(false);
+			setIsSuccess(true);
 
 			setUploadSuccess(true);
 			setUpdatedUserProfile(
@@ -104,7 +109,6 @@ const UpdateForm = ({
 		if (name === 'passwordTwo') return setPasswordTwo(value);
 		return setAlias(value);
 	};
-	console.log(alias);
 
 	useEffect(() => {
 		if (uploadSuccess === true) {

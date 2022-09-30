@@ -36,8 +36,6 @@ export default async function handler(
 			break;
 		}
 		case 'GET': {
-			console.log({ get: body });
-
 			const user = await prisma.user.findUnique({ where: { id: req.body } });
 			res.status(200).send({ user: user as User });
 

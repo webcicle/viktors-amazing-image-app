@@ -3,6 +3,7 @@ import { m } from 'framer-motion';
 import { z, ZodError } from 'zod';
 import { UserWithFollowers } from '../../pages/profile/[id]';
 import prisma from '../../prisma/client';
+import bcrypt from 'bcrypt';
 
 export interface UserWithFollowerCounts extends User {
 	_count: { followers: number; following: number; uploads: number };
@@ -71,11 +72,13 @@ export default async function updateUser(requestData: any): Promise<{
 	try {
 		const data = userUpdateReqValidated.parse(requestData);
 
+		const hash = await bcrypt.hash(data.password, 14);
+
 		updatedUser = await prisma.user.update({
 			data: {
 				userName: data.userName,
 				alias: data.alias,
-				password: data.password,
+				password: hash,
 			},
 			include: {
 				_count: {

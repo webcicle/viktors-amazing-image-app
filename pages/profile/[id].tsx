@@ -2,6 +2,7 @@ import { Follows, Image, User } from '@prisma/client';
 import { GetServerSideProps } from 'next';
 import React from 'react';
 import { Profile } from '../../components';
+import ProfileImages from '../../components/profile/ProfileImages';
 import MainLayout from '../../layouts/main';
 import { UserWithFollowerCounts } from '../../lib/apiHelpers/updateUser';
 import prisma from '../../prisma/client';
@@ -21,6 +22,7 @@ const ProfilePage: React.FC<Props> = ({ userProfile, cookie }) => {
 	return (
 		<MainLayout cookie={cookie}>
 			<Profile userProfile={userProfile} cookie={cookie} />
+			<ProfileImages />
 		</MainLayout>
 	);
 };

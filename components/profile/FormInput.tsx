@@ -21,6 +21,8 @@ const FormInput: React.FC<InputProps> = ({
 }) => {
 	const placeholder = updatedUserProfile[name];
 
+	const isPassword = name === 'password' || name === 'passwordTwo';
+
 	const regex =
 		/[a-zA-Z0-9]{8}\b-[a-zA-Z0-9]{4}\b-[a-zA-Z0-9]{4}\b-[a-zA-Z0-9]{4}\b-[a-zA-Z0-9]{12}/;
 
@@ -37,7 +39,7 @@ const FormInput: React.FC<InputProps> = ({
 				value={value}
 				id={name}
 				placeholder={
-					name !== 'password' && regex.test(placeholder)
+					!isPassword && regex.test(placeholder)
 						? 'unknownuser' + placeholder.split('-').pop()
 						: placeholder
 				}
