@@ -140,8 +140,20 @@ const ImageForm: React.FC<Props> = ({ isUploaded, setIsUploaded }) => {
 							</button>
 						</>
 					)}
-					{isLoading && <StatusModule type='loading' />}
-					{isUploaded && <StatusModule type='success' />}
+					{isLoading && (
+						<StatusModule
+							minWidth={'500px'}
+							minHeight={'535px'}
+							type='loading'
+						/>
+					)}
+					{isUploaded && (
+						<StatusModule
+							minWidth={'500px'}
+							minHeight={'535px'}
+							type='success'
+						/>
+					)}
 				</div>
 			)}
 			{/* PREVIEW MODAL ABOVE */}

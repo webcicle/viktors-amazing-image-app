@@ -8,7 +8,7 @@ type Props = {
 const Header = ({ cookie }: Props) => {
 	return (
 		<header className={styles.header}>
-			<Link href={`./profile/${cookie}`} className={`${styles.headerBtn}`}>
+			<Link href={`/profile/${cookie}`} className={`${styles.headerBtn}`}>
 				My Profile
 			</Link>
 			<Link href={`/`} className={`${styles.headerBtn}`}>

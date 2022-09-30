@@ -27,7 +27,6 @@ const MainLayout: React.FC<Props> = ({ cookie, children }) => {
 				<Header cookie={cookie} />
 				{children}
 			</div>
-			;
 		</>
 	);
 };

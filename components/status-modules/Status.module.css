@@ -1,6 +1,4 @@
 .wrapper {
-	height: 538px;
-	width: 500px;
 	display: grid;
 	place-items: center;
 	border-radius: var(--border-radius-main);
@@ -50,4 +48,10 @@
 	animation-duration: 200ms;
 	animation-delay: 200ms;
 	font-size: 2rem;
+}
+
+.closeBtn {
+	width: auto;
+	height: auto;
+	background-color: transparent;
 }

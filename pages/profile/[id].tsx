@@ -3,6 +3,7 @@ import { GetServerSideProps } from 'next';
 import React from 'react';
 import { Profile } from '../../components';
 import MainLayout from '../../layouts/main';
+import { UserWithFollowerCounts } from '../../lib/apiHelpers/updateUser';
 import prisma from '../../prisma/client';
 
 export interface UserWithFollowers extends User {
@@ -13,7 +14,7 @@ export interface UserWithFollowers extends User {
 
 type Props = {
 	cookie: string;
-	userProfile: UserWithFollowers;
+	userProfile: UserWithFollowerCounts;
 };
 
 const ProfilePage: React.FC<Props> = ({ userProfile, cookie }) => {
@@ -39,7 +40,15 @@ export const getServerSideProps: GetServerSideProps = async ({
 
 	const userProfile = await prisma.user.findFirst({
 		where: { id: profileId as string },
-		include: { followers: true, following: true, uploads: true },
+		include: {
+			_count: {
+				select: {
+					followers: true,
+					following: true,
+					uploads: true,
+				},
+			},
+		},
 	});
 
 	return {

@@ -21,6 +21,11 @@ model User {
   followers    Follows[] @relation("following")
   following    Follows[] @relation("follower")
   dislikes     Dislike[]
+
+  password  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  claimed   Boolean  @default(false)
 }
 
 model Follows {
@@ -50,7 +55,6 @@ model Tag {
   tagName String  @unique
   images  Image[]
 }
-
 
 model Like {
   id      String @id @default(cuid())
