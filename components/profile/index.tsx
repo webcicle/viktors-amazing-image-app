@@ -2,9 +2,10 @@ import Image from 'next/image';
 import styles from './Profile.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { UserWithFollowerCounts } from '../../lib/apiHelpers/updateUser';
+
 import UpdateForm from './UpdateForm';
 import StatusModule from '../status-modules/StatusModule';
+import { UserWithFollowerCounts } from '../../pages/profile/[id]';
 
 type UpdatedUserProfile = { [key: string]: string | { [key: string]: string } };
 

@@ -3,19 +3,28 @@ import { User } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../prisma/client';
 import { ZodIssue } from 'zod';
-import updateUser from '../../lib/apiHelpers/updateUser';
+import updateUser, {
+	UpdateUserResponse,
+} from '../../lib/apiHelpers/updateUser';
+import { UserWithFollowerCounts } from '../profile/[id]';
 
 interface Data {
 	newUser?: User;
 	singleUser?: User;
-	updatedUser?: User | { success: boolean; error: any };
+	updatedUser?: {
+		success: boolean;
+		error: any;
+		updatedUser?: UserWithFollowerCounts;
+	};
 	error?: ZodIssue[];
 	user?: User;
 }
 
+type UpdatedUser = UpdateUserResponse;
+
 export default async function handler(
 	req: NextApiRequest,
-	res: NextApiResponse<Data>
+	res: NextApiResponse<Data | UpdatedUser>
 ) {
 	const { body, cookies, method } = req;
 

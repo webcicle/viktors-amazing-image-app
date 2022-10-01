@@ -1,18 +1,19 @@
 import Head from 'next/head';
 import { ReactNode } from 'react';
 import { Header } from '../components';
+import useMediaQuery from '../hooks/useMediaQuery';
 
 type Props = {
 	cookie: string;
 	children: ReactNode;
 };
 
-const styles = {
-	width: 'clamp(100px, 90vw, 500px)',
-	marginInline: 'auto',
-};
-
 const MainLayout: React.FC<Props> = ({ cookie, children }) => {
+	const isMobile = useMediaQuery(400, false);
+	const styles = {
+		width: isMobile ? '100vw' : 'clamp(100px, 90vw, 500px)',
+		marginInline: 'auto',
+	};
 	return (
 		<>
 			<Head>

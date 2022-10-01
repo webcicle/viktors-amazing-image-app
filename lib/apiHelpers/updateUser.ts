@@ -1,13 +1,9 @@
-import { User } from '@prisma/client';
+import { Image, User } from '@prisma/client';
 import { m } from 'framer-motion';
 import { z, ZodError } from 'zod';
-import { UserWithFollowers } from '../../pages/profile/[id]';
 import prisma from '../../prisma/client';
 import bcrypt from 'bcrypt';
-
-export interface UserWithFollowerCounts extends User {
-	_count: { followers: number; following: number; uploads: number };
-}
+import { UserWithFollowerCounts } from '../../pages/profile/[id]';
 
 const userUpdateReqValidated = z
 	.object({
@@ -62,11 +58,15 @@ const userUpdateResValidated = z.object({
 	_count: Count,
 });
 
-export default async function updateUser(requestData: any): Promise<{
+export interface UpdateUserResponse {
 	success: boolean;
 	error: any;
 	updatedUser?: UserWithFollowerCounts;
-}> {
+}
+
+export default async function updateUser(
+	requestData: any
+): Promise<UpdateUserResponse> {
 	let updatedUser = {} as UserWithFollowerCounts;
 
 	try {
@@ -91,6 +91,9 @@ export default async function updateUser(requestData: any): Promise<{
 			},
 			where: { id: requestData.cookie },
 		});
+		console.log(updatedUser);
+
+		delete updatedUser.password;
 	} catch (error) {
 		if (error instanceof ZodError) {
 			return { success: false, error };

@@ -9,7 +9,7 @@ import {
 	useState,
 } from 'react';
 import useMediaQuery from '../../hooks/useMediaQuery';
-import { UserWithFollowerCounts } from '../../lib/apiHelpers/updateUser';
+import { UserWithFollowerCounts } from '../../pages/profile/[id]';
 import styles from './Profile.module.css';
 import FormInput from './FormInput';
 
@@ -61,6 +61,7 @@ const UpdateForm = ({
 		try {
 			setIsLoading(true);
 			const updateRes = await axios.put('/api/user', data);
+			console.log(updateRes);
 
 			if (updateRes.data.success === false && updateRes.data.error) {
 				setIsLoading(false);
