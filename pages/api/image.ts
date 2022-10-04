@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import multer from 'multer';
-import { Comment, Image, Like, Tag, User } from '@prisma/client';
+import { Comment, Dislike, Image, Like, Tag, User } from '@prisma/client';
 import prisma from '../../prisma/client';
 import { PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
@@ -23,6 +23,7 @@ export interface ModdedImage extends Image {
 	uploadedBy: User;
 	comments: Comment[] | undefined;
 	likes: Like[] | undefined;
+	disLikes: Dislike[] | undefined;
 	tags: Tag[];
 }
 

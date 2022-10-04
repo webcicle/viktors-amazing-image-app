@@ -2,7 +2,7 @@ import { getSignedUrl } from '@aws-sdk/cloudfront-signer';
 import { envVars } from '../../aws/s3';
 import fs from 'fs';
 
-interface ImageIdsForSignedUrl {
+export interface ImageIdsForSignedUrl {
 	created: Date;
 	id: string;
 	url?: string;

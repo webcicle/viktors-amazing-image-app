@@ -9,10 +9,19 @@ type Props = {
 };
 
 const MainLayout: React.FC<Props> = ({ cookie, children }) => {
-	const isMobile = useMediaQuery(400, false);
+	const isDesktop = useMediaQuery(900, true);
+	const isMobile = useMediaQuery(600, false);
 	const styles = {
-		width: isMobile ? '100vw' : 'clamp(100px, 90vw, 500px)',
-		marginInline: 'auto',
+		outer: {
+			width: !isDesktop ? '95vw' : 'clamp(100px, 90vw, 750px)',
+			marginInline: 'auto',
+		},
+		inner: {
+			// width: isMobile ? '100%' : 'clamp(100px, 90%, 500px)',
+			width: '100%',
+			marginRight: 'auto',
+			marginTop: '2rem',
+		},
 	};
 	return (
 		<>
@@ -24,9 +33,9 @@ const MainLayout: React.FC<Props> = ({ cookie, children }) => {
 				/>
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
-			<div style={styles}>
+			<div style={styles.outer}>
 				<Header cookie={cookie} />
-				{children}
+				<div style={styles.inner}>{children}</div>
 			</div>
 		</>
 	);

@@ -5,7 +5,6 @@ import { ImageDisplay, Profile } from '../../components';
 import MainLayout from '../../layouts/main';
 import getSignedCfUrl from '../../lib/apiHelpers/getSignedCfUrl';
 import prisma from '../../prisma/client';
-import { ModdedImage } from '../api/image';
 
 export interface ProfileThumbnails {
 	created: Date;

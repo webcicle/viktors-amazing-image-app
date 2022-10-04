@@ -1,17 +1,32 @@
+.mainContainer {
+	width: 100%;
+	--inner-padding: 0.8em;
+	--bg-color: rgb(31, 30, 30);
+}
+
 .imagePost {
+	width: 100%;
 	display: flex;
 	flex-direction: column;
-	border: 1px solid white;
+	background-color: rgb(31, 30, 30);
 	padding: 0.8em;
-	margin-bottom: 2.5rem;
-	border-radius: var(--border-radius-main);
+	border-top-left-radius: var(--border-radius-main);
+	border-top-right-radius: var(--border-radius-main);
+}
+.sidebar {
+	width: 100%;
+	background-color: var(--bg-color);
+	padding: var(--inner-padding);
+	border-bottom-left-radius: var(--border-radius-main);
+	border-bottom-right-radius: var(--border-radius-main);
 }
 
 .profileBar {
 	display: flex;
 	align-items: center;
 	border-bottom: 1px solid var(--brand-color-hover);
-	margin-bottom: 0.5em;
+	padding-bottom: 0.75em;
+	margin-bottom: 1em;
 	gap: 0.6rem;
 }
 
@@ -40,27 +55,6 @@
 	border-radius: var(--border-radius-main);
 	overflow: hidden;
 }
-.buttonSeparators {
-	padding: 0.2em;
-}
-
-.imageButtons {
-	margin-top: 0.7em;
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: left;
-}
-
-.imageButton {
-	font-size: 1.8em;
-	background-color: transparent;
-	color: white;
-}
-
-.imageButton:hover {
-	color: var(--brand-color-hover);
-}
 
 .tagContainer {
 	display: flex;
@@ -87,4 +81,19 @@
 
 .imageDate {
 	font-size: 0.7em;
+}
+
+@media (min-width: 700px) {
+	.mainContainer {
+		display: grid;
+		gap: 1em;
+		grid-template-columns: minmax(100px, 500px) minmax(150px, 1fr);
+	}
+	.imagePost {
+		width: clamp(100px, 100%, 500px);
+		border-radius: var(--border-radius-main);
+	}
+	.sidebar {
+		border-radius: var(--border-radius-main);
+	}
 }
