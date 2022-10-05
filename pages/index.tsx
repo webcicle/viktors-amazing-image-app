@@ -23,6 +23,8 @@ const Home: NextPage<PageProps> = ({ images, cookie }) => {
 	const [isUploaded, setIsUploaded] = useState<boolean>(false);
 	const [updatedImages, setUpdatedImages] = useState<ModdedImage[]>(images);
 
+	console.log(images);
+
 	useEffect(() => {
 		if (isUploaded === true) {
 			axios
@@ -34,14 +36,23 @@ const Home: NextPage<PageProps> = ({ images, cookie }) => {
 	}, [isUploaded]);
 
 	return (
-		<MainLayout cookie={cookie}>
+		<MainLayout page={'frontPage'} cookie={cookie}>
 			<h1>Viktor&apos;s amazing image app</h1>
 
 			<ImageForm isUploaded={isUploaded} setIsUploaded={setIsUploaded} />
 			<div className={styles.imageContainer}>
 				{updatedImages?.length > 0 ? (
 					updatedImages.map((image, index) => {
-						return <ImagePost key={image.id} index={index} image={image} />;
+						return (
+							<ImagePost
+								userId={cookie}
+								// userLikes={}
+								// userDislikes={}
+								key={image.id}
+								index={index}
+								image={image}
+							/>
+						);
 					})
 				) : (
 					<p>No images yet</p>
@@ -72,6 +83,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 		include: {
 			comments: true,
 			likes: true,
+			dislikes: true,
 			uploadedBy: {
 				select: { id: true, alias: true, userName: true, profileImage: true },
 			},
@@ -80,62 +92,76 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 		orderBy: { created: 'desc' },
 	})) as ModdedImage[];
 
-	for (const image of images) {
-		const getObjectParams = {
-			Bucket: envVars.bucketName,
-			Key: image.id,
-		};
+	if (images) {
+		for (const image of images) {
+			const getObjectParams = {
+				Bucket: envVars.bucketName,
+				Key: image.id,
+			};
 
-		// const command = new GetObjectCommand(getObjectParams);
-		// const url = await getSignedUrl(s3, command, {
-		// 	expiresIn: 3600,
-		// });
+			const userLike = image?.likes?.find((like) => like.userId === cookie);
+			const userDislike = image?.dislikes?.find(
+				(dislike) => dislike.userId === cookie
+			);
 
-		const getFileInfo = (filePath: string) => {
-			let pemKey: string = '';
-			return new Promise((resolve, reject) => {
-				const reader = fs.createReadStream(filePath);
-				reader.on('error', (error) => {
-					reject('There was an error');
+			image.userLike = userLike;
+			image.userDislike = userDislike;
+			// const command = new GetObjectCommand(getObjectParams);
+			// const url = await getSignedUrl(s3, command, {
+			// 	expiresIn: 3600,
+			// });
+
+			const getFileInfo = (filePath: string) => {
+				let pemKey: string = '';
+				return new Promise((resolve, reject) => {
+					const reader = fs.createReadStream(filePath);
+					reader.on('error', (error) => {
+						reject('There was an error');
+					});
+					reader.on('data', (chunk) => {
+						pemKey = chunk.toString();
+						resolve(pemKey);
+					});
 				});
-				reader.on('data', (chunk) => {
-					pemKey = chunk.toString();
-					resolve(pemKey);
-				});
+			};
+
+			const pemKey = await getFileInfo('private_key.pem');
+
+			const cfUrl = `https://d2d5ackrn9fpvj.cloudfront.net/${image.id}`;
+
+			const privateKey: string = JSON.parse(
+				process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY_JSON!
+			);
+
+			const url = getSignedCloudFrontUrl({
+				url: cfUrl,
+				dateLessThan: new Date(Date.now() + 1000 * 60 * 60).toString(),
+				privateKey:
+					process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+						? privateKey.toString()
+						: (pemKey as string),
+				keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
 			});
-		};
 
-		const pemKey = await getFileInfo('private_key.pem');
+			image.url = url;
+			// image.url =
+			// 	'https://d2d5ackrn9fpvj.cloudfront.net/cl88t16cr0014xzvzzim1oiio';
+		}
 
-		const cfUrl = `https://d2d5ackrn9fpvj.cloudfront.net/${image.id}`;
-
-		const privateKey: string = JSON.parse(
-			process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY_JSON!
+		res.setHeader(
+			'Cache-Control',
+			'public, s-maxage=10, stale-while-revalidate=59'
 		);
 
-		const url = getSignedCloudFrontUrl({
-			url: cfUrl,
-			dateLessThan: new Date(Date.now() + 1000 * 60 * 60).toString(),
-			privateKey:
-				process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
-					? privateKey.toString()
-					: (pemKey as string),
-			keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
-		});
-
-		image.url = url;
-		// image.url =
-		// 	'https://d2d5ackrn9fpvj.cloudfront.net/cl88t16cr0014xzvzzim1oiio';
+		return {
+			props: {
+				images: JSON.parse(JSON.stringify(images)),
+				cookie,
+			},
+		};
 	}
-
-	res.setHeader(
-		'Cache-Control',
-		'public, s-maxage=10, stale-while-revalidate=59'
-	);
-
 	return {
 		props: {
-			images: JSON.parse(JSON.stringify(images)),
 			cookie,
 		},
 	};

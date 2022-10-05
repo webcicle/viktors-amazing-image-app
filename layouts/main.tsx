@@ -6,18 +6,21 @@ import useMediaQuery from '../hooks/useMediaQuery';
 type Props = {
 	cookie: string;
 	children: ReactNode;
+	page?: string;
 };
 
-const MainLayout: React.FC<Props> = ({ cookie, children }) => {
+const MainLayout: React.FC<Props> = ({ cookie, children, page }) => {
 	const isDesktop = useMediaQuery(900, true);
 	const isMobile = useMediaQuery(600, false);
 	const styles = {
 		outer: {
-			width: !isDesktop ? '95vw' : 'clamp(100px, 90vw, 750px)',
+			width:
+				page === 'frontPage'
+					? 'clamp(100px, 95vw, 600px)'
+					: 'clamp(100px, 95vw, 800px)',
 			marginInline: 'auto',
 		},
 		inner: {
-			// width: isMobile ? '100%' : 'clamp(100px, 90%, 500px)',
 			width: '100%',
 			marginRight: 'auto',
 			marginTop: '2rem',

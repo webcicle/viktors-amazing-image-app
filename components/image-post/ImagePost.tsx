@@ -1,20 +1,25 @@
 import Image from 'next/image';
 import { ModdedImage } from '../../pages/api/image';
 import styles from './ImagePost.module.css';
-import { AiFillDislike, AiFillLike, AiFillFire } from 'react-icons/ai';
-import { FaRegComment } from 'react-icons/fa';
-import { ImShare } from 'react-icons/im';
 import { CgProfile } from 'react-icons/cg';
 import Link from 'next/link';
 import { getFormatDate } from '../../lib/helpers/date';
 import { nanoIdRegex } from '../../lib/helpers/regex';
+import ImageButtons from './ImageButtons';
+import { useState } from 'react';
+import { CommentWithUser } from '../single-image';
 
 type Props = {
 	image: ModdedImage;
 	index: number;
+	userId: string;
 };
 
-export default function ImagePost({ image, index }: Props) {
+export default function ImagePost({ userId, image, index }: Props) {
+	const [comments, setComments] = useState<CommentWithUser[]>(
+		image?.comments! as CommentWithUser[]
+	);
+
 	const { uploadedBy } = image;
 
 	return (
@@ -25,65 +30,57 @@ export default function ImagePost({ image, index }: Props) {
 						<CgProfile />
 					</div>
 					<div className={styles.userNameContainer}>
+						<p>
+							{nanoIdRegex.test(uploadedBy?.userName)
+								? 'unknownusername' + uploadedBy?.alias.split('-').pop()
+								: uploadedBy?.alias}
+						</p>
 						<Link href={`/profile/${uploadedBy?.id}`}>
 							<a>
+								@
 								{nanoIdRegex.test(uploadedBy?.userName)
 									? 'unknownuser' + uploadedBy?.userName.split('-').pop()
 									: uploadedBy?.userName}
 							</a>
 						</Link>
-						<p>
-							@
-							{nanoIdRegex.test(uploadedBy?.userName)
-								? 'unknownusername' + uploadedBy?.alias.split('-').pop()
-								: uploadedBy?.alias}
-						</p>
 					</div>
 				</div>
-				<div className={styles.imageContainer}>
-					<Image
-						src={image.url}
-						layout={'responsive'}
-						height={500}
-						width={500}
-						priority={index === 0}
-					/>
-				</div>
-				<div className={styles.imageButtons}>
-					<button className={styles.imageButton}>
-						<AiFillLike />
-					</button>
-					<button className={styles.imageButton}>
-						<AiFillDislike />
-					</button>
-					<button className={styles.imageButton}>
-						<FaRegComment />
-					</button>
-					<button className={styles.imageButton}>
-						<ImShare />
-					</button>
-					<button className={styles.imageButton}>
-						<AiFillFire />
-					</button>
-				</div>
-				<p>{image.caption}</p>
-				<div className={styles.tagContainer}>
-					{image?.tags?.map((tag) => (
-						<Link key={tag.id} href={`/tag/${tag.tagName}`}>
-							<a className={styles.imageTag}>{`#${tag.tagName}`}</a>
-						</Link>
-					))}
-				</div>
 				<Link href={`/image/${image.id}`}>
-					<a className={styles.commentLink}>
-						{image?.comments?.length! >= 1
-							? `View ${image?.comments?.length} comments`
-							: `No comments yet`}
-					</a>
+					<div className={styles.imageContainer}>
+						<Image
+							src={image.url}
+							layout={'responsive'}
+							height={500}
+							width={500}
+							priority={index === 0}
+						/>
+					</div>
 				</Link>
-				<p className={styles.imageDate}>
-					{getFormatDate(image.created.toString())}
-				</p>
+				<ImageButtons
+					userId={userId}
+					imageId={image.id}
+					setComments={setComments}
+					userLike={image.userLike}
+					userDislike={image.userDislike}>
+					<p>{image.caption}</p>
+					<div className={styles.tagContainer}>
+						{image?.tags?.map((tag) => (
+							<Link key={tag.id} href={`/tag/${tag.tagName}`}>
+								<a className={styles.imageTag}>{`#${tag.tagName}`}</a>
+							</Link>
+						))}
+					</div>
+					<Link href={`/image/${image.id}`}>
+						<a className={styles.commentLink}>
+							{image?.comments?.length! >= 1
+								? `View ${image?.comments?.length} comments`
+								: `No comments yet`}
+						</a>
+					</Link>
+					<p className={styles.imageDate}>
+						{getFormatDate(image.created.toString())}
+					</p>
+				</ImageButtons>
 			</div>
 		</>
 	);

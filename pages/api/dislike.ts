@@ -13,7 +13,7 @@ export default async function handler(
 	switch (method) {
 		case 'PUT': {
 			try {
-				const deleteLike = await prisma.like.delete({
+				const deleteDislike = await prisma.dislike.delete({
 					where: { id: body.id },
 				});
 				res.status(204).end();
@@ -24,14 +24,14 @@ export default async function handler(
 		}
 		case 'POST': {
 			try {
-				const newLike = await prisma.like.create({
+				const newLike = await prisma.dislike.create({
 					data: {
 						userId: body.userId,
 						type: body.type,
 						imageId: body.type === 'image' ? body.imageId : body.commentId,
 					},
 				});
-				res.status(201).send({ message: 'Like created', newLike });
+				res.status(201).send({ message: 'Dislike created', newLike });
 			} catch (error) {
 				console.error(error as string);
 			}

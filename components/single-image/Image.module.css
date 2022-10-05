@@ -43,10 +43,10 @@
 	padding-bottom: 0.5em;
 }
 
-.userNameContainer p {
+.userNameContainer a {
 	margin: 0;
 }
-.userNameContainer p:last-child {
+.userNameContainer a:last-child {
 	font-size: 0.65em;
 }
 
@@ -80,7 +80,7 @@
 }
 
 .commentsContainer {
-	max-height: 15vh;
+	max-height: 35vh;
 	overflow-y: scroll;
 	overflow-x: hidden;
 	margin-bottom: 0.8em;
@@ -120,9 +120,6 @@
 	flex-direction: column;
 }
 
-.commentAlias {
-}
-
 .commentUsername {
 	font-size: calc(var(--main-fs) - 0.5px);
 	color: rgb(168, 168, 168);
@@ -156,7 +153,7 @@
 
 @media (min-width: 700px) {
 	.commentsContainer {
-		max-height: unset;
+		max-height: 20vh;
 	}
 
 	.commentWrapper {
@@ -191,6 +188,11 @@
 	.commentWrapper {
 		grid-template-columns: 25px 1fr 25px;
 	}
+
+	.commentsContainer {
+		max-height: 30vh;
+	}
+
 	.commentButtons {
 		flex-direction: column;
 		gap: 0.2em;

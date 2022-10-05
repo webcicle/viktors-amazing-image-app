@@ -1,9 +1,8 @@
-import { Comment, Like, Tag } from '@prisma/client';
+import { Comment, Dislike, Like, Tag } from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { CgProfile } from 'react-icons/cg';
-import useMediaQuery from '../../hooks/useMediaQuery';
 import { getFormatDate } from '../../lib/helpers/date';
 import { nanoIdRegex } from '../../lib/helpers/regex';
 import { ModdedImage } from '../../pages/api/image';
@@ -23,17 +22,14 @@ export interface CommentWithUser extends Comment {
 type Props = {
 	image: ModdedImage;
 	cookie: string;
+	userLike: Like | null;
+	userDislike: Dislike | null;
 };
 
-const SingleImage = ({ cookie, image }: Props) => {
-	const userHasLiked = image?.likes?.find((like) => like.userId === cookie);
-
+const SingleImage = ({ cookie, image, userLike, userDislike }: Props) => {
 	const [comments, setComments] = useState<CommentWithUser[]>(
 		image?.comments! as CommentWithUser[]
 	);
-	// console.log(image);
-
-	const isDesktop = useMediaQuery(700, true);
 
 	return (
 		<div className={styles.mainContainer}>
@@ -82,8 +78,9 @@ const SingleImage = ({ cookie, image }: Props) => {
 				<ImageButtons
 					userId={cookie}
 					imageId={image.id}
-					setComment={setComments}
-					userLike={userHasLiked as Like}>
+					setComments={setComments}
+					userLike={userLike as Like}
+					userDislike={userDislike as Like}>
 					<div className={styles.commentsContainer}>
 						{comments.length! >= 1 ? (
 							comments.map((c) => <CommentComponent key={c.id} comment={c} />)

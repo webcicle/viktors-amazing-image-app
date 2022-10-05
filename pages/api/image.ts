@@ -31,8 +31,10 @@ export interface ModdedImage extends Image {
 	uploadedBy: ImageUser;
 	comments: Comment[] | CommentWithUser[] | undefined;
 	likes: Like[] | undefined;
-	disLikes: Dislike[] | undefined;
+	dislikes: Dislike[] | undefined;
 	tags: Tag[];
+	userLike?: Like | null | undefined;
+	userDislike?: Dislike | null | undefined;
 }
 
 export interface TagWithImageIds extends Tag {
