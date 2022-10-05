@@ -14,18 +14,12 @@ type Props = {
 };
 
 const TagPage = ({ images, cookie }: Props) => {
-	const styles = {
-		tagName: {
-			textAlign: `center`,
-		},
-	};
-
 	const {
 		query: { tagName },
 	} = useRouter();
 	return (
 		<MainLayout cookie={cookie}>
-			<h1 style={styles.tagName}>#{tagName}</h1>
+			<h1 style={{ textAlign: 'center' }}>#{tagName}</h1>
 			<ImageDisplay feedName='Images for this tag:' images={images} />
 		</MainLayout>
 	);
