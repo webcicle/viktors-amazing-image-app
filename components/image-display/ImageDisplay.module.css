@@ -52,11 +52,11 @@
 	align-items: center;
 }
 
-.commentsContainer {
+/* .commentsContainer {
 	display: flex;
 	gap: 0.2em;
 	align-items: center;
-}
+} */
 
 .ratioInfo {
 	margin: 0;

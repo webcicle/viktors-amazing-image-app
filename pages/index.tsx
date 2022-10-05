@@ -129,11 +129,13 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
 			const cfUrl = `https://d2d5ackrn9fpvj.cloudfront.net/${image.id}`;
 
-			const privateKey: string = JSON.parse(
-				process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY_JSON!
-			);
+			// const privateKey: string = JSON.parse(
+			// 	process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY_JSON!
+			// );
+			const privateKey: string =
+				process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!.replace(/\\n/g, '\n');
 
-			const url = getSignedCloudFrontUrl({
+			const signedCfUrl = getSignedCloudFrontUrl({
 				url: cfUrl,
 				dateLessThan: new Date(Date.now() + 1000 * 60 * 60).toString(),
 				privateKey:
@@ -143,9 +145,10 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 				keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
 			});
 
-			image.url = url;
-			// image.url =
-			// 	'https://d2d5ackrn9fpvj.cloudfront.net/cl88t16cr0014xzvzzim1oiio';
+			image.url =
+				process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+					? cfUrl
+					: signedCfUrl;
 		}
 
 		res.setHeader(

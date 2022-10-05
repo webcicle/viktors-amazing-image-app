@@ -69,7 +69,7 @@ const SingleImage = ({ cookie, image, userLike, userDislike }: Props) => {
 						</Link>
 					</div>
 				</div>
-				<p>{image.caption}</p>
+				<p className={styles.caption}>{image.caption}</p>
 				<div className={styles.tagContainer}>
 					{image?.tags?.map((tag: Tag) => (
 						<Link key={tag.id} href={`/tag/${tag.tagName}`}>

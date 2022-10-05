@@ -51,8 +51,6 @@ const ImageButtons = ({
 		disliked,
 	] = useLikeDislike({ userHasLiked, userHasDisliked, userLike, userDislike });
 
-	console.log(disliked);
-
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.currentTarget;
 		setNewComment(value);
@@ -86,7 +84,7 @@ const ImageButtons = ({
 	}, [commentFocus, liked, disliked]);
 
 	return (
-		<div className={styles.imageButtonsMain}>
+		<div className={styles.imageButtons}>
 			<div className={styles.imageButtons}>
 				<div className={styles.buttonSeparators}>
 					<button
@@ -123,25 +121,27 @@ const ImageButtons = ({
 					</button>
 				</div>
 			</div>
-			{children ?? ''}
-			{pathname.startsWith('/image') && (
-				<form onSubmit={commentClick} className={styles.commentForm}>
-					<div className={styles.commentInput}>
-						<label htmlFor='commentInput'></label>
-						<input
-							ref={commentInputRef}
-							onChange={handleChange}
-							placeholder={`Type your comment here...`}
-							value={newComment}
-							required
-							title='Please enter your comment'
-						/>
-					</div>
-					<button type='submit' className={styles.submitCommentButton}>
-						Comment
-					</button>
-				</form>
-			)}
+			<div className={styles.imageButtonsMain}>
+				{children ?? ''}
+				{pathname.startsWith('/image') && (
+					<form onSubmit={commentClick} className={styles.commentForm}>
+						<div className={styles.commentInput}>
+							<label htmlFor='commentInput'></label>
+							<input
+								ref={commentInputRef}
+								onChange={handleChange}
+								placeholder={`Type your comment here...`}
+								value={newComment}
+								required
+								title='Please enter your comment'
+							/>
+						</div>
+						<button type='submit' className={styles.submitCommentButton}>
+							Comment
+						</button>
+					</form>
+				)}
+			</div>
 		</div>
 	);
 };

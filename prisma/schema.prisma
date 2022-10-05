@@ -39,7 +39,7 @@ model Follows {
 
 model Image {
   id         String    @id @default(cuid())
-  caption    String
+  caption    String     @db.VarChar(5000)
   created    DateTime  @default(now())
   uploadedBy User      @relation(fields: [userId], references: [id])
   userId     String

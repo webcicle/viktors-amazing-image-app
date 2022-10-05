@@ -1,5 +1,6 @@
 .mainContainer {
 	width: 100%;
+	max-height: 100%;
 	--inner-padding: 0.8em;
 	--bg-color: var(--bg-color-main);
 }
@@ -15,6 +16,10 @@
 }
 .sidebar {
 	width: 100%;
+	max-height: 500px;
+	display: grid;
+	grid-template-rows: min-content min-content 1fr;
+	height: 100%;
 	background-color: var(--bg-color);
 	padding: var(--inner-padding);
 	border-bottom-left-radius: var(--border-radius-main);
@@ -50,6 +55,10 @@
 	font-size: 0.65em;
 }
 
+.caption {
+	font-size: 0.7em;
+}
+
 .imageContainer {
 	position: relative;
 	border-radius: var(--border-radius-main);
@@ -63,6 +72,13 @@
 	gap: 0.3em;
 	font-size: 0.8em;
 	margin-bottom: 0.4em;
+	max-height: 100px;
+}
+
+.tagContainer a {
+	margin-bottom: 0.1em;
+	font-size: 0.7em;
+	line-height: normal;
 }
 
 .imageTag {
@@ -80,7 +96,8 @@
 }
 
 .commentsContainer {
-	max-height: 35vh;
+	max-height: 200px;
+	width: 100%;
 	overflow-y: scroll;
 	overflow-x: hidden;
 	margin-bottom: 0.8em;
@@ -88,6 +105,8 @@
 
 .imageDate {
 	font-size: 0.7em;
+	margin: 0;
+	margin-bottom: 0.5em;
 	margin-top: auto;
 }
 
@@ -161,9 +180,9 @@
 }
 
 @media (min-width: 700px) {
-	.commentsContainer {
-		max-height: 20vh;
-	}
+	/* .commentsContainer {
+		max-height: 15vh;
+	} */
 
 	.commentWrapper {
 		grid-template-columns: 25px 1fr;
@@ -203,7 +222,7 @@
 	}
 
 	.commentsContainer {
-		max-height: 30vh;
+		/* max-height: 30vh; */
 	}
 
 	.commentButtons {

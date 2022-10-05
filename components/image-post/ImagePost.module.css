@@ -53,6 +53,7 @@
 .imageTag {
 	margin-block: 0;
 	margin-bottom: 0.4em;
+	word-wrap: break-word;
 }
 
 .imageTag:hover {
@@ -73,21 +74,27 @@
 /* IMAGE BUTTONS */
 
 .imageButtonsMain {
-	margin-top: 0.7em;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	height: 70%;
+	margin-top: auto;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: min-content 150px min-content min-content;
+	height: clamp(20%, 100%, 45%);
 }
 
 .buttonSeparators {
+	grid-row: 1/-1;
 	padding: 0.2em;
+}
+.buttonSeparators:last-child {
+	justify-self: flex-end;
 }
 
 .imageButtons {
 	margin-top: 0.7em;
-	display: flex;
+	margin-bottom: auto;
+
 	flex-wrap: wrap;
+	display: flex;
 	align-items: center;
 	justify-content: left;
 }
@@ -134,6 +141,8 @@
 	border-bottom-right-radius: var(--border-radius-main);
 	background-color: var(--brand-color);
 	color: var(--bg-grey-400);
+	height: fit-content;
+	padding: 0.5em;
 }
 
 .submitCommentButton:hover {
