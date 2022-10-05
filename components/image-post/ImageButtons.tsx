@@ -80,6 +80,7 @@ const ImageButtons = ({ userId, imageId, setComment, children }: Props) => {
 						placeholder={`Type your comment here...`}
 						value={newComment}
 						required
+						title='Please enter your comment'
 					/>
 				</div>
 				<button type='submit' className={styles.submitCommentButton}>
