@@ -16,10 +16,6 @@ type Props = {
 };
 
 export default function ImagePost({ userId, image, index }: Props) {
-	const [comments, setComments] = useState<CommentWithUser[]>(
-		image?.comments! as CommentWithUser[]
-	);
-
 	const { uploadedBy } = image;
 
 	return (
@@ -59,7 +55,6 @@ export default function ImagePost({ userId, image, index }: Props) {
 				<ImageButtons
 					userId={userId}
 					imageId={image.id}
-					setComments={setComments}
 					userLike={image.userLike}
 					userDislike={image.userDislike}>
 					<p>{image.caption}</p>

@@ -6,6 +6,8 @@ import React, {
 	Dispatch,
 	FormEvent,
 	ReactNode,
+	useEffect,
+	useRef,
 	useState,
 } from 'react';
 import { AiFillDislike, AiFillFire, AiFillLike } from 'react-icons/ai';
@@ -38,6 +40,7 @@ const ImageButtons = ({
 		userDislike === null || userDislike === undefined ? false : true;
 
 	const [newComment, setNewComment] = useState<string>('');
+	const [commentFocus, setCommentFocus] = useState<boolean>(false);
 	const { pathname, push } = useRouter();
 	const [
 		createLike,
@@ -55,9 +58,15 @@ const ImageButtons = ({
 		setNewComment(value);
 	};
 
+	const focusComment = () => {
+		if (!pathname.startsWith('/image')) return push(`/image/${imageId}`);
+		setCommentFocus((prev) => !prev);
+	};
+
+	const commentInputRef = useRef<HTMLInputElement | null>(null);
+
 	const commentClick = async (e: FormEvent) => {
 		if (newComment === '') return;
-		if (!pathname.startsWith('/image')) return push(`/image/${imageId}`);
 		e.preventDefault();
 		const axiosResponse = await axios.post('/api/comment', {
 			userId,
@@ -71,6 +80,10 @@ const ImageButtons = ({
 		}
 		return;
 	};
+
+	useEffect(() => {
+		commentInputRef?.current?.focus();
+	}, [commentFocus, liked, disliked]);
 
 	return (
 		<div className={styles.imageButtonsMain}>
@@ -97,7 +110,7 @@ const ImageButtons = ({
 						<AiFillDislike />
 					</button>
 
-					<button onClick={commentClick} className={styles.imageButton}>
+					<button onClick={focusComment} className={styles.imageButton}>
 						<FaRegComment />
 					</button>
 				</div>
@@ -116,6 +129,7 @@ const ImageButtons = ({
 					<div className={styles.commentInput}>
 						<label htmlFor='commentInput'></label>
 						<input
+							ref={commentInputRef}
 							onChange={handleChange}
 							placeholder={`Type your comment here...`}
 							value={newComment}
