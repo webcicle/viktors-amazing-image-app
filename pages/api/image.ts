@@ -9,6 +9,7 @@ import { getSignedUrl as getSignedCloudFrontUrl } from '@aws-sdk/cloudfront-sign
 import { s3, envVars } from '../../aws/s3';
 import fs from 'fs';
 import path from 'path';
+import { CommentWithUser } from '../../components/single-image';
 
 type Data = {
 	message: string;
@@ -18,10 +19,17 @@ type Data = {
 // 	tag?: { tagName: string };
 // }
 
+interface ImageUser {
+	id: string;
+	alias: string;
+	userName: string;
+	profileImage: string;
+}
+
 export interface ModdedImage extends Image {
 	url: string;
-	uploadedBy: User;
-	comments: Comment[] | undefined;
+	uploadedBy: ImageUser;
+	comments: Comment[] | CommentWithUser[] | undefined;
 	likes: Like[] | undefined;
 	disLikes: Dislike[] | undefined;
 	tags: Tag[];
@@ -132,7 +140,14 @@ export default async function handler(
 				include: {
 					comments: true,
 					likes: true,
-					uploadedBy: true,
+					uploadedBy: {
+						select: {
+							id: true,
+							alias: true,
+							userName: true,
+							profileImage: true,
+						},
+					},
 					tags: true,
 				},
 				orderBy: { created: 'desc' },

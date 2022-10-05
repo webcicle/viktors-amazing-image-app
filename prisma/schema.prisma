@@ -79,4 +79,5 @@ model Comment {
   userId  String
   image   Image  @relation(fields: [imageId], references: [id])
   imageId String
+  createdAt DateTime @default(now())
 }

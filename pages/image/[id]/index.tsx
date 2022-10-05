@@ -28,10 +28,24 @@ export const getServerSideProps: GetServerSideProps = async ({
 	const image = await prisma.image.findFirst({
 		where: { id: { equals: imageId as string } },
 		include: {
-			comments: true,
+			comments: {
+				include: {
+					user: {
+						select: {
+							id: true,
+							alias: true,
+							userName: true,
+							profileImage: true,
+						},
+					},
+				},
+				orderBy: { createdAt: 'desc' },
+			},
 			likes: true,
 			dislikes: true,
-			uploadedBy: { select: { id: true, alias: true, userName: true } },
+			uploadedBy: {
+				select: { id: true, alias: true, userName: true, profileImage: true },
+			},
 			tags: true,
 		},
 	});

@@ -40,27 +40,6 @@
 	border-radius: var(--border-radius-main);
 	overflow: hidden;
 }
-.buttonSeparators {
-	padding: 0.2em;
-}
-
-.imageButtons {
-	margin-top: 0.7em;
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: left;
-}
-
-.imageButton {
-	font-size: 1.8em;
-	background-color: transparent;
-	color: white;
-}
-
-.imageButton:hover {
-	color: var(--brand-color-hover);
-}
 
 .tagContainer {
 	display: flex;
@@ -87,4 +66,73 @@
 
 .imageDate {
 	font-size: 0.7em;
+}
+
+/* IMAGE BUTTONS */
+/* IMAGE BUTTONS */
+/* IMAGE BUTTONS */
+
+.imageButtonMain {
+	margin-top: 0.7em;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.buttonSeparators {
+	padding: 0.2em;
+}
+
+.imageButtons {
+	margin-top: 0.7em;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: left;
+}
+
+.imageButton {
+	font-size: 1.8em;
+	background-color: transparent;
+	color: white;
+}
+
+.imageButton:hover {
+	color: var(--brand-color-hover);
+}
+
+.commentForm {
+	display: flex;
+	width: 100%;
+}
+
+.commentInput {
+	width: 100%;
+}
+
+.commentInput input {
+	width: 100%;
+	padding: 0.5em;
+	border: none;
+	border-top-left-radius: var(--border-radius-main);
+	border-bottom-left-radius: var(--border-radius-main);
+}
+
+.submitCommentButton {
+	border-top-left-radius: 0px;
+	border-top-right-radius: var(--border-radius-main);
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: var(--border-radius-main);
+	background-color: var(--brand-color);
+	color: var(--bg-grey-400);
+}
+
+.submitCommentButton:hover {
+	background-color: var(--brand-color-hover);
+}
+
+@media (min-width: 700px) {
+	.imageButtonMain {
+		height: clamp(200px, 350px, 370px);
+	}
 }

@@ -26,6 +26,16 @@ export default async function handler(
 					userId: body.userId,
 					comment: body.comment,
 				},
+				include: {
+					user: {
+						select: {
+							id: true,
+							alias: true,
+							userName: true,
+							profileImage: true,
+						},
+					},
+				},
 			});
 			res
 				.status(201)

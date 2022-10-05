@@ -72,7 +72,9 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 		include: {
 			comments: true,
 			likes: true,
-			uploadedBy: true,
+			uploadedBy: {
+				select: { id: true, alias: true, userName: true, profileImage: true },
+			},
 			tags: true,
 		},
 		orderBy: { created: 'desc' },

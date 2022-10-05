@@ -1,7 +1,7 @@
 import { Comment, Tag } from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CgProfile } from 'react-icons/cg';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import { getFormatDate } from '../../lib/helpers/date';
@@ -11,13 +11,26 @@ import ImageButtons from '../image-post/ImageButtons';
 import CommentComponent from './Comment';
 import styles from './Image.module.css';
 
+export interface CommentWithUser extends Comment {
+	user: {
+		id: string;
+		alias: string;
+		userName: string;
+		profileImage: string | null;
+	};
+}
+
 type Props = {
 	image: ModdedImage;
 	cookie: string;
 };
 
 const SingleImage = ({ cookie, image }: Props) => {
-	const [comments, setComments] = useState<Comment[]>(image?.comments!);
+	const [comments, setComments] = useState<CommentWithUser[]>(
+		image?.comments! as CommentWithUser[]
+	);
+	console.log(image);
+
 	const isDesktop = useMediaQuery(700, true);
 
 	return (
@@ -42,25 +55,20 @@ const SingleImage = ({ cookie, image }: Props) => {
 						<Link href={`/profile/${image.uploadedBy.id}`}>
 							<a>
 								{nanoIdRegex.test(image.uploadedBy?.userName)
-									? 'unknownuser' + image.uploadedBy?.userName.split('-').pop()
-									: image.uploadedBy?.userName}
+									? 'unknownusername' + image.uploadedBy?.alias.split('-').pop()
+									: image.uploadedBy?.alias}
 							</a>
 						</Link>
 						<Link href={`/profile/${image.uploadedBy.id}`}>
 							<a>
 								@
 								{nanoIdRegex.test(image.uploadedBy?.userName)
-									? 'unknownusername' + image.uploadedBy?.alias.split('-').pop()
-									: image.uploadedBy?.alias}
+									? 'unknownuser' + image.uploadedBy?.userName.split('-').pop()
+									: image.uploadedBy?.userName}
 							</a>
 						</Link>
 					</div>
 				</div>
-				<ImageButtons
-					userId={cookie}
-					imageId={image.id}
-					setComment={setComments}
-				/>
 				<p>{image.caption}</p>
 				<div className={styles.tagContainer}>
 					{image?.tags?.map((tag: Tag) => (
@@ -69,14 +77,21 @@ const SingleImage = ({ cookie, image }: Props) => {
 						</Link>
 					))}
 				</div>
-				{comments.length! >= 1 ? (
-					comments.map((c) => <CommentComponent key={c.id} comment={c} />)
-				) : (
-					<p className={styles.commentLink}>No comments yet</p>
-				)}
-				<p className={styles.imageDate}>
-					{getFormatDate(image.created.toString())}
-				</p>
+				<ImageButtons
+					userId={cookie}
+					imageId={image.id}
+					setComment={setComments}>
+					<div className={styles.commentsContainer}>
+						{comments.length! >= 1 ? (
+							comments.map((c) => <CommentComponent key={c.id} comment={c} />)
+						) : (
+							<p className={styles.commentLink}>No comments yet</p>
+						)}
+					</div>
+					<p className={styles.imageDate}>
+						{getFormatDate(image.created.toString())}
+					</p>
+				</ImageButtons>
 			</aside>
 		</div>
 	);

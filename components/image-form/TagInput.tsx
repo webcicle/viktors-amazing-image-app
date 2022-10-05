@@ -35,8 +35,8 @@ const TagInput = ({ tags, setTags }: Props) => {
 	};
 
 	const createAndAddNewTag = (tag: string) => {
-		if (tags.length >= 5) {
-			alert('You may only use maximum five tags');
+		if (tags.length >= 15) {
+			alert('You may only use maximum fifteen tags');
 			setNewTag('');
 			return;
 		}

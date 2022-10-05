@@ -74,7 +74,7 @@ export default function ImagePost({ image, index }: Props) {
 						</Link>
 					))}
 				</div>
-				<Link href={`/post/${image.id}`}>
+				<Link href={`/image/${image.id}`}>
 					<a className={styles.commentLink}>
 						{image?.comments?.length! >= 1
 							? `View ${image?.comments?.length} comments`
