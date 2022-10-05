@@ -1,4 +1,4 @@
-import { Comment, Tag } from '@prisma/client';
+import { Comment, Like, Tag } from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -26,10 +26,12 @@ type Props = {
 };
 
 const SingleImage = ({ cookie, image }: Props) => {
+	const userHasLiked = image?.likes?.find((like) => like.userId === cookie);
+
 	const [comments, setComments] = useState<CommentWithUser[]>(
 		image?.comments! as CommentWithUser[]
 	);
-	console.log(image);
+	// console.log(image);
 
 	const isDesktop = useMediaQuery(700, true);
 
@@ -80,7 +82,8 @@ const SingleImage = ({ cookie, image }: Props) => {
 				<ImageButtons
 					userId={cookie}
 					imageId={image.id}
-					setComment={setComments}>
+					setComment={setComments}
+					userLike={userHasLiked as Like}>
 					<div className={styles.commentsContainer}>
 						{comments.length! >= 1 ? (
 							comments.map((c) => <CommentComponent key={c.id} comment={c} />)

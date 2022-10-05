@@ -14,7 +14,7 @@ type Props = {
 
 const CommentComponent = ({ comment }: Props) => {
 	const { comment: commentText, user } = comment;
-	console.log(comment);
+	// console.log(comment);
 
 	return (
 		<div className={styles.commentWrapper}>

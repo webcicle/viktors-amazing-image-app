@@ -20,26 +20,31 @@ export default async function handler(
 		case 'POST': {
 			console.log({ body, cookies });
 
-			const newComment = await prisma.comment.create({
-				data: {
-					imageId: body.imageId,
-					userId: body.userId,
-					comment: body.comment,
-				},
-				include: {
-					user: {
-						select: {
-							id: true,
-							alias: true,
-							userName: true,
-							profileImage: true,
+			try {
+				const newComment = await prisma.comment.create({
+					data: {
+						imageId: body.imageId,
+						userId: body.userId,
+						comment: body.comment,
+					},
+					include: {
+						user: {
+							select: {
+								id: true,
+								alias: true,
+								userName: true,
+								profileImage: true,
+							},
 						},
 					},
-				},
-			});
-			res
-				.status(201)
-				.send({ message: 'Comment created successfully', newComment });
+				});
+				res
+					.status(201)
+					.send({ message: 'Comment created successfully', newComment });
+				return;
+			} catch (error) {
+				throw new Error(error as string);
+			}
 			break;
 		}
 		case 'GET': {

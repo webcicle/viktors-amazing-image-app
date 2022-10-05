@@ -65,6 +65,7 @@ model Like {
   imageId   String?
   comment   Comment? @relation(fields: [commentId], references: [id])
   commentId String?
+  createdAt DateTime @default(now())
 }
 
 model Dislike {
@@ -76,6 +77,7 @@ model Dislike {
   imageId   String?
   comment   Comment? @relation(fields: [commentId], references: [id])
   commentId String?
+  createdAt DateTime @default(now())
 }
 
 model Comment {
@@ -99,13 +101,5 @@ model Reply {
   replyToComment Comment? @relation("replyTo")
   replyFrom      Comment  @relation("replies", fields: [replyFromId], references: [id])
   replyFromId    String
+  createdAt      DateTime @default(now())
 }
-
-// model Reply {
-//   replyTo    Comment @relation("replyTo", fields: [replyToId], references: [id])
-//   replyToId  String
-//   replyFrom   Comment   @relation("replyFrom", fields: [replyFromId], references: [id])
-//   replyFromId String
-
-//   @@id([replyToId, replyFromId])
-// }
