@@ -125,7 +125,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 				});
 			};
 
-			const pemKey = await getFileInfo('private_key.pem');
+			// const pemKey = await getFileInfo('private_key.pem');
 
 			const cfUrl = `https://d2d5ackrn9fpvj.cloudfront.net/${image.id}`;
 
