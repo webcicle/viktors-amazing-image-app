@@ -7,7 +7,7 @@ import { getFormatDate } from '../../lib/helpers/date';
 import { nanoIdRegex } from '../../lib/helpers/regex';
 import ImageButtons from './ImageButtons';
 import { useState } from 'react';
-import { CommentWithUser } from '../single-image';
+import { CommentWithUserAndLikes } from '../single-image';
 
 type Props = {
 	image: ModdedImage;

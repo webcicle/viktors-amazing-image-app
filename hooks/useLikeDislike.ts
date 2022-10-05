@@ -1,6 +1,6 @@
 import { Dislike, Like } from '@prisma/client';
 import axios from 'axios';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 type Props = {
 	userHasLiked: boolean;
@@ -24,11 +24,24 @@ const useLikeDislike = ({
 		userDislike?.id as string
 	);
 
-	const createLike = async (userId: string, imageId: string, type: string) => {
+	// console.log({ userDislike, userLikeId, userDislikeId });
+
+	const createLike = async ({
+		userId,
+		type,
+		imageId,
+		commentId,
+	}: {
+		userId: string;
+		type: string;
+		imageId?: string;
+		commentId?: string;
+	}) => {
 		setLiked(true);
 		const like = await axios.post('/api/like', {
 			userId,
-			imageId,
+			imageId: imageId ? imageId : null,
+			commentId: commentId ? commentId : null,
 			type,
 		});
 		setUserLikeId(like.data.newLike.id);
@@ -51,18 +64,25 @@ const useLikeDislike = ({
 		}
 		return;
 	};
-	const createDislike = async (
-		userId: string,
-		imageId: string,
-		type: string
-	) => {
+	const createDislike = async ({
+		userId,
+		type,
+		imageId,
+		commentId,
+	}: {
+		userId: string;
+		type: string;
+		imageId?: string;
+		commentId?: string;
+	}) => {
 		setDisliked(true);
 		const dislike = await axios.post('/api/dislike', {
 			userId,
-			imageId,
-			type: 'image',
+			imageId: imageId ? imageId : null,
+			commentId: commentId ? commentId : null,
+			type,
 		});
-		setUserDislikeId(dislike.data.newLike.id);
+		setUserDislikeId(dislike.data.newDislike.id);
 		if (dislike.status !== 201) {
 			setDisliked(false);
 			alert('ERROR: There was an error disliking the image, please try again');

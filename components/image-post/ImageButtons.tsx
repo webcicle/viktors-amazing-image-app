@@ -14,7 +14,7 @@ import { AiFillDislike, AiFillFire, AiFillLike } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa';
 import { ImShare } from 'react-icons/im';
 import useLikeDislike from '../../hooks/useLikeDislike';
-import { CommentWithUser } from '../single-image';
+import { CommentWithUserAndLikes } from '../single-image';
 import styles from './ImagePost.module.css';
 
 type Props = {
@@ -23,7 +23,7 @@ type Props = {
 	userLike: Like | null | undefined;
 	userDislike: Dislike | null | undefined;
 	children: ReactNode;
-	setComments?: Dispatch<React.SetStateAction<CommentWithUser[]>>;
+	setComments?: Dispatch<React.SetStateAction<CommentWithUserAndLikes[]>>;
 };
 
 const ImageButtons = ({
@@ -92,7 +92,7 @@ const ImageButtons = ({
 					<button
 						onClick={
 							liked === false
-								? () => createLike(userId, imageId, 'image')
+								? () => createLike({ userId, imageId, type: 'image' })
 								: () => deleteLike()
 						}
 						className={liked ? styles.imageButtonClicked : styles.imageButton}>
@@ -104,7 +104,7 @@ const ImageButtons = ({
 						}
 						onClick={
 							disliked === false
-								? () => createDislike(userId, imageId, 'image')
+								? () => createDislike({ userId, imageId, type: 'image' })
 								: () => deleteDislike()
 						}>
 						<AiFillDislike />

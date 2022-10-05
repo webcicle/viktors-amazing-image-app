@@ -9,7 +9,7 @@ import { getSignedUrl as getSignedCloudFrontUrl } from '@aws-sdk/cloudfront-sign
 import { s3, envVars } from '../../aws/s3';
 import fs from 'fs';
 import path from 'path';
-import { CommentWithUser } from '../../components/single-image';
+import { CommentWithUserAndLikes } from '../../components/single-image';
 
 type Data = {
 	message: string;
@@ -29,7 +29,7 @@ interface ImageUser {
 export interface ModdedImage extends Image {
 	url: string;
 	uploadedBy: ImageUser;
-	comments: Comment[] | CommentWithUser[] | undefined;
+	comments: Comment[] | CommentWithUserAndLikes[] | undefined;
 	likes: Like[] | undefined;
 	dislikes: Dislike[] | undefined;
 	tags: Tag[];

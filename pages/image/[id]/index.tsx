@@ -47,6 +47,8 @@ export const getServerSideProps: GetServerSideProps = async ({
 							profileImage: true,
 						},
 					},
+					likes: true,
+					dislikes: true,
 				},
 				orderBy: { createdAt: 'desc' },
 			},
@@ -65,8 +67,6 @@ export const getServerSideProps: GetServerSideProps = async ({
 			(dislike) => dislike.userId === cookie
 		);
 
-		console.log({ userDislike, userLike });
-
 		const urls = await getSignedCfUrl([
 			{ id: image?.id, created: image?.created },
 		]);
@@ -80,8 +80,10 @@ export const getServerSideProps: GetServerSideProps = async ({
 			props: {
 				image: JSON.parse(JSON.stringify(imageWithUrl)),
 				cookie,
-				userLike: userLike ? userLike : null,
-				userDislike: userDislike ? userDislike : null,
+				userLike: userLike ? JSON.parse(JSON.stringify(userLike)) : null,
+				userDislike: userDislike
+					? JSON.parse(JSON.stringify(userDislike))
+					: null,
 			},
 		};
 	}

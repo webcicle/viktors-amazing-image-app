@@ -1,20 +1,47 @@
-import { AiFillDislike, AiFillFire, AiFillLike } from 'react-icons/ai';
-import { Comment } from '@prisma/client';
+import { AiFillDislike, AiFillLike } from 'react-icons/ai';
 import Image from 'next/image';
 import Link from 'next/link';
 import { CgProfile } from 'react-icons/cg';
-import { CommentWithUser } from '.';
+import { CommentWithUserAndLikes } from '.';
 import { nanoIdRegex } from '../../lib/helpers/regex';
 import styles from './Image.module.css';
 import { FaRegComment } from 'react-icons/fa';
+import useLikeDislike from '../../hooks/useLikeDislike';
+import { Dislike, Like } from '@prisma/client';
 
 type Props = {
-	comment: CommentWithUser;
+	comment: CommentWithUserAndLikes;
+	loggedInUser: string;
 };
 
-const CommentComponent = ({ comment }: Props) => {
-	const { comment: commentText, user } = comment;
-	// console.log(comment);
+const CommentComponent = ({ comment, loggedInUser }: Props) => {
+	const { comment: commentText, user, likes, dislikes } = comment;
+
+	const userLike = likes?.find((like) => like.userId === loggedInUser);
+	const userDislike = dislikes?.find(
+		(dislike) => dislike.userId === loggedInUser
+	);
+
+	const userHasLiked = userLike === undefined ? false : true;
+	const userHasDisliked = userDislike === undefined ? false : true;
+
+	const [
+		createLike,
+		deleteLike,
+		createDislike,
+		deleteDislike,
+		liked,
+		disliked,
+	] = useLikeDislike({ userHasLiked, userHasDisliked, userLike, userDislike });
+
+	console.log({
+		liked,
+		disliked,
+		userLike,
+		userDislike,
+		userHasLiked,
+		userHasDisliked,
+	});
 
 	return (
 		<div className={styles.commentWrapper}>
@@ -46,10 +73,36 @@ const CommentComponent = ({ comment }: Props) => {
 			</div>
 			<p className={styles.commentText}>{commentText}</p>
 			<div className={styles.commentButtons}>
-				<button type='button' className={styles.commentButton}>
+				<button
+					type='button'
+					className={liked ? styles.commentButtonClicked : styles.commentButton}
+					onClick={
+						liked === false
+							? () =>
+									createLike({
+										userId: loggedInUser,
+										commentId: comment.id,
+										type: 'comment',
+									})
+							: () => deleteLike()
+					}>
 					<AiFillLike />
 				</button>
-				<button type='button' className={styles.commentButton}>
+				<button
+					onClick={
+						disliked === false
+							? () =>
+									createDislike({
+										userId: loggedInUser,
+										commentId: comment.id,
+										type: 'comment',
+									})
+							: () => deleteDislike()
+					}
+					type='button'
+					className={
+						disliked ? styles.commentButtonClicked : styles.commentButton
+					}>
 					<AiFillDislike />
 				</button>
 				<button type='button' className={styles.commentButton}>

@@ -150,6 +150,15 @@
 .commentButton:hover {
 	color: var(--brand-color-hover);
 }
+.commentButtonClicked {
+	background-color: transparent;
+	color: var(--brand-color);
+	padding: 0;
+	font-size: 1.5em;
+}
+.commentButtonClicked:hover {
+	color: var(--bg-grey-400);
+}
 
 @media (min-width: 700px) {
 	.commentsContainer {
@@ -167,6 +176,10 @@
 		margin-right: 0.8em;
 	}
 	.commentButton {
+		font-size: 1.25em;
+		margin-top: 0.4em;
+	}
+	.commentButtonClicked {
 		font-size: 1.25em;
 		margin-top: 0.4em;
 	}
@@ -205,6 +218,9 @@
 		opacity: 1;
 	}
 	.commentButton {
+		font-size: inherit;
+	}
+	.commentButtonClicked {
 		font-size: inherit;
 	}
 }

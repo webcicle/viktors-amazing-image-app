@@ -10,13 +10,15 @@ import ImageButtons from '../image-post/ImageButtons';
 import CommentComponent from './Comment';
 import styles from './Image.module.css';
 
-export interface CommentWithUser extends Comment {
+export interface CommentWithUserAndLikes extends Comment {
 	user: {
 		id: string;
 		alias: string;
 		userName: string;
 		profileImage: string | null;
 	};
+	likes?: Like[];
+	dislikes?: Dislike[];
 }
 
 type Props = {
@@ -27,8 +29,8 @@ type Props = {
 };
 
 const SingleImage = ({ cookie, image, userLike, userDislike }: Props) => {
-	const [comments, setComments] = useState<CommentWithUser[]>(
-		image?.comments! as CommentWithUser[]
+	const [comments, setComments] = useState<CommentWithUserAndLikes[]>(
+		image?.comments! as CommentWithUserAndLikes[]
 	);
 
 	return (
@@ -83,7 +85,13 @@ const SingleImage = ({ cookie, image, userLike, userDislike }: Props) => {
 					userDislike={userDislike as Like}>
 					<div className={styles.commentsContainer}>
 						{comments.length! >= 1 ? (
-							comments.map((c) => <CommentComponent key={c.id} comment={c} />)
+							comments.map((c) => (
+								<CommentComponent
+									loggedInUser={cookie}
+									key={c.id}
+									comment={c}
+								/>
+							))
 						) : (
 							<p className={styles.commentLink}>No comments yet</p>
 						)}

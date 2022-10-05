@@ -28,7 +28,8 @@ export default async function handler(
 					data: {
 						userId: body.userId,
 						type: body.type,
-						imageId: body.type === 'image' ? body.imageId : body.commentId,
+						imageId: body.type === 'image' ? body.imageId : null,
+						commentId: body.type === 'comment' ? body.commentId : null,
 					},
 				});
 				res.status(201).send({ message: 'Like created', newLike });

@@ -24,14 +24,15 @@ export default async function handler(
 		}
 		case 'POST': {
 			try {
-				const newLike = await prisma.dislike.create({
+				const newDislike = await prisma.dislike.create({
 					data: {
 						userId: body.userId,
 						type: body.type,
-						imageId: body.type === 'image' ? body.imageId : body.commentId,
+						imageId: body.type === 'image' ? body.imageId : null,
+						commentId: body.type === 'comment' ? body.commentId : null,
 					},
 				});
-				res.status(201).send({ message: 'Dislike created', newLike });
+				res.status(201).send({ message: 'Dislike created', newDislike });
 			} catch (error) {
 				console.error(error as string);
 			}
