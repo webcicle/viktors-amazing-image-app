@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from 'react';
-import { UserWithFollowerCounts } from '../../lib/apiHelpers/updateUser';
+import { UserWithFollowerCounts } from '../../pages/profile/[id]';
 import styles from './Profile.module.css';
 
 interface InputProps {
