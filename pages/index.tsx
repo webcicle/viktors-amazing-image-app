@@ -111,19 +111,19 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 			// 	expiresIn: 3600,
 			// });
 
-			const getFileInfo = (filePath: string) => {
-				let pemKey: string = '';
-				return new Promise((resolve, reject) => {
-					const reader = fs.createReadStream(filePath);
-					reader.on('error', (error) => {
-						reject('There was an error');
-					});
-					reader.on('data', (chunk) => {
-						pemKey = chunk.toString();
-						resolve(pemKey);
-					});
-				});
-			};
+			// const getFileInfo = (filePath: string) => {
+			// 	let pemKey: string = '';
+			// 	return new Promise((resolve, reject) => {
+			// 		const reader = fs.createReadStream(filePath);
+			// 		reader.on('error', (error) => {
+			// 			reject('There was an error');
+			// 		});
+			// 		reader.on('data', (chunk) => {
+			// 			pemKey = chunk.toString();
+			// 			resolve(pemKey);
+			// 		});
+			// 	});
+			// };
 
 			// const pemKey = await getFileInfo('private_key.pem');
 
@@ -132,24 +132,25 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 			// const privateKey: string = JSON.parse(
 			// 	process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY_JSON!
 			// );
-			// const privateKey: string =
-			// 	process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!.replace(/\\n/g, '\n');
+			const privateKey: string =
+				process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!.replace(/\\n/g, '\n');
 
-			// const signedCfUrl = getSignedCloudFrontUrl({
-			// 	url: cfUrl,
-			// 	dateLessThan: new Date(Date.now() + 1000 * 60 * 60).toString(),
-			// 	privateKey:
-			// 		process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
-			// 			? privateKey.toString()
-			// 			: (pemKey as string),
-			// 	keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
-			// });
+			const signedCfUrl = getSignedCloudFrontUrl({
+				url: cfUrl,
+				dateLessThan: new Date(Date.now() + 1000 * 60 * 60).toString(),
+				privateKey: privateKey,
+				// privateKey:
+				// 	process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+				// 		? privateKey.toString()
+				// 		: (pemKey as string),
+				keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
+			});
 
-			// image.url =
-			// 	process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
-			// 		? cfUrl
-			// 		: signedCfUrl;
-			image.url = cfUrl;
+			image.url =
+				process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+					? cfUrl
+					: signedCfUrl;
+			// image.url = cfUrl;
 		}
 
 		res.setHeader(
