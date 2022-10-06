@@ -9,7 +9,8 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { Header, ImageForm, ImagePost } from '../components';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { getSignedUrl as getSignedCloudFrontUrl } from '@aws-sdk/cloudfront-signer';
+// import { getSignedUrl as getSignedCloudFrontUrl } from '@aws-sdk/cloudfront-signer';
+import getSignedCloudfrontUrl from '../aws/getSignedCloudfrontUrl';
 import fs from 'fs';
 import path from 'path';
 import MainLayout from '../layouts/main';
@@ -115,50 +116,51 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
 			const cfUrl = `https://d2d5ackrn9fpvj.cloudfront.net/${image.id}`;
 
-			if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
-				const privateKey: string =
-					process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!.replace(/\\n/g, '\n');
+			// if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
+			// 	const privateKey: string =
+			// 		process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!.replace(/\\n/g, '\n');
 
-				const signedCfUrl = getSignedCloudFrontUrl({
-					url: cfUrl,
-					dateLessThan: new Date(Date.now() + 1000 * 60 * 60).toString(),
-					privateKey: privateKey,
-					keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
-				});
+			// 	const signedCfUrl = getSignedCloudFrontUrl({
+			// 		url: cfUrl,
+			// 		dateLessThan: new Date(Date.now() + 1000 * 60 * 60).toString(),
+			// 		privateKey: privateKey,
+			// 		keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
+			// 	});
 
-				image.url = signedCfUrl;
-			} else {
-				const getFileInfo = (filePath: string) => {
-					let pemKey: string = '';
-					return new Promise((resolve, reject) => {
-						const reader = fs.createReadStream(filePath);
-						reader.on('error', (error) => {
-							reject('There was an error');
-						});
-						reader.on('data', (chunk) => {
-							pemKey = chunk.toString();
-							resolve(pemKey);
-						});
-					});
-				};
+			// 	image.url = signedCfUrl;
+			// } else {
+			// 	const getFileInfo = (filePath: string) => {
+			// 		let pemKey: string = '';
+			// 		return new Promise((resolve, reject) => {
+			// 			const reader = fs.createReadStream(filePath);
+			// 			reader.on('error', (error) => {
+			// 				reject('There was an error');
+			// 			});
+			// 			reader.on('data', (chunk) => {
+			// 				pemKey = chunk.toString();
+			// 				resolve(pemKey);
+			// 			});
+			// 		});
+			// 	};
 
-				const pemKey = await getFileInfo('private_key.pem');
+			// 	const pemKey = await getFileInfo('private_key.pem');
 
-				const signedCfUrl = getSignedCloudFrontUrl({
-					url: cfUrl,
-					dateLessThan: new Date(Date.now() + 1000 * 60 * 60).toString(),
-					privateKey: pemKey as string,
-					keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
-				});
+			// 	const signedCfUrl = getSignedCloudFrontUrl({
+			// 		url: cfUrl,
+			// 		dateLessThan: new Date(Date.now() + 1000 * 60 * 60).toString(),
+			// 		privateKey: pemKey as string,
+			// 		keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
+			// 	});
 
-				image.url = signedCfUrl;
+			// 	image.url = signedCfUrl;
 
-				image.url =
-					process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
-						? cfUrl
-						: signedCfUrl;
-				// image.url = cfUrl;
-			}
+			// 	image.url =
+			// 		process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+			// 			? cfUrl
+			// 			: signedCfUrl;
+			// 	// image.url = cfUrl;
+			// }
+			image.url = await getSignedCloudfrontUrl(cfUrl);
 		}
 
 		res.setHeader(
