@@ -146,10 +146,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 				keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
 			});
 
-			image.url =
-				process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
-					? cfUrl
-					: signedCfUrl;
+			image.url = signedCfUrl;
+			// image.url =
+			// 	process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+			// 		? cfUrl
+			// 		: signedCfUrl;
 			// image.url = cfUrl;
 		}
 
