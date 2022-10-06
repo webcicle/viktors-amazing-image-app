@@ -129,50 +129,38 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 				});
 
 				image.url = signedCfUrl;
-
-				res.setHeader(
-					'Cache-Control',
-					'public, s-maxage=10, stale-while-revalidate=59'
-				);
-
-				return {
-					props: {
-						images: JSON.parse(JSON.stringify(images)),
-						cookie,
-					},
+			} else {
+				const getFileInfo = (filePath: string) => {
+					let pemKey: string = '';
+					return new Promise((resolve, reject) => {
+						const reader = fs.createReadStream(filePath);
+						reader.on('error', (error) => {
+							reject('There was an error');
+						});
+						reader.on('data', (chunk) => {
+							pemKey = chunk.toString();
+							resolve(pemKey);
+						});
+					});
 				};
-			}
 
-			const getFileInfo = (filePath: string) => {
-				let pemKey: string = '';
-				return new Promise((resolve, reject) => {
-					const reader = fs.createReadStream(filePath);
-					reader.on('error', (error) => {
-						reject('There was an error');
-					});
-					reader.on('data', (chunk) => {
-						pemKey = chunk.toString();
-						resolve(pemKey);
-					});
+				const pemKey = await getFileInfo('private_key.pem');
+
+				const signedCfUrl = getSignedCloudFrontUrl({
+					url: cfUrl,
+					dateLessThan: new Date(Date.now() + 1000 * 60 * 60).toString(),
+					privateKey: pemKey as string,
+					keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
 				});
-			};
 
-			const pemKey = await getFileInfo('private_key.pem');
+				image.url = signedCfUrl;
 
-			const signedCfUrl = getSignedCloudFrontUrl({
-				url: cfUrl,
-				dateLessThan: new Date(Date.now() + 1000 * 60 * 60).toString(),
-				privateKey: pemKey as string,
-				keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
-			});
-
-			image.url = signedCfUrl;
-
-			image.url =
-				process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
-					? cfUrl
-					: signedCfUrl;
-			// image.url = cfUrl;
+				image.url =
+					process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+						? cfUrl
+						: signedCfUrl;
+				// image.url = cfUrl;
+			}
 		}
 
 		res.setHeader(
