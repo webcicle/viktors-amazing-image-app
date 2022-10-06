@@ -6,8 +6,6 @@ import Link from 'next/link';
 import { getFormatDate } from '../../lib/helpers/date';
 import { nanoIdRegex } from '../../lib/helpers/regex';
 import ImageButtons from './ImageButtons';
-import { useState } from 'react';
-import { CommentWithUserAndLikes } from '../single-image';
 
 type Props = {
 	image: ModdedImage;
@@ -57,7 +55,7 @@ export default function ImagePost({ userId, image, index }: Props) {
 					imageId={image.id}
 					userLike={image.userLike}
 					userDislike={image.userDislike}>
-					<p>{image.caption}</p>
+					<p className={styles.caption}>{image.caption}</p>
 					<div className={styles.tagContainer}>
 						{image?.tags?.map((tag) => (
 							<Link key={tag.id} href={`/tag/${tag.tagName}`}>

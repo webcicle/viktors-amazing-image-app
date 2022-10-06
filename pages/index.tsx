@@ -1,18 +1,11 @@
 import type { GetServerSideProps, NextPage } from 'next';
-import Head from 'next/head';
 import prisma from '../prisma/client';
 import styles from '../styles/Home.module.css';
 import type { ModdedImage } from './api/image';
-import { s3, envVars } from '../aws/s3';
-import { GetObjectCommand } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { Header, ImageForm, ImagePost } from '../components';
+import { ImageForm, ImagePost } from '../components';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-// import { getSignedUrl as getSignedCloudFrontUrl } from '@aws-sdk/cloudfront-signer';
 import getSignedCloudfrontUrl from '../aws/getSignedCloudfrontUrl';
-import fs from 'fs';
-import path from 'path';
 import MainLayout from '../layouts/main';
 
 interface PageProps {
@@ -47,8 +40,6 @@ const Home: NextPage<PageProps> = ({ images, cookie }) => {
 						return (
 							<ImagePost
 								userId={cookie}
-								// userLikes={}
-								// userDislikes={}
 								key={image.id}
 								index={index}
 								image={image}

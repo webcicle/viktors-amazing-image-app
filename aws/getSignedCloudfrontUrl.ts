@@ -1,4 +1,3 @@
-import React from 'react';
 import { getSignedUrl } from '@aws-sdk/cloudfront-signer';
 import fs from 'fs';
 

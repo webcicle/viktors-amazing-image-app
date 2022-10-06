@@ -17,8 +17,10 @@
 .sidebar {
 	width: 100%;
 	max-height: 500px;
-	display: grid;
-	grid-template-rows: min-content min-content 1fr;
+	/* display: grid;
+	grid-template-rows: min-content min-content min-content 1fr; */
+	display: flex;
+	flex-direction: column;
 	height: 100%;
 	background-color: var(--bg-color);
 	padding: var(--inner-padding);
@@ -27,6 +29,7 @@
 }
 
 .profileBar {
+	flex: 0 1;
 	display: flex;
 	align-items: center;
 	border-bottom: 1px solid var(--brand-color-hover);
@@ -55,7 +58,19 @@
 	font-size: 0.65em;
 }
 
+.captionContainer {
+	margin: 0;
+	padding: 0;
+	flex-shrink: 1;
+	flex-grow: 0;
+	justify-self: flex-start;
+	margin-bottom: 1rem;
+	max-height: 125px;
+	overflow-y: scroll;
+}
 .caption {
+	margin: 0;
+	padding: 0;
 	font-size: 0.7em;
 }
 
@@ -66,12 +81,13 @@
 }
 
 .tagContainer {
+	flex-shrink: 1;
+
 	display: flex;
 	flex-wrap: wrap;
 	width: 100%;
 	gap: 0.3em;
 	font-size: 0.8em;
-	margin-bottom: 0.4em;
 	max-height: 100px;
 }
 
@@ -96,11 +112,21 @@
 }
 
 .commentsContainer {
-	max-height: 100px;
+	flex-grow: 1;
+	max-height: 200px;
 	width: 100%;
 	overflow-y: scroll;
 	overflow-x: hidden;
 	margin-bottom: 0.8em;
+}
+
+.commentsContainer::-webkit-scrollbar {
+	/* width: 0px; */
+	width: 5px;
+	scrollbar-gutter: auto;
+}
+.commentsContainer::-webkit-scrollbar:hover {
+	width: 0px;
 }
 
 .imageDate {
@@ -219,10 +245,6 @@
 @media (min-width: 1200px) {
 	.commentWrapper {
 		grid-template-columns: 25px 1fr 25px;
-	}
-
-	.commentsContainer {
-		/* max-height: 30vh; */
 	}
 
 	.commentButtons {

@@ -4,6 +4,7 @@
 	/* border: 1px solid white; */
 	margin-bottom: 2.5rem;
 	border-radius: var(--border-radius-main);
+	background-color: var(--bg-color-main);
 }
 
 .profileBar {
@@ -50,6 +51,12 @@
 	margin-bottom: 0.4em;
 }
 
+.caption {
+	font-size: 0.7em;
+	max-height: 100px;
+	overflow-y: scroll;
+}
+
 .imageTag {
 	margin-block: 0;
 	margin-bottom: 0.4em;
@@ -74,11 +81,10 @@
 /* IMAGE BUTTONS */
 
 .imageButtonsMain {
-	margin-top: auto;
 	display: grid;
 	grid-template-columns: 1fr;
-	grid-template-rows: min-content 150px min-content min-content;
-	height: clamp(20%, 100%, 45%);
+	grid-template-rows: min-content 1fr min-content;
+	flex-grow: 1;
 }
 
 .buttonSeparators {
@@ -93,8 +99,8 @@
 	margin-top: 0.7em;
 	margin-bottom: auto;
 
-	flex-wrap: wrap;
 	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
 	justify-content: left;
 }
@@ -117,9 +123,15 @@
 	color: white;
 }
 
+.childrenContainer {
+	font-size: 0.75em;
+}
+
 .commentForm {
 	display: flex;
 	width: 100%;
+	justify-self: flex-end;
+	margin-top: auto;
 }
 
 .commentInput {

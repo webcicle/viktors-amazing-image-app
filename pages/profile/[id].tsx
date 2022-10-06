@@ -109,10 +109,6 @@ export const getServerSideProps: GetServerSideProps = async ({
 			image.url = await getSignedCloudfrontUrl(cfUrl);
 		}
 
-		// const uploadsWithUrls = await getSignedCfUrl(userProfile?.uploads!);
-
-		console.log({ userProfile });
-
 		const userProfileWOImages: UserOptional = { ...userProfile };
 		delete userProfileWOImages.uploads;
 		delete userProfileWOImages.password;
