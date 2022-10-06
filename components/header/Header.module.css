@@ -1,6 +1,7 @@
 .header {
 	padding: 0.3em;
 	background-color: var(--brand-color);
+	color: var(--text-color-400);
 	display: flex;
 	gap: 1rem;
 	align-items: center;

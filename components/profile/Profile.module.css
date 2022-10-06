@@ -19,19 +19,29 @@
 }
 
 .profileInput {
-	border-radius: 5px;
-	border: 0;
+	color: var(--text-color-contrast);
+	font-family: var(--main-font);
+
+	border: 2px solid var(--brand-color);
+	border-radius: var(--border-radius-main);
 	padding: 0.4em 0.3em;
 }
 
+.profileInput::placeholder {
+	color: black;
+	text-transform: capitalize;
+	font-size: 0.8em;
+}
 .profileInput:focus {
 	outline: none;
-	outline-width: 3px;
+	outline-width: 1px;
 	outline-style: solid;
-	outline-color: var(--brand-color);
+	outline-color: var(--brand-color-hover);
 }
 
 .inputLabel {
+	color: var(--text-color-contrast);
+	text-transform: capitalize;
 	font-size: 0.65em;
 	margin-bottom: 0.4em;
 }
@@ -77,6 +87,7 @@
 }
 
 .errorOutput {
+	color: var(--text-color-contrast);
 	font-size: 0.5em;
 	margin-block: 0.2em;
 	min-height: 10px;
@@ -91,6 +102,8 @@
 }
 
 .statBox {
+	color: var(--text-color-contrast);
+
 	border-block: 1px solid var(--bg-grey-400);
 	text-align: center;
 	padding-block: 0.5em;

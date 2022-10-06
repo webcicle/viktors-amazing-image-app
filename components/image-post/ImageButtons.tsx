@@ -122,7 +122,6 @@ const ImageButtons = ({
 				</div>
 			</div>
 			{children ?? ''}
-			{/* <div className={styles.childrenContainer}></div> */}
 
 			{pathname.startsWith('/image') && (
 				<form onSubmit={commentClick} className={styles.commentForm}>

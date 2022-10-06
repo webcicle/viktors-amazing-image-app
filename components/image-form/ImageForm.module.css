@@ -1,5 +1,8 @@
 .main {
 	--row-gap: 0.5em;
+	background-color: var(--brand-color);
+	border-radius: var(--border-radius-main);
+	padding: 0.5em;
 }
 
 .imageUploadForm {
@@ -7,6 +10,7 @@
 	flex-direction: column;
 	gap: var(--row-gap);
 	font-family: var(--main-font);
+	color: var(--text-color-400);
 }
 
 .fitButton {
@@ -133,12 +137,14 @@
 	padding-block: 0.5em;
 	margin-block: 0.5em;
 	width: 100%;
+	background-color: var(--brand-color-hover);
+	border: 2px solid var(--brand-color-hover);
 	font-family: var(--main-font);
-	background-color: var(--brand-color);
 	color: var(--text-color-400);
 	font-family: var(--main-font);
 }
 
 .submitBtn:hover {
-	background-color: var(--brand-color-hover);
+	background-color: var(--brand-color);
+	border: 2px solid var(--text-color-400);
 }

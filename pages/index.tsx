@@ -31,7 +31,9 @@ const Home: NextPage<PageProps> = ({ images, cookie }) => {
 
 	return (
 		<MainLayout page={'frontPage'} cookie={cookie}>
-			<h1>Viktor&apos;s amazing image app</h1>
+			<h1 style={{ color: 'var(--text-color-contrast)' }}>
+				Viktor&apos;s amazing image app
+			</h1>
 
 			<ImageForm isUploaded={isUploaded} setIsUploaded={setIsUploaded} />
 			<div className={styles.imageContainer}>

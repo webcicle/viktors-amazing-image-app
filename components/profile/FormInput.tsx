@@ -38,11 +38,7 @@ const FormInput: React.FC<InputProps> = ({
 				onChange={handleInputChange}
 				value={value}
 				id={name}
-				placeholder={
-					!isPassword && regex.test(placeholder)
-						? 'unknownuser' + placeholder.split('-').pop()
-						: placeholder
-				}
+				placeholder={`Enter your ${name}`}
 			/>
 			<p className={styles.errorOutput}>{errors.alias}</p>
 		</div>

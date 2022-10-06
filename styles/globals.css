@@ -4,11 +4,17 @@
 	--border-radius-main: 7px;
 
 	/* COLORS */
-	--text-color-400: #ede5e5;
-	--brand-color: #2b962b;
-	--brand-color-hover: #3cad3c;
+	--text-color-400: #fdfdfd;
+	--contrast-color: #1d1c1c;
+	--scrollbar-head-color: #852e28;
+	--scrollbar-head-hover: #681f1a;
+	--scrollbar-background: var(--brand-color);
+	--scrollbar-background-hover: var(--brand-color-hover);
+	--brand-color: #d89b0e;
+	--text-color-contrast: var(--contrast-color);
+	--brand-color-hover: hsl(42, 72%, 40%);
 	--bg-grey-400: #cccccc;
-	--bg-color-main: rgb(37, 46, 39);
+	--bg-color-main: var(--brand-color);
 }
 
 /* SCROLLBAR */
@@ -16,7 +22,7 @@
 /* Firefox */
 * {
 	scrollbar-width: thin;
-	scrollbar-color: #2b962b var(--bg-color-main);
+	scrollbar-color: var(--scrollbar-head-color) var(--scrollbar-background);
 	scrollbar-gutter: auto;
 }
 
@@ -24,27 +30,28 @@
 *::-webkit-scrollbar {
 	width: 5px;
 	width: 5px;
+	cursor: grab;
 }
 *::-webkit-scrollbar-track {
 	border-radius: 7px;
-	background-color: var(--bg-color-main);
+	background-color: var(--scrollbar-background);
 }
 
 *::-webkit-scrollbar-track:hover {
-	background-color: #1b1a1a;
+	background-color: var(--scrollbar-background-hover);
 }
 
 *::-webkit-scrollbar-track:active {
-	background-color: #1b1a1a;
+	background-color: var(--scrollbar-background-hover);
 }
 
 *::-webkit-scrollbar-thumb {
 	border-radius: var(--border-radius-main);
-	background-color: #2b962b;
+	background-color: var(--scrollbar-head-color);
 }
 
 *::-webkit-scrollbar-thumb:hover {
-	background-color: #3cad3c;
+	background-color: var(--scrollbar-head-color);
 }
 
 *::-webkit-scrollbar-thumb:active {
@@ -73,19 +80,30 @@ a {
 	text-decoration: none;
 }
 
+input,
+textarea {
+	background-color: white;
+	border: none;
+}
+
 * {
 	box-sizing: border-box;
 }
 
 @media (prefers-color-scheme: dark) {
 	:root {
-		--bg-color-main: rgb(31, 30, 30);
+		--brand-color: #252e27;
+		--brand-color-hover: hsl(133, 11%, 8%);
+		--text-color-400: #ede5e5;
+		--text-color-contrast: var(--text-color-400);
+		--scrollbar-head-color: #2b962b;
+		--scrollbar-head-hover: #3cad3c;
 	}
 	html {
 		color-scheme: dark;
 	}
 	body {
+		background: rgb(11, 11, 11);
 		color: white;
-		background: black;
 	}
 }

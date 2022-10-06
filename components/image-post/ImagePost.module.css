@@ -1,6 +1,8 @@
 .imagePost {
 	display: flex;
 	flex-direction: column;
+	padding: 0.4em;
+
 	/* border: 1px solid white; */
 	margin-bottom: 2.5rem;
 	border-radius: var(--border-radius-main);
@@ -13,6 +15,7 @@
 	border-bottom: 1px solid var(--brand-color-hover);
 	margin-bottom: 0.5em;
 	gap: 0.6rem;
+	color: var(--text-color-400);
 }
 
 .profileImageContainer {
@@ -55,16 +58,18 @@
 	font-size: 0.7em;
 	max-height: 100px;
 	overflow-y: scroll;
+	color: var(--text-color-400);
 }
 
 .imageTag {
 	margin-block: 0;
 	margin-bottom: 0.4em;
 	word-wrap: break-word;
+	color: var(--text-color-400);
 }
 
 .imageTag:hover {
-	color: var(--brand-color);
+	color: var(--brand-color-hover);
 }
 
 .commentLink {
@@ -74,6 +79,7 @@
 
 .imageDate {
 	font-size: 0.7em;
+	color: var(--text-color-400);
 }
 
 /* IMAGE BUTTONS */
@@ -81,6 +87,7 @@
 /* IMAGE BUTTONS */
 
 .imageButtonsMain {
+	margin-top: 0.3em;
 	display: grid;
 	grid-template-columns: 1fr;
 	grid-template-rows: min-content 1fr min-content;
@@ -108,7 +115,7 @@
 .imageButton {
 	font-size: 1.8em;
 	background-color: transparent;
-	color: white;
+	color: var(--text-color-400);
 }
 .imageButtonClicked {
 	font-size: 1.8em;
@@ -118,9 +125,6 @@
 
 .imageButton:hover {
 	color: var(--brand-color-hover);
-}
-.imageButtonClicked:hover {
-	color: white;
 }
 
 .childrenContainer {
@@ -151,8 +155,8 @@
 	border-top-right-radius: var(--border-radius-main);
 	border-bottom-left-radius: 0px;
 	border-bottom-right-radius: var(--border-radius-main);
-	background-color: var(--brand-color);
-	color: var(--bg-grey-400);
+	background-color: var(--brand-color-hover);
+	color: var(--text-color-400);
 	height: fit-content;
 	padding: 0.5em;
 }

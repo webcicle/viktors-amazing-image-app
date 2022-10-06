@@ -23,6 +23,7 @@
 }
 
 .overlay {
+	color: var(--text-color-400);
 	display: none;
 	transition: opacity 100ms ease-in;
 	opacity: 0;
@@ -52,11 +53,11 @@
 	align-items: center;
 }
 
-/* .commentsContainer {
+.commentsContainer {
 	display: flex;
-	gap: 0.2em;
+	gap: 0.4em;
 	align-items: center;
-} */
+}
 
 .ratioInfo {
 	margin: 0;
