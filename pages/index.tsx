@@ -95,17 +95,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
 	if (images) {
 		for (const image of images) {
-			// REGULAR S3 FLOW
-			// const getObjectParams = {
-			// 	Bucket: envVars.bucketName,
-			// 	Key: image.id,
-			// };
-
-			// const command = new GetObjectCommand(getObjectParams);
-			// const url = await getSignedUrl(s3, command, {
-			// 	expiresIn: 3600,
-			// });
-
 			const userLike = image?.likes?.find((like) => like.userId === cookie);
 			const userDislike = image?.dislikes?.find(
 				(dislike) => dislike.userId === cookie
@@ -114,52 +103,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 			image.userLike = userLike;
 			image.userDislike = userDislike;
 
-			const cfUrl = `https://d2d5ackrn9fpvj.cloudfront.net/${image.id}`;
+			const cfUrl = `${process.env.CF_ROOT_URL}/${image.id}`;
 
-			// if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
-			// 	const privateKey: string =
-			// 		process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!.replace(/\\n/g, '\n');
-
-			// 	const signedCfUrl = getSignedCloudFrontUrl({
-			// 		url: cfUrl,
-			// 		dateLessThan: new Date(Date.now() + 1000 * 60 * 60).toString(),
-			// 		privateKey: privateKey,
-			// 		keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
-			// 	});
-
-			// 	image.url = signedCfUrl;
-			// } else {
-			// 	const getFileInfo = (filePath: string) => {
-			// 		let pemKey: string = '';
-			// 		return new Promise((resolve, reject) => {
-			// 			const reader = fs.createReadStream(filePath);
-			// 			reader.on('error', (error) => {
-			// 				reject('There was an error');
-			// 			});
-			// 			reader.on('data', (chunk) => {
-			// 				pemKey = chunk.toString();
-			// 				resolve(pemKey);
-			// 			});
-			// 		});
-			// 	};
-
-			// 	const pemKey = await getFileInfo('private_key.pem');
-
-			// 	const signedCfUrl = getSignedCloudFrontUrl({
-			// 		url: cfUrl,
-			// 		dateLessThan: new Date(Date.now() + 1000 * 60 * 60).toString(),
-			// 		privateKey: pemKey as string,
-			// 		keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
-			// 	});
-
-			// 	image.url = signedCfUrl;
-
-			// 	image.url =
-			// 		process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
-			// 			? cfUrl
-			// 			: signedCfUrl;
-			// 	// image.url = cfUrl;
-			// }
 			image.url = await getSignedCloudfrontUrl(cfUrl);
 		}
 

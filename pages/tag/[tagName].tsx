@@ -7,6 +7,7 @@ import getSignedCfUrl, {
 } from '../../lib/apiHelpers/getSignedCfUrl';
 import { ImageDisplay } from '../../components';
 import { ProfileThumbnails } from '../profile/[id]';
+import getSignedCloudfrontUrl from '../../aws/getSignedCloudfrontUrl';
 
 type Props = {
 	images: ProfileThumbnails[];
@@ -27,6 +28,7 @@ const TagPage = ({ images, cookie }: Props) => {
 
 export const getServerSideProps: GetServerSideProps = async ({
 	req,
+	res,
 	query,
 }) => {
 	const cookie = req.cookies.vikAmazimg;
@@ -54,11 +56,20 @@ export const getServerSideProps: GetServerSideProps = async ({
 	});
 
 	if (tagImages) {
-		const imagesWithUrls = await getSignedCfUrl(tagImages?.images);
+		let images: ProfileThumbnails[] = tagImages.images;
+		for (const image of images) {
+			const cfUrl = `${process.env.CF_ROOT_URL}/${image.id}`;
+
+			image.url = await getSignedCloudfrontUrl(cfUrl);
+		}
+		res.setHeader(
+			'Cache-Control',
+			'public, s-maxage=10, stale-while-revalidate=59'
+		);
 		return {
 			props: {
 				cookie,
-				images: JSON.parse(JSON.stringify(imagesWithUrls)),
+				images: JSON.parse(JSON.stringify(images)),
 			},
 		};
 	}

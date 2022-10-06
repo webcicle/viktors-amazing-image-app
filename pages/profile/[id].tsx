@@ -1,10 +1,27 @@
 import { Follows, Image, User } from '@prisma/client';
 import { GetServerSideProps } from 'next';
 import React from 'react';
+import getSignedCloudfrontUrl from '../../aws/getSignedCloudfrontUrl';
 import { ImageDisplay, Profile } from '../../components';
 import MainLayout from '../../layouts/main';
 import getSignedCfUrl from '../../lib/apiHelpers/getSignedCfUrl';
 import prisma from '../../prisma/client';
+
+interface UserOptional {
+	id: string;
+	userName: string;
+	alias: string;
+	profileImage: string | null;
+	createdAt: Date;
+	updatedAt: Date;
+	claimed: boolean;
+	password?: string | null;
+	uploads?: {
+		id: string;
+		created: Date;
+		_count: { comments: number; dislikes: number; likes: number };
+	}[];
+}
 
 export interface ProfileThumbnails {
 	created: Date;
@@ -83,17 +100,34 @@ export const getServerSideProps: GetServerSideProps = async ({
 		},
 	});
 
-	const uploadsWithUrls = await getSignedCfUrl(userProfile?.uploads!);
+	if (userProfile) {
+		const images: ProfileThumbnails[] = userProfile?.uploads;
 
-	const userProfileWOImages = { ...userProfile };
-	delete userProfileWOImages.uploads;
-	delete userProfileWOImages.password;
+		for (const image of images) {
+			const cfUrl = `${process.env.CF_ROOT_URL}/${image.id}`;
 
+			image.url = await getSignedCloudfrontUrl(cfUrl);
+		}
+
+		// const uploadsWithUrls = await getSignedCfUrl(userProfile?.uploads!);
+
+		console.log({ userProfile });
+
+		const userProfileWOImages: UserOptional = { ...userProfile };
+		delete userProfileWOImages.uploads;
+		delete userProfileWOImages.password;
+
+		return {
+			props: {
+				cookie,
+				userProfile: JSON.parse(JSON.stringify(userProfileWOImages)),
+				uploads: JSON.parse(JSON.stringify(images)),
+			},
+		};
+	}
 	return {
 		props: {
 			cookie,
-			userProfile: JSON.parse(JSON.stringify(userProfileWOImages)),
-			uploads: JSON.parse(JSON.stringify(uploadsWithUrls)),
 		},
 	};
 };

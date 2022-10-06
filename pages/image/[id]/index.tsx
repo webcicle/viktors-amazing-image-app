@@ -5,6 +5,7 @@ import MainLayout from '../../../layouts/main';
 import { SingleImage } from '../../../components';
 import { ModdedImage } from '../../api/image';
 import { Dislike, Like } from '@prisma/client';
+import getSignedCloudfrontUrl from '../../../aws/getSignedCloudfrontUrl';
 
 type Props = {
 	image: ModdedImage;
@@ -30,6 +31,7 @@ const ImagePage = ({ image, cookie, userLike, userDislike }: Props) => {
 
 export const getServerSideProps: GetServerSideProps = async ({
 	req,
+	res,
 	query,
 }) => {
 	const cookie = req.cookies.vikAmazimg;
@@ -67,14 +69,19 @@ export const getServerSideProps: GetServerSideProps = async ({
 			(dislike) => dislike.userId === cookie
 		);
 
-		const urls = await getSignedCfUrl([
-			{ id: image?.id, created: image?.created },
-		]);
+		const cfUrl = `${process.env.CF_ROOT_URL}/${image.id}`;
+
+		const url = await getSignedCloudfrontUrl(cfUrl);
 
 		const imageWithUrl = {
 			...image,
-			url: urls[0].url,
+			url,
 		};
+
+		res.setHeader(
+			'Cache-Control',
+			'public, s-maxage=10, stale-while-revalidate=59'
+		);
 
 		return {
 			props: {
