@@ -115,8 +115,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
 			const cfUrl = `https://d2d5ackrn9fpvj.cloudfront.net/${image.id}`;
 
-			image.url = cfUrl;
-
 			if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
 				const privateKey: string =
 					process.env.PUBLIC_CLOUDFRONT_PRIVATE_KEY!.replace(/\\n/g, '\n');
