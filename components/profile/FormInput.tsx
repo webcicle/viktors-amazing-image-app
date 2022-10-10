@@ -1,5 +1,4 @@
-import React, { ChangeEvent, useImperativeHandle } from 'react';
-import { UserWithFollowerCounts } from '../../pages/profile/[id]';
+import React, { ChangeEvent } from 'react';
 import styles from './Profile.module.css';
 
 interface InputProps {

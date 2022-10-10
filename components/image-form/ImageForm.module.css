@@ -65,16 +65,17 @@
 	flex-wrap: wrap;
 	justify-content: space-between;
 	min-height: 35px;
+	border-radius: var(--border-radius-main);
+	overflow: hidden;
 }
 
 .tagsContainer {
 	display: flex;
+	flex-grow: 1;
 	flex-wrap: wrap;
 	gap: 0.4em;
 	background-color: white;
 	padding: 0.4em 0.2em;
-	border-top-left-radius: var(--border-radius-main);
-	border-top-right-radius: var(--border-radius-main);
 }
 
 .tagWrapper {
@@ -120,17 +121,16 @@
 	border: none;
 	font-size: 75%;
 	font-family: var(--main-font);
-	border-bottom-left-radius: var(--border-radius-main);
-	border-bottom-right-radius: var(--border-radius-main);
+	padding: 0.6em;
 	color: black;
 }
 
 .tagInput:focus {
 	outline: none;
 }
+
 .tags:focus-within {
 	outline: 2px solid var(--brand-color);
-	border-radius: var(--border-radius-main);
 }
 
 .submitBtn {

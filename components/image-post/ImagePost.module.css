@@ -46,11 +46,11 @@
 }
 
 .tagContainer {
-	/* display: flex;
-	flex-wrap: wrap; */
-	display: grid;
+	display: flex;
+	flex-wrap: wrap;
+	/* display: grid;
 	grid-auto-flow: column;
-	overflow-x: hidden;
+	overflow-x: hidden; */
 	width: 100%;
 	gap: 0.3em;
 	font-size: 0.8em;

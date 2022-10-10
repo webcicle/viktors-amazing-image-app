@@ -101,41 +101,26 @@ const TagInput = ({ tags, setTags }: Props) => {
 
 	const isMobile = useMediaQuery(500, false);
 
-	const tagsContainerDynamicStyles = {
-		flexGrow: inputHalfFull || isMobile ? '1' : '0',
-		borderBottomLeftRadius: inputHalfEmpty || isMobile ? '0' : '5px',
-		borderTopLeftRadius: '5px',
-		borderTopRightRadius: !inputHalfEmpty ? '0px' : '5px',
-	};
-
-	const tagsInputDynamicStyles = {
-		borderBottomLeftRadius: !inputHalfEmpty || !isMobile ? '0px' : '5px',
-		borderTopRightRadius: !inputHalfEmpty || isMobile ? '5px' : '0px',
-		borderBottomRightRadius: '5px',
-	};
-
 	return (
 		<div className={styles.tags}>
-			<div
-				ref={containerRef}
-				className={styles.tagsContainer}
-				style={tagsContainerDynamicStyles}>
-				{tags?.map((tag) => (
-					<div key={tag.id} className={styles.tagWrapper}>
-						<p className={styles.tag}>#{tag.tagName}</p>
-						<button
-							type='button'
-							onClick={(_) => removeTag(tag.id)}
-							className={styles.deleteTag}>
-							<AiOutlineCloseCircle />
-						</button>
-					</div>
-				))}
-			</div>
+			{tags.length > 0 && (
+				<div ref={containerRef} className={styles.tagsContainer}>
+					{tags?.map((tag) => (
+						<div key={tag.id} className={styles.tagWrapper}>
+							<p className={styles.tag}>#{tag.tagName}</p>
+							<button
+								type='button'
+								onClick={(_) => removeTag(tag.id)}
+								className={styles.deleteTag}>
+								<AiOutlineCloseCircle />
+							</button>
+						</div>
+					))}
+				</div>
+			)}
 			<input
 				type='text'
 				name='tag'
-				style={tagsInputDynamicStyles}
 				value={newTag}
 				className={styles.tagInput}
 				placeholder='Enter the hashtags for your image'
