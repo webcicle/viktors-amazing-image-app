@@ -93,11 +93,6 @@ const ImageButtons = ({
 								? () => createLike({ userId, imageId, type: 'image' })
 								: () => deleteLike()
 						}
-						onTouchEnd={
-							liked === false
-								? () => createLike({ userId, imageId, type: 'image' })
-								: () => deleteLike()
-						}
 						className={liked ? styles.imageButtonClicked : styles.imageButton}>
 						<AiFillLike />
 					</button>
@@ -109,19 +104,11 @@ const ImageButtons = ({
 							disliked === false
 								? () => createDislike({ userId, imageId, type: 'image' })
 								: () => deleteDislike()
-						}
-						onTouchEnd={
-							disliked === false
-								? () => createDislike({ userId, imageId, type: 'image' })
-								: () => deleteDislike()
 						}>
 						<AiFillDislike />
 					</button>
 
-					<button
-						onClick={focusComment}
-						onTouchEnd={focusComment}
-						className={styles.imageButton}>
+					<button onClick={focusComment} className={styles.imageButton}>
 						<FaRegComment />
 					</button>
 				</div>

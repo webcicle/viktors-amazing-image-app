@@ -116,7 +116,6 @@ const ImageForm: React.FC<Props> = ({ isUploaded, setIsUploaded }) => {
 				<button
 					type='button'
 					onClick={clearForm}
-					onTouchEnd={clearForm}
 					className={styles.submitBtn}
 					disabled={!isUploaded}>
 					Upload another picture
@@ -136,10 +135,7 @@ const ImageForm: React.FC<Props> = ({ isUploaded, setIsUploaded }) => {
 									objectFit={previewFit}
 								/>
 							</div>
-							<button
-								className={styles.fitButton}
-								onClick={changeObjectFit}
-								onTouchEnd={changeObjectFit}>
+							<button className={styles.fitButton} onClick={changeObjectFit}>
 								{previewFit === 'cover' ? 'Fit in frame' : 'Cover frame'}
 							</button>
 						</>
