@@ -22,10 +22,6 @@
 	color: var(--text-color-400);
 }
 
-.fitButton:hover {
-	background-color: var(--brand-color-hover);
-}
-
 .inputLabel {
 	display: block;
 	margin-bottom: 0.4em;
@@ -110,10 +106,6 @@
 	display: none;
 }
 
-.tagWrapper:hover .deleteTag {
-	display: block;
-}
-
 .tagInput {
 	flex-grow: 10;
 	flex-shrink: 1;
@@ -144,7 +136,15 @@
 	font-family: var(--main-font);
 }
 
-.submitBtn:hover {
-	background-color: var(--brand-color);
-	border: 2px solid var(--text-color-400);
+@media (min-height: 1200px) {
+	.tagWrapper:hover .deleteTag {
+		display: block;
+	}
+	.submitBtn:hover {
+		background-color: var(--brand-color);
+		border: 2px solid var(--text-color-400);
+	}
+	.fitButton:hover {
+		background-color: var(--brand-color-hover);
+	}
 }

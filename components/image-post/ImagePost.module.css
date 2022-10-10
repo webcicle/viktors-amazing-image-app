@@ -48,9 +48,6 @@
 .tagContainer {
 	display: flex;
 	flex-wrap: wrap;
-	/* display: grid;
-	grid-auto-flow: column;
-	overflow-x: hidden; */
 	width: 100%;
 	gap: 0.3em;
 	font-size: 0.8em;
@@ -69,10 +66,6 @@
 	margin-bottom: 0.4em;
 	word-wrap: break-word;
 	color: var(--text-color-400);
-}
-
-.imageTag:hover {
-	color: var(--brand-color-hover);
 }
 
 .commentLink {
@@ -126,10 +119,6 @@
 	color: var(--brand-color-hover);
 }
 
-.imageButton:hover {
-	color: var(--brand-color-hover);
-}
-
 .childrenContainer {
 	font-size: 0.75em;
 }
@@ -164,10 +153,6 @@
 	padding: 0.5em;
 }
 
-.submitCommentButton:hover {
-	background-color: var(--brand-color-hover);
-}
-
 @media (min-width: 700px) {
 	.imagePost {
 		border: 1px solid white;
@@ -175,5 +160,17 @@
 	}
 	.imageButtonMain {
 		height: clamp(200px, 350px, 370px);
+	}
+}
+
+@media (min-width: 1200px) {
+	.imageButton:hover {
+		color: var(--brand-color-hover);
+	}
+	.submitCommentButton:hover {
+		background-color: var(--brand-color-hover);
+	}
+	.imageTag:hover {
+		color: var(--brand-color-hover);
 	}
 }

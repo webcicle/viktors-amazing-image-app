@@ -60,8 +60,6 @@ const UpdateForm = ({
 			return 'Update your user profile';
 	};
 
-	console.log({ isClaimProfile });
-
 	const regex =
 		/[a-zA-Z0-9]{8}\b-[a-zA-Z0-9]{4}\b-[a-zA-Z0-9]{4}\b-[a-zA-Z0-9]{4}\b-[a-zA-Z0-9]{12}/;
 
@@ -116,7 +114,9 @@ const UpdateForm = ({
 		display: isClaimProfile && !isMobile ? 'flex' : 'block',
 		gap: '0.3em',
 	};
-	const isFollowing = updatedUserProfile?.id === cookie;
+
+	const isFollowing = {};
+	const isOwnProfile = updatedUserProfile?.id === cookie;
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.currentTarget;
@@ -125,6 +125,8 @@ const UpdateForm = ({
 		if (name === 'passwordTwo') return setPasswordTwo(value);
 		return setAlias(value);
 	};
+
+	const clickToFollowUser = () => {};
 
 	useEffect(() => {
 		if (uploadSuccess === true) {
@@ -203,15 +205,18 @@ const UpdateForm = ({
 				</div>
 				{!isClaimProfile && (
 					<div className={styles.profileButtons}>
-						{isFollowing ? (
+						{isOwnProfile ? (
 							<button
 								type='button'
-								disabled={isFollowing as boolean}
+								disabled={isOwnProfile as boolean}
 								className={styles.followBtn}>
 								Follow <ImCheckmark2 />
 							</button>
 						) : (
-							<button type='button' className={styles.followBtn}>
+							<button
+								type='button'
+								onClick={clickToFollowUser}
+								className={styles.followBtn}>
 								Follow
 							</button>
 						)}
@@ -260,10 +265,10 @@ const UpdateForm = ({
 			</div>
 			{isClaimProfile && (
 				<div className={styles.profileButtons}>
-					{isFollowing ? (
+					{isOwnProfile ? (
 						<button
 							type='button'
-							disabled={isFollowing as boolean}
+							disabled={isOwnProfile as boolean}
 							className={styles.followBtn}>
 							Follow <ImCheckmark2 />
 						</button>
