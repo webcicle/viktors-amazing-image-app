@@ -14,12 +14,19 @@ import useMediaQuery from '../../hooks/useMediaQuery';
 import { UserWithFollowerCounts } from '../../pages/profile/[id]';
 import styles from './Profile.module.css';
 import FormInput from './FormInput';
+import { Follows } from '@prisma/client';
+
+interface UserWithFollowersAndCount extends UserWithFollowerCounts {
+	followers: Follows[];
+}
 
 type Props = {
 	setIsLoading: Dispatch<SetStateAction<boolean>>;
 	setIsSuccess: Dispatch<SetStateAction<boolean>>;
 	cookie: string;
-	updatedUserProfile: { [key: string]: string } | UserWithFollowerCounts;
+	updatedUserProfile:
+		| { [key: string]: string & { [key: string]: Follows[] } }
+		| UserWithFollowerCounts;
 	setUpdatedUserProfile: Dispatch<SetStateAction<UserWithFollowerCounts>>;
 	id: string;
 };
@@ -34,6 +41,10 @@ const UpdateForm = ({
 	setUpdatedUserProfile,
 	id,
 }: Props) => {
+	const followers = updatedUserProfile.followers as Follows[];
+	const getIsFollowing =
+		followers.filter((f) => f.followerId === cookie).length > 0 ? true : false;
+	const [isFollowing, setIsFollowing] = useState<boolean>(getIsFollowing);
 	const [isClaimProfile, setIsClaimProfile] = useState<boolean>(false);
 	const [alias, setAlias] = useState<string>('');
 	const [username, setUsername] = useState<string>('');
@@ -46,6 +57,8 @@ const UpdateForm = ({
 		password: '',
 		passwordTwo: '',
 	});
+
+	console.log(updatedUserProfile);
 
 	const unRef = useRef<HTMLInputElement | null>(null);
 	const aliRef = useRef<HTMLInputElement | null>(null);
@@ -115,8 +128,8 @@ const UpdateForm = ({
 		gap: '0.3em',
 	};
 
-	const isFollowing = {};
 	const isOwnProfile = updatedUserProfile?.id === cookie;
+	console.log(isFollowing);
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.currentTarget;
@@ -126,7 +139,29 @@ const UpdateForm = ({
 		return setAlias(value);
 	};
 
-	const clickToFollowUser = () => {};
+	const clickToFollowUser = async () => {
+		if (isFollowing) {
+			try {
+				setIsFollowing(false);
+				const unfollow = await axios.put('/api/follow', {
+					followerId: cookie,
+					followingId: updatedUserProfile.id,
+				});
+				if (unfollow.status !== 204) return setIsFollowing(true);
+				return;
+			} catch (error) {
+				return console.error(error);
+			}
+		}
+		try {
+			setIsFollowing(true);
+			const follow = await axios.post('/api/follow', {
+				followerId: cookie,
+				followingId: updatedUserProfile.id,
+			});
+			if (follow.status !== 201) return setIsFollowing(false);
+		} catch (error) {}
+	};
 
 	useEffect(() => {
 		if (uploadSuccess === true) {
@@ -217,7 +252,7 @@ const UpdateForm = ({
 								type='button'
 								onClick={clickToFollowUser}
 								className={styles.followBtn}>
-								Follow
+								{isFollowing ? 'Unfollow' : 'Follow'}
 							</button>
 						)}
 						{id === cookie && (

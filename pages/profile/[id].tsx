@@ -40,6 +40,7 @@ export interface UserWithFollowerCounts {
 	userName: string;
 	_count: { followers: number; following: number; uploads: number };
 	password?: string | null;
+	followers?: Follows[];
 }
 
 type Props = {
@@ -82,6 +83,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 					uploads: true,
 				},
 			},
+			followers: true,
 			uploads: {
 				select: {
 					created: true,
