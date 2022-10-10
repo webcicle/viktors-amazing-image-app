@@ -43,38 +43,6 @@ const FormInput = React.forwardRef<HTMLInputElement, InputProps>(
 	}
 );
 
-// const FormInput: React.FC<InputProps> = ({
-// 	errors,
-// 	value,
-// 	type,
-// 	handleInputChange,
-// 	name,
-// 	updatedUserProfile,
-// }) => {
-// 	const placeholder = updatedUserProfile[name];
-
-// 	const isPassword = name === 'password' || name === 'passwordTwo';
-
-// 	const regex =
-// 		/[a-zA-Z0-9]{8}\b-[a-zA-Z0-9]{4}\b-[a-zA-Z0-9]{4}\b-[a-zA-Z0-9]{4}\b-[a-zA-Z0-9]{12}/;
-
-// 	return (
-// 		<div className={styles.inputContainer}>
-// 			<label className={styles.inputLabel} htmlFor={name}>
-// 				{name}
-// 			</label>
-// 			<input
-// 				className={styles.profileInput}
-// 				name={name}
-// 				type={type}
-// 				onChange={handleInputChange}
-// 				value={value}
-// 				id={name}
-// 				placeholder={`Enter your ${name}`}
-// 			/>
-// 			<p className={styles.errorOutput}>{errors.alias}</p>
-// 		</div>
-// 	);
-// };
+FormInput.displayName = 'FormInput';
 
 export default FormInput;

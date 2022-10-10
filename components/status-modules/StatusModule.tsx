@@ -13,8 +13,8 @@ type Props = {
 function StatusModule({ type, minHeight, minWidth, setStatus }: Props) {
 	const dynamicStyles = {
 		backgroundColor: type === 'loading' ? 'var(--bg-gray-400)' : 'limegreen',
-		minHeight: minHeight,
-		minWidth: minWidth,
+		// minHeight: minHeight,
+		// minWidth: minWidth,
 	};
 
 	return (

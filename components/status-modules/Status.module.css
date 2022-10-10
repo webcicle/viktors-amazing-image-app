@@ -1,5 +1,7 @@
 .wrapper {
 	display: grid;
+	max-width: 100%;
+	padding-block: 8rem;
 	place-items: center;
 	border-radius: var(--border-radius-main);
 }
