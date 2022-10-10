@@ -6,6 +6,8 @@ import {
 	FormEvent,
 	SetStateAction,
 	useEffect,
+	useImperativeHandle,
+	useRef,
 	useState,
 } from 'react';
 import useMediaQuery from '../../hooks/useMediaQuery';
@@ -44,6 +46,19 @@ const UpdateForm = ({
 		password: '',
 		passwordTwo: '',
 	});
+
+	const unRef = useRef<HTMLInputElement | null>(null);
+	const aliRef = useRef<HTMLInputElement | null>(null);
+	const pwRef = useRef<HTMLInputElement | null>(null);
+	const pw2Ref = useRef<HTMLInputElement | null>(null);
+
+	const getClaimButtonFace = () => {
+		if (isClaimProfile) return 'Cancel';
+		if (!isClaimProfile && !updatedUserProfile.claimed)
+			return 'Claim your user profile!';
+		if (!isClaimProfile && updatedUserProfile.claimed)
+			return 'Update your user profile';
+	};
 
 	console.log({ isClaimProfile });
 
@@ -132,12 +147,22 @@ const UpdateForm = ({
 		}
 	}, [uploadSuccess]);
 
+	// useEffect(() => {
+	//    if(isClaimProfile) {
+	//       unRef?.current?.value =
+	// 				aliRef.current =
+	// 				pwRef?.current?.value =
+	// 				pw2Ref?.current?.value =
+	//    }
+	// }, [isClaimProfile])
+
 	return (
 		<form onSubmit={(e) => claimUserProfile(e)} className={styles.profileInfo}>
 			<div className={styles.topInfo} style={topInfoDynamicStyles}>
 				<div style={infoRows}>
 					{isClaimProfile ? (
 						<FormInput
+							ref={unRef}
 							errors={errors}
 							type={'text'}
 							value={alias}
@@ -156,6 +181,7 @@ const UpdateForm = ({
 					)}
 					{isClaimProfile ? (
 						<FormInput
+							ref={aliRef}
 							errors={errors}
 							type={'text'}
 							value={username}
@@ -194,7 +220,7 @@ const UpdateForm = ({
 								type='button'
 								onClick={(e) => setIsClaimProfile((prev) => !prev)}
 								className={styles.claimProfile}>
-								{isClaimProfile ? 'Cancel' : 'Claim your username!'}
+								{getClaimButtonFace()}
 							</button>
 						)}
 						{isClaimProfile && (
@@ -207,6 +233,7 @@ const UpdateForm = ({
 				{isClaimProfile && (
 					<div style={infoRows}>
 						<FormInput
+							ref={pwRef}
 							type={'password'}
 							errors={errors}
 							value={password}
@@ -218,6 +245,7 @@ const UpdateForm = ({
 						/>
 
 						<FormInput
+							ref={pw2Ref}
 							type={'password'}
 							errors={errors}
 							value={passwordTwo}
@@ -249,12 +277,12 @@ const UpdateForm = ({
 							type='button'
 							onClick={(e) => setIsClaimProfile((prev) => !prev)}
 							className={styles.claimProfile}>
-							{isClaimProfile ? 'Cancel' : 'Claim your username!'}
+							{getClaimButtonFace()}
 						</button>
 					)}
 					{isClaimProfile && (
 						<button type='submit' className={styles.claimProfile}>
-							Claim
+							{updatedUserProfile.claimed ? 'Update' : 'Claim'}
 						</button>
 					)}
 				</div>

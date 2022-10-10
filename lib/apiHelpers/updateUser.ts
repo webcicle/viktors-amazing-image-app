@@ -79,6 +79,7 @@ export default async function updateUser(
 				userName: data.userName,
 				alias: data.alias,
 				password: hash,
+				claimed: true,
 			},
 			include: {
 				_count: {

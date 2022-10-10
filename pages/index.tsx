@@ -17,8 +17,6 @@ const Home: NextPage<PageProps> = ({ images, cookie }) => {
 	const [isUploaded, setIsUploaded] = useState<boolean>(false);
 	const [updatedImages, setUpdatedImages] = useState<ModdedImage[]>(images);
 
-	console.log(images);
-
 	useEffect(() => {
 		if (isUploaded === true) {
 			axios
