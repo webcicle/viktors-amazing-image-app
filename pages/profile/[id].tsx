@@ -4,7 +4,6 @@ import React from 'react';
 import getSignedCloudfrontUrl from '../../aws/getSignedCloudfrontUrl';
 import { ImageDisplay, Profile } from '../../components';
 import MainLayout from '../../layouts/main';
-import getSignedCfUrl from '../../lib/apiHelpers/getSignedCfUrl';
 import prisma from '../../prisma/client';
 
 interface UserOptional {
@@ -50,8 +49,6 @@ type Props = {
 };
 
 const ProfilePage: React.FC<Props> = ({ userProfile, uploads, cookie }) => {
-	console.log(userProfile);
-
 	return (
 		<MainLayout cookie={cookie}>
 			<Profile userProfile={userProfile} cookie={cookie} />

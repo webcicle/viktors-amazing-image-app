@@ -15,6 +15,7 @@ import { UserWithFollowerCounts } from '../../pages/profile/[id]';
 import styles from './Profile.module.css';
 import FormInput from './FormInput';
 import { Follows } from '@prisma/client';
+import Router from 'next/router';
 
 interface UserWithFollowersAndCount extends UserWithFollowerCounts {
 	followers: Follows[];
@@ -41,10 +42,6 @@ const UpdateForm = ({
 	setUpdatedUserProfile,
 	id,
 }: Props) => {
-	const followers = updatedUserProfile.followers as Follows[];
-	const getIsFollowing =
-		followers.filter((f) => f.followerId === cookie).length > 0 ? true : false;
-	const [isFollowing, setIsFollowing] = useState<boolean>(getIsFollowing);
 	const [isClaimProfile, setIsClaimProfile] = useState<boolean>(false);
 	const [alias, setAlias] = useState<string>('');
 	const [username, setUsername] = useState<string>('');
@@ -55,10 +52,13 @@ const UpdateForm = ({
 		userName: '',
 		alias: '',
 		password: '',
-		passwordTwo: '',
+		passwordConfirm: '',
 	});
 
-	console.log(updatedUserProfile);
+	const followers = updatedUserProfile.followers as Follows[];
+	const getIsFollowing =
+		followers?.filter((f) => f.followerId === cookie).length > 0 ? true : false;
+	const [isFollowing, setIsFollowing] = useState<boolean>(getIsFollowing);
 
 	const unRef = useRef<HTMLInputElement | null>(null);
 	const aliRef = useRef<HTMLInputElement | null>(null);
@@ -87,22 +87,25 @@ const UpdateForm = ({
 		try {
 			setIsLoading(true);
 			const updateRes = await axios.put('/api/user', data);
-			console.log(updateRes);
 
 			if (updateRes.data.success === false && updateRes.data.error) {
 				setIsLoading(false);
-				console.log('error');
-
+				console.log('error', updateRes);
+				setErrors({
+					userName: '',
+					alias: '',
+					password: '',
+					passwordConfirm: '',
+				});
 				updateRes.data.error.issues.forEach(
-					(err: typeof updateRes.data.error[0]) => {
-						console.log(err);
-
+					(err: typeof updateRes.data.error.issues[0]) => {
 						setErrors((prev) => ({ ...prev, [err.path[0]]: err.message }));
 						return;
 					}
 				);
 				return;
 			}
+
 			setIsLoading(false);
 			setIsSuccess(true);
 
@@ -110,10 +113,10 @@ const UpdateForm = ({
 			setUpdatedUserProfile(
 				updateRes.data.updatedUser as UserWithFollowerCounts
 			);
+			Router.reload();
 			return;
 		} catch (error) {
 			if (error) {
-				console.log(error);
 			}
 		}
 	};
@@ -129,13 +132,12 @@ const UpdateForm = ({
 	};
 
 	const isOwnProfile = updatedUserProfile?.id === cookie;
-	console.log(isFollowing);
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.currentTarget;
-		if (name === 'username') return setUsername(value);
+		if (name === 'userName') return setUsername(value);
 		if (name === 'password') return setPassword(value);
-		if (name === 'passwordTwo') return setPasswordTwo(value);
+		if (name === 'passwordConfirm') return setPasswordTwo(value);
 		return setAlias(value);
 	};
 
@@ -184,15 +186,6 @@ const UpdateForm = ({
 		}
 	}, [uploadSuccess]);
 
-	// useEffect(() => {
-	//    if(isClaimProfile) {
-	//       unRef?.current?.value =
-	// 				aliRef.current =
-	// 				pwRef?.current?.value =
-	// 				pw2Ref?.current?.value =
-	//    }
-	// }, [isClaimProfile])
-
 	return (
 		<form onSubmit={(e) => claimUserProfile(e)} className={styles.profileInfo}>
 			<div className={styles.topInfo} style={topInfoDynamicStyles}>
@@ -223,7 +216,7 @@ const UpdateForm = ({
 							type={'text'}
 							value={username}
 							handleInputChange={handleInputChange}
-							name={'username'}
+							name={'userName'}
 							updatedUserProfile={
 								updatedUserProfile as { [key: string]: string }
 							}
@@ -290,7 +283,7 @@ const UpdateForm = ({
 							errors={errors}
 							value={passwordTwo}
 							handleInputChange={handleInputChange}
-							name={'passwordTwo'}
+							name={'passwordConfirm'}
 							updatedUserProfile={
 								updatedUserProfile as { [key: string]: string }
 							}

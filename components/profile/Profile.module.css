@@ -13,6 +13,7 @@
 	gap: 2rem;
 
 	min-height: 285px;
+	color: var(--text-color-contrast);
 }
 
 .inputContainer {
@@ -20,8 +21,12 @@
 	flex-direction: column;
 }
 
+.claimProfile {
+	padding: 0.2em 0.75em;
+}
+
 .profileInput {
-	color: var(--text-color-contrast);
+	color: black;
 	font-family: var(--main-font);
 
 	border: 2px solid var(--brand-color);

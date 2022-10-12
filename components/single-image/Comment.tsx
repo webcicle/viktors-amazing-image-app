@@ -34,14 +34,7 @@ const CommentComponent = ({ comment, loggedInUser }: Props) => {
 		disliked,
 	] = useLikeDislike({ userHasLiked, userHasDisliked, userLike, userDislike });
 
-	console.log({
-		liked,
-		disliked,
-		userLike,
-		userDislike,
-		userHasLiked,
-		userHasDisliked,
-	});
+	console.log({ liked, disliked });
 
 	return (
 		<div className={styles.commentWrapper}>

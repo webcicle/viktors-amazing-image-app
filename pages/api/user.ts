@@ -35,6 +35,8 @@ export default async function handler(
 				cookie: cookies.vikAmazimg,
 			});
 
+			console.log(updatedUser);
+
 			res.status(200).send(updatedUser);
 			break;
 		}
