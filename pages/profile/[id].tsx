@@ -42,6 +42,7 @@ export interface UserWithFollowerCounts {
 	profileImage: string | null;
 	userName: string;
 	_count: { followers: number; following: number; uploads: number };
+	password?: string;
 	followers?: Follows[];
 }
 
