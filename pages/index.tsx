@@ -99,11 +99,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 			image.url = await getSignedCloudfrontUrl(cfUrl);
 		}
 
-		res.setHeader(
-			'Cache-Control',
-			'public, s-maxage=10, stale-while-revalidate=59'
-		);
-
 		return {
 			props: {
 				images: JSON.parse(JSON.stringify(images)),

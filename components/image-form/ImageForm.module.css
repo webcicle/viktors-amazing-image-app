@@ -117,6 +117,7 @@
 	font-family: var(--main-font);
 	padding: 0.6em;
 	color: black;
+	border-radius: 0px;
 }
 
 .tagInput:focus {
