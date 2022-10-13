@@ -27,6 +27,7 @@
 	margin-bottom: 0.4em;
 	font-size: 0.9em;
 	font-family: var(--main-font);
+	color: var(--text-color-contrast);
 }
 
 .inputElement {
@@ -53,6 +54,7 @@
 	padding: 0.3em;
 	font-family: var(--main-font);
 	border-radius: var(--border-radius-main);
+	color: black;
 }
 
 .tags {

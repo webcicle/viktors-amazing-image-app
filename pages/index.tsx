@@ -113,7 +113,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 	}
 	return {
 		props: {
-			cookie,
+			cookie: cookie ?? null,
 		},
 	};
 };

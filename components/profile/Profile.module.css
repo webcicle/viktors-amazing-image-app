@@ -1,24 +1,28 @@
-.profile {
-	padding: 1.4rem;
+.profileMain {
+	min-height: 22.125rem;
+
+	display: grid;
+	grid-template-columns: 50px 1fr;
+	column-gap: 1rem;
+	grid-template-rows: repeat(3, min-content);
 }
 
-.topBit {
-	display: flex;
-	gap: 1rem;
+.inputRow {
+	max-width: 80%;
 }
 
-.profileDetails {
-	display: flex;
-	flex-direction: column;
-	gap: 2rem;
-
-	min-height: 285px;
-	color: var(--text-color-contrast);
-}
+/* ProfileInput */
 
 .inputContainer {
 	display: flex;
 	flex-direction: column;
+}
+
+.inputLabel {
+	color: var(--text-color-contrast);
+	text-transform: capitalize;
+	font-size: 0.65em;
+	margin-bottom: 0.4em;
 }
 
 .claimProfile {
@@ -46,11 +50,11 @@
 	outline-color: var(--brand-color-hover);
 }
 
-.inputLabel {
+.errorOutput {
 	color: var(--text-color-contrast);
-	text-transform: capitalize;
-	font-size: 0.65em;
-	margin-bottom: 0.4em;
+	font-size: 0.5em;
+	margin-block: 0.2em;
+	min-height: 10px;
 }
 
 .profileImgContainer {
@@ -61,19 +65,22 @@
 	aspect-ratio: 1/1;
 }
 
-.profileInfo {
-	display: flex;
-	flex-direction: column;
-	gap: 0.3em;
+/* UPDATE FORM */
+
+.formContainer {
+	min-height: 0rem;
+	transition: min-height 200ms linear;
 }
 
-.topInfo {
+.formContainer[data-height='true'] {
+	min-height: 15.9375rem;
+}
+
+.updateProfileForm {
+	grid-column: 2/3;
 	display: flex;
 	flex-direction: column;
 	gap: 0.3em;
-	min-height: 0px;
-	transition: min-height 300ms ease-in;
-	width: fit-content;
 }
 
 .profileName {
@@ -88,24 +95,20 @@
 	font-family: var(--main-font);
 }
 
+/* ProfileButtons */
+
 .profileButtons {
+	grid-column: 2/3;
 	display: flex;
 	gap: 0.3em;
+	margin-block: 0.5em;
 }
-
-.errorOutput {
-	color: var(--text-color-contrast);
-	font-size: 0.5em;
-	margin-block: 0.2em;
-	min-height: 10px;
-}
-
 .statBoxes {
+	grid-column: 2/3;
+
 	display: flex;
 	gap: 0.4em;
 	width: 100%;
-	margin-top: 0.8em;
-	margin-left: 65px;
 }
 
 .statBox {
@@ -127,12 +130,21 @@
 	margin-bottom: 0.5em;
 }
 
-@media (max-width: 560px) {
-	.profileDetails {
-		flex-direction: column;
+@media (min-width: 560px) {
+	.profileMain {
+		min-height: 14.375rem;
 	}
+	.inputRow {
+		max-width: 50%;
+		display: flex;
+	}
+	.formContainer[data-height='true'] {
+		min-height: 8.125rem;
+	}
+}
 
-	.statBoxes {
-		margin-left: 50px;
+@media (min-width: 1200px) {
+	.updateProfileForm {
+		flex-direction: row;
 	}
 }

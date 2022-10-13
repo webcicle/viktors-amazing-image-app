@@ -5,6 +5,10 @@ import getSignedCloudfrontUrl from '../../aws/getSignedCloudfrontUrl';
 import { ImageDisplay, Profile } from '../../components';
 import MainLayout from '../../layouts/main';
 import prisma from '../../prisma/client';
+import ProfileContextProvider, {
+	FormContextProps,
+	ProfileContext,
+} from '../../components/profile/formContext';
 
 interface UserOptional {
 	id: string;
@@ -38,7 +42,6 @@ export interface UserWithFollowerCounts {
 	profileImage: string | null;
 	userName: string;
 	_count: { followers: number; following: number; uploads: number };
-	password?: string | null;
 	followers?: Follows[];
 }
 
@@ -50,10 +53,12 @@ type Props = {
 
 const ProfilePage: React.FC<Props> = ({ userProfile, uploads, cookie }) => {
 	return (
-		<MainLayout cookie={cookie}>
-			<Profile userProfile={userProfile} cookie={cookie} />
-			<ImageDisplay feedName={'Your uploads'} images={uploads} />
-		</MainLayout>
+		<ProfileContextProvider>
+			<MainLayout cookie={cookie}>
+				<Profile userProfile={userProfile} cookie={cookie} />
+				<ImageDisplay feedName={'Your uploads'} images={uploads} />
+			</MainLayout>
+		</ProfileContextProvider>
 	);
 };
 
