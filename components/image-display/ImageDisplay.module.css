@@ -15,6 +15,7 @@
 .thumbnailContainer {
 	width: 100%;
 	position: relative;
+	cursor: pointer;
 }
 
 .thumbnailContainer:hover .overlay {

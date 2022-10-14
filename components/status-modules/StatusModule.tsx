@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { ImSpinner6 } from 'react-icons/im';
 import { FaCheckCircle } from 'react-icons/fa';
 import styles from './Status.module.css';
