@@ -52,7 +52,7 @@ type Props = {
 const ProfilePage: React.FC<Props> = ({ userProfile, uploads, cookie }) => {
 	return (
 		<ProfileContextProvider>
-			<MainLayout cookie={cookie}>
+			<MainLayout page={'frontPage'} cookie={cookie}>
 				<Profile userProfile={userProfile} cookie={cookie} />
 				<ImageDisplay feedName={'Your uploads'} images={uploads} />
 			</MainLayout>
