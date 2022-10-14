@@ -1,13 +1,31 @@
 .header {
-	padding: 0.3em;
+	font-family: IndieStar;
+	font-size: 1.65em;
+	letter-spacing: 0.15ch;
+	padding: 1.2rem 0.6em;
 	background-color: var(--brand-color);
 	color: var(--text-color-400);
 	display: flex;
 	gap: 1rem;
 	align-items: center;
-	justify-content: right;
+	justify-content: space-between;
 	border-bottom-right-radius: var(--border-radius-main);
 	border-bottom-left-radius: var(--border-radius-main);
+	outline: 5px dashed var(--brand-color);
+}
+
+.profileImgContainer {
+	cursor: pointer;
+	position: relative;
+	width: 35px;
+	border-radius: 50%;
+	overflow: hidden;
+	aspect-ratio: 1/1;
+}
+
+.leftLinks {
+	display: flex;
+	gap: 0.5em;
 }
 
 .headerBtn {
@@ -17,4 +35,13 @@
 
 .headerBtn:hover {
 	color: var(--brand-color-hover);
+}
+
+.logoContainer {
+	position: absolute;
+	left: 50%;
+	top: 0;
+	translate: -50%;
+	width: 75px;
+	aspect-ratio: 1/1;
 }

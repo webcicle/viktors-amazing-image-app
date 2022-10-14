@@ -1,0 +1,8 @@
+.container {
+	width: clamp(100px, 90vw, 500px);
+	margin-inline: auto;
+}
+
+.imageContainer {
+	margin-top: 2rem;
+}

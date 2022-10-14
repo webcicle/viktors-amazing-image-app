@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import styles from './Profile.module.css';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { useRouter } from 'next/router';
 import UpdateForm from './UpdateForm';
 import StatusModule from '../status-modules/StatusModule';

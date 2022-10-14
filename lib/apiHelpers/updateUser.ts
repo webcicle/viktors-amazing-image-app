@@ -103,7 +103,6 @@ export default async function updateUser(
 	return {
 		success: true,
 		error: null,
-		// updatedUser,
 		updatedUser: userUpdateResValidated.parse(
 			updatedUser
 		) as UserWithFollowerCounts,

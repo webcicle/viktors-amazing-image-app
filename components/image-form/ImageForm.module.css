@@ -3,6 +3,7 @@
 	background-color: var(--brand-color);
 	border-radius: var(--border-radius-main);
 	padding: 0.5em;
+	outline: 5px dashed var(--brand-color);
 }
 
 .imageUploadForm {

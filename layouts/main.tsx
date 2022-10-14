@@ -17,7 +17,7 @@ const MainLayout: React.FC<Props> = ({ cookie, children, page }) => {
 			width:
 				page === 'frontPage'
 					? 'clamp(100px, 95vw, 600px)'
-					: 'clamp(100px, 95vw, 800px)',
+					: 'clamp(100px, 95vw, 600px)',
 			marginInline: 'auto',
 		},
 		inner: {

@@ -1,38 +1,24 @@
 import type { GetServerSideProps, NextPage } from 'next';
-import prisma from '../prisma/client';
-import styles from '../styles/Home.module.css';
-import type { ModdedImage } from './api/image';
-import { ImageForm, ImagePost } from '../components';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import getSignedCloudfrontUrl from '../aws/getSignedCloudfrontUrl';
-import MainLayout from '../layouts/main';
+import prisma from '../../prisma/client';
+import styles from '../../styles/Explore.module.css';
+import type { ModdedImage } from '.././api/image';
+import { ImagePost } from '../../components';
+import getSignedCloudfrontUrl from '../../aws/getSignedCloudfrontUrl';
+import MainLayout from '../../layouts/main';
 
 interface PageProps {
 	images: ModdedImage[];
 	cookie: string;
 }
 
-const Home: NextPage<PageProps> = ({ images, cookie }) => {
-	const [isUploaded, setIsUploaded] = useState<boolean>(false);
-	const [updatedImages, setUpdatedImages] = useState<ModdedImage[]>(images);
-
-	useEffect(() => {
-		if (isUploaded === true) {
-			axios
-				.get('/api/image')
-				.then((data) => setUpdatedImages((prev) => [data.data, ...prev]));
-			return;
-		}
-		return;
-	}, [isUploaded]);
-
+const Explore: NextPage<PageProps> = ({ images, cookie }) => {
 	return (
 		<MainLayout page={'frontPage'} cookie={cookie}>
-			<ImageForm isUploaded={isUploaded} setIsUploaded={setIsUploaded} />
+			<h1 style={{ color: 'var(--text-color-contrast)' }}>Explore new users</h1>
+
 			<div className={styles.imageContainer}>
-				{updatedImages?.length > 0 ? (
-					updatedImages.map((image, index) => {
+				{images?.length > 0 ? (
+					images.map((image, index) => {
 						return (
 							<ImagePost
 								userId={cookie}
@@ -98,7 +84,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 		return {
 			props: {
 				images: JSON.parse(JSON.stringify(images)),
-				cookie,
+				cookie: cookie ?? null,
 			},
 		};
 	}
@@ -109,4 +95,4 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 	};
 };
 
-export default Home;
+export default Explore;

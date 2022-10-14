@@ -74,7 +74,7 @@ const ImageForm: React.FC<Props> = ({ isUploaded, setIsUploaded }) => {
 				onSubmit={submitForm}>
 				<div>
 					<label className={styles.inputLabel} htmlFor='file'>
-						Select and image to upload
+						Select an image to upload:
 					</label>
 					<input
 						type='file'
@@ -88,7 +88,7 @@ const ImageForm: React.FC<Props> = ({ isUploaded, setIsUploaded }) => {
 				</div>
 				<div>
 					<label className={styles.inputLabel} htmlFor='file'>
-						A citchy-catchy caption
+						A citchy-catchy caption:
 					</label>
 					<textarea
 						name='caption'

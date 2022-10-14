@@ -34,8 +34,6 @@ const CommentComponent = ({ comment, loggedInUser }: Props) => {
 		disliked,
 	] = useLikeDislike({ userHasLiked, userHasDisliked, userLike, userDislike });
 
-	console.log({ liked, disliked });
-
 	return (
 		<div className={styles.commentWrapper}>
 			<div className={styles.commentProfileImage}>
