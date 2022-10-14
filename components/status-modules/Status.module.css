@@ -1,8 +1,8 @@
 .wrapper {
 	display: grid;
 	/* width: clamp(200px, 75vw, 80%); */
-	width: clamp(100px, 100%, 600px);
-	aspect-ratio: 1/1;
+	/* width: clamp(100px, 100%, 600px);
+    */
 	/* min-height: 22.5rem; */
 	padding-block: 4rem;
 	place-items: center;

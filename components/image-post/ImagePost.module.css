@@ -136,12 +136,18 @@
 
 .commentInput input {
 	width: 100%;
+	color: black;
 	padding: 0.5em;
 	border: none;
 	border-top-left-radius: var(--border-radius-main);
 	border-bottom-left-radius: var(--border-radius-main);
 	border-top-right-radius: 0px;
 	border-bottom-right-radius: 0px;
+}
+
+.commentInput input:focus {
+	outline-offset: -2px;
+	outline: 2px solid var(--brand-color-hover);
 }
 
 .submitCommentButton {

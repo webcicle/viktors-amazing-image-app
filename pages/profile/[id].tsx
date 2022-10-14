@@ -5,14 +5,11 @@ import getSignedCloudfrontUrl from '../../aws/getSignedCloudfrontUrl';
 import { ImageDisplay, Profile } from '../../components';
 import MainLayout from '../../layouts/main';
 import prisma from '../../prisma/client';
-import ProfileContextProvider, {
-	FormContextProps,
-	ProfileContext,
-} from '../../components/profile/formContext';
+import ProfileContextProvider from '../../components/profile/formContext';
 
 interface UserOptional {
 	id: string;
-	userName: string;
+	username: string;
 	alias: string;
 	profileImage: string | null;
 	createdAt: Date;
@@ -40,7 +37,7 @@ export interface UserWithFollowerCounts {
 	updatedAt: Date | string;
 	id: string;
 	profileImage: string | null;
-	userName: string;
+	username: string;
 	_count: { followers: number; following: number; uploads: number };
 	password?: string | null;
 	followers?: Follows[];

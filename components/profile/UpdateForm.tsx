@@ -1,37 +1,14 @@
-import axios from 'axios';
-import { ImCheckmark2 } from 'react-icons/im';
-import {
-	ChangeEvent,
-	Dispatch,
-	FormEvent,
-	SetStateAction,
-	useContext,
-	useEffect,
-	useImperativeHandle,
-	useRef,
-	useState,
-} from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import { UserWithFollowerCounts } from '../../pages/profile/[id]';
 import styles from './Profile.module.css';
 import FormInput from './FormInput';
 import { Follows } from '@prisma/client';
-import Router from 'next/router';
 import { FormContextProps, ProfileContext } from './formContext';
 
-interface UserWithFollowersAndCount extends UserWithFollowerCounts {
-	followers: Follows[];
-}
+type Props = {};
 
-type Props = {
-	updatedUserProfile:
-		| { [key: string]: string & { [key: string]: Follows[] } }
-		| UserWithFollowerCounts;
-};
-
-type UserWithFollowers = { [key: string]: string };
-
-const UpdateForm = ({ updatedUserProfile }: Props) => {
+const UpdateForm = ({}: Props) => {
 	const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
 
 	const unRef = useRef<HTMLInputElement | null>(null);
@@ -73,7 +50,6 @@ const UpdateForm = ({ updatedUserProfile }: Props) => {
 					value={alias}
 					handleInputChange={handleInputChange}
 					name={'alias'}
-					updatedUserProfile={updatedUserProfile as { [key: string]: string }}
 				/>
 				<FormInput
 					ref={aliRef}
@@ -81,8 +57,7 @@ const UpdateForm = ({ updatedUserProfile }: Props) => {
 					type={'text'}
 					value={username}
 					handleInputChange={handleInputChange}
-					name={'userName'}
-					updatedUserProfile={updatedUserProfile as { [key: string]: string }}
+					name={'username'}
 				/>
 			</div>
 
@@ -94,7 +69,6 @@ const UpdateForm = ({ updatedUserProfile }: Props) => {
 					value={password}
 					handleInputChange={handleInputChange}
 					name={'password'}
-					updatedUserProfile={updatedUserProfile as { [key: string]: string }}
 				/>
 
 				<FormInput
@@ -104,7 +78,6 @@ const UpdateForm = ({ updatedUserProfile }: Props) => {
 					value={passwordConfirm}
 					handleInputChange={handleInputChange}
 					name={'passwordConfirm'}
-					updatedUserProfile={updatedUserProfile as { [key: string]: string }}
 				/>
 			</div>
 		</form>

@@ -22,7 +22,7 @@ type Data = {
 interface ImageUser {
 	id: string;
 	alias: string;
-	userName: string;
+	username: string;
 	profileImage: string;
 }
 
@@ -146,7 +146,7 @@ export default async function handler(
 						select: {
 							id: true,
 							alias: true,
-							userName: true,
+							username: true,
 							profileImage: true,
 						},
 					},

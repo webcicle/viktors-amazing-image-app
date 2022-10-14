@@ -32,7 +32,7 @@ export default async function handler(
 							select: {
 								id: true,
 								alias: true,
-								userName: true,
+								username: true,
 								profileImage: true,
 							},
 						},

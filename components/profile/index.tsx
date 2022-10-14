@@ -32,11 +32,7 @@ const ProfileComponent: React.FC<Props> = ({ cookie, userProfile }) => {
 				return <ProfileInfo updatedUserProfile={userProfile} />;
 				break;
 			case 'form':
-				return (
-					<UpdateForm
-						updatedUserProfile={userProfile as UserWithFollowerCounts}
-					/>
-				);
+				return <UpdateForm />;
 				break;
 			case 'loading':
 				return (

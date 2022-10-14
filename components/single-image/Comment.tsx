@@ -57,9 +57,9 @@ const CommentComponent = ({ comment, loggedInUser }: Props) => {
 					<Link href={`/profile/${user.id}`}>
 						<a className={styles.commentUsername}>
 							@
-							{nanoIdRegex.test(user?.userName)
-								? 'unknownuser' + user?.userName.split('-').pop()
-								: user?.userName}
+							{nanoIdRegex.test(user?.username)
+								? 'unknownuser' + user?.username.split('-').pop()
+								: user?.username}
 						</a>
 					</Link>
 				</div>

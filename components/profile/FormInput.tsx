@@ -5,7 +5,6 @@ import styles from './Profile.module.css';
 interface InputProps {
 	name: string; //input name
 	handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
-	updatedUserProfile: { [key: string]: string };
 	errors: { [key: string]: string };
 	value: string;
 	type: string;
@@ -13,11 +12,7 @@ interface InputProps {
 
 const FormInput = React.forwardRef<HTMLInputElement, InputProps>(
 	(props, ref) => {
-		const { errors, value, type, handleInputChange, name, updatedUserProfile } =
-			props;
-		const placeholder = updatedUserProfile[name];
-
-		const isPassword = name === 'password' || name === 'passwordTwo';
+		const { errors, value, type, handleInputChange, name } = props;
 
 		return (
 			<div className={styles.inputContainer}>

@@ -14,7 +14,7 @@ const userUpdateReqValidated = z
 				message: 'Alias needs to be less than 50 characters long',
 			})
 			.trim(),
-		userName: z
+		username: z
 			.string()
 			.min(2, {
 				message: 'Username must be at least 2 character long',
@@ -53,7 +53,7 @@ const Count = z.object({
 const userUpdateResValidated = z.object({
 	id: z.string(),
 	alias: z.string().trim(),
-	userName: z.string().trim(),
+	username: z.string().trim(),
 	profileImage: z.string().nullable(),
 	_count: Count,
 });
@@ -76,7 +76,7 @@ export default async function updateUser(
 
 		updatedUser = await prisma.user.update({
 			data: {
-				userName: data.userName,
+				username: data.username,
 				alias: data.alias,
 				password: hash,
 				claimed: true,

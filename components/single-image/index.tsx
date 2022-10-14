@@ -14,7 +14,7 @@ export interface CommentWithUserAndLikes extends Comment {
 	user: {
 		id: string;
 		alias: string;
-		userName: string;
+		username: string;
 		profileImage: string | null;
 	};
 	likes?: Like[];
@@ -54,7 +54,7 @@ const SingleImage = ({ cookie, image, userLike, userDislike }: Props) => {
 					<div className={styles.userNameContainer}>
 						<Link href={`/profile/${image.uploadedBy.id}`}>
 							<a>
-								{nanoIdRegex.test(image.uploadedBy?.userName)
+								{nanoIdRegex.test(image.uploadedBy?.username)
 									? 'unknownusername' + image.uploadedBy?.alias.split('-').pop()
 									: image.uploadedBy?.alias}
 							</a>
@@ -62,9 +62,9 @@ const SingleImage = ({ cookie, image, userLike, userDislike }: Props) => {
 						<Link href={`/profile/${image.uploadedBy.id}`}>
 							<a>
 								@
-								{nanoIdRegex.test(image.uploadedBy?.userName)
-									? 'unknownuser' + image.uploadedBy?.userName.split('-').pop()
-									: image.uploadedBy?.userName}
+								{nanoIdRegex.test(image.uploadedBy?.username)
+									? 'unknownuser' + image.uploadedBy?.username.split('-').pop()
+									: image.uploadedBy?.username}
 							</a>
 						</Link>
 					</div>

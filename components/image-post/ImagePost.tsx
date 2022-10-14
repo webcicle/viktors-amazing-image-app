@@ -25,16 +25,16 @@ export default function ImagePost({ userId, image, index }: Props) {
 					</div>
 					<div className={styles.userNameContainer}>
 						<p>
-							{nanoIdRegex.test(uploadedBy?.userName)
+							{nanoIdRegex.test(uploadedBy?.username)
 								? 'unknownusername' + uploadedBy?.alias.split('-').pop()
 								: uploadedBy?.alias}
 						</p>
 						<Link href={`/profile/${uploadedBy?.id}`}>
 							<a>
 								@
-								{nanoIdRegex.test(uploadedBy?.userName)
-									? 'unknownuser' + uploadedBy?.userName.split('-').pop()
-									: uploadedBy?.userName}
+								{nanoIdRegex.test(uploadedBy?.username)
+									? 'unknownuser' + uploadedBy?.username.split('-').pop()
+									: uploadedBy?.username}
 							</a>
 						</Link>
 					</div>

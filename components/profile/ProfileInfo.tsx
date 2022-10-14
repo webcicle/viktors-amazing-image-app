@@ -17,9 +17,9 @@ const ProfileInfo: React.FC<InfoProps> = ({ updatedUserProfile }) => {
 			</p>
 			<p className={styles.profileUsername}>
 				@
-				{regex.test(updatedUserProfile?.userName)
-					? 'unknownusername' + updatedUserProfile?.userName.split('-').pop()
-					: updatedUserProfile?.userName}
+				{regex.test(updatedUserProfile?.username)
+					? 'unknownusername' + updatedUserProfile?.username.split('-').pop()
+					: updatedUserProfile?.username}
 			</p>
 		</div>
 	);

@@ -47,7 +47,7 @@ const FormContextProvider: React.FC<ProviderProps> = ({ children }) => {
 	const [passwordConfirm, setPasswordConfirm] = useState<string>('');
 	const [formStatus, setFormStatus] = useState<string>('init');
 	const errorDefaults = {
-		userName: '',
+		username: '',
 		alias: '',
 		password: '',
 		passwordTwo: '',
@@ -58,7 +58,7 @@ const FormContextProvider: React.FC<ProviderProps> = ({ children }) => {
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.currentTarget;
-		if (name === 'userName') return setUsername(value);
+		if (name === 'username') return setUsername(value);
 		if (name === 'password') return setPassword(value);
 		if (name === 'passwordConfirm') return setPasswordConfirm(value);
 		return setAlias(value);
@@ -68,7 +68,7 @@ const FormContextProvider: React.FC<ProviderProps> = ({ children }) => {
 		e.preventDefault();
 		const data = {
 			alias,
-			userName: username,
+			username: username,
 			password,
 			passwordConfirm,
 		};
