@@ -2,7 +2,6 @@
 	display: flex;
 	flex-direction: column;
 	padding: 0.4em;
-	outline: 5px dashed var(--brand-color);
 
 	/* border: 1px solid white; */
 	margin-bottom: 2.5rem;
@@ -109,11 +108,31 @@
 	justify-content: left;
 }
 
+/* 
+60-0 
+91-60
+*/
+
 .imageButton {
 	font-size: 1.8em;
 	background-color: transparent;
-	color: var(--text-color-400);
 	width: fit-content;
+	color: var(--text-color-400);
+}
+.flameButton {
+	position: relative;
+	font-size: 1.8em;
+	background-color: transparent;
+	width: fit-content;
+}
+
+.flameNumber {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	translate: -50% -25%;
+	font-size: 0.5em;
+	color: var(--brand-color);
 }
 
 .imageButtonClicked {
@@ -140,6 +159,7 @@
 
 .commentInput input {
 	width: 100%;
+	height: 100%;
 	color: black;
 	padding: 0.5em;
 	border: none;
@@ -171,6 +191,8 @@
 
 @media (min-width: 700px) {
 	.imagePost {
+		outline: 5px dashed var(--brand-color);
+
 		border: 1px solid white;
 		padding: 0.8em;
 	}

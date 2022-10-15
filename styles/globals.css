@@ -9,20 +9,21 @@
 :root {
 	--main-font: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
 		Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	--brand-font: 'IndieStar';
 	--border-radius-main: 7px;
 
 	/* COLORS */
-	--text-color-400: #fdfdfd;
-	--contrast-color: #1d1c1c;
-	--scrollbar-head-color: #852e28;
-	--scrollbar-head-hover: #681f1a;
-	--scrollbar-background: var(--brand-color);
-	--scrollbar-background-hover: var(--brand-color-hover);
-	--brand-color: #d89b0e;
-	--text-color-contrast: var(--contrast-color);
-	--brand-color-hover: hsl(42, 72%, 40%);
 	--bg-grey-400: #cccccc;
 	--bg-color-main: var(--brand-color);
+	--text-color-400: #fdfdfd;
+	--text-color-contrast: var(--contrast-color);
+	--contrast-color: #1d1c1c;
+	--brand-color: #3c83d0;
+	--brand-color-hover: hsl(211, 70%, 40%);
+	--scrollbar-head-color: hsl(211, 97%, 27%);
+	--scrollbar-head-hover: rgb(200, 200, 200);
+	--scrollbar-background: var(--brand-color);
+	--scrollbar-background-hover: var(--brand-color-hover);
 }
 
 /* SCROLLBAR */
@@ -69,19 +70,19 @@
 
 html,
 body {
-	color: white;
-
+	color: rgb(246, 243, 243);
 	padding: 0;
 	margin: 0;
 	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
 		Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	background: #e0edfb;
 }
 
 button {
 	border: none;
 	border-radius: 5px;
 	cursor: pointer;
-	font-family: 'IndieStar';
+	font-family: var(--brand-font);
 	font-size: 1.1em;
 }
 
@@ -111,6 +112,7 @@ textarea {
 	}
 	html {
 		color-scheme: dark;
+		background: rgb(16, 16, 16);
 	}
 	body {
 		background: rgb(16, 16, 16);

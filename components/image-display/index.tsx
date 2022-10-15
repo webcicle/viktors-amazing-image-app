@@ -10,7 +10,13 @@ type Props = {
 const ImageDisplay = ({ feedName, images }: Props) => {
 	return (
 		<>
-			<p style={{ color: 'var(--text-color-contrast)' }}>{feedName}</p>
+			<p
+				style={{
+					color: 'var(--text-color-contrast)',
+					fontFamily: 'var(--main-font)',
+				}}>
+				{feedName}
+			</p>
 			<div className={styles.imagesGrid}>
 				{images.map((image) => {
 					return <ImageThumbnail key={image.id} image={image} />;

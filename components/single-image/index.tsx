@@ -80,6 +80,7 @@ const SingleImage = ({ cookie, image, userLike, userDislike }: Props) => {
 					))}
 				</div>
 				<ImageButtons
+					flames={image.flames}
 					userId={cookie}
 					imageId={image.id}
 					setComments={setComments}

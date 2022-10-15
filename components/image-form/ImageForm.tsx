@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, {
 	ChangeEvent,
 	Dispatch,
@@ -27,6 +28,7 @@ const ImageForm: React.FC<Props> = ({ isUploaded, setIsUploaded }) => {
 	const [tags, setTags] = useState<Tag[]>([] as Tag[]);
 	const [previewFit, setPreviewFit] = useState<any>('cover' as any);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const Router = useRouter();
 
 	const changeObjectFit = () => {
 		if (previewFit === 'cover') return setPreviewFit('contain');
@@ -60,6 +62,7 @@ const ImageForm: React.FC<Props> = ({ isUploaded, setIsUploaded }) => {
 		if (newImage.status === 201) {
 			setIsLoading(false);
 			setIsUploaded(true);
+			Router.reload();
 			return;
 		}
 		setIsLoading(false);

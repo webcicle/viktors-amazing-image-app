@@ -1,4 +1,4 @@
-import { Comment, Dislike, Like } from '@prisma/client';
+import { Comment, Dislike, Flame, Like } from '@prisma/client';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import React, {
@@ -6,6 +6,7 @@ import React, {
 	Dispatch,
 	FormEvent,
 	ReactNode,
+	useCallback,
 	useEffect,
 	useRef,
 	useState,
@@ -21,6 +22,7 @@ type Props = {
 	userId: string;
 	imageId: string;
 	userLike: Like | null | undefined;
+	flames: Flame[] | undefined;
 	userDislike: Dislike | null | undefined;
 	children: ReactNode;
 	setComments?: Dispatch<React.SetStateAction<CommentWithUserAndLikes[]>>;
@@ -30,6 +32,7 @@ const ImageButtons = ({
 	userId,
 	userLike,
 	userDislike,
+	flames,
 	imageId,
 	setComments,
 	children,
@@ -41,6 +44,12 @@ const ImageButtons = ({
 
 	const [newComment, setNewComment] = useState<string>('');
 	const [commentFocus, setCommentFocus] = useState<boolean>(false);
+	const [flameHeat, setFlameHeat] = useState<number>(
+		(flames?.length as number) ?? 0
+	);
+
+	console.log(flameHeat);
+
 	const { pathname, push } = useRouter();
 	const [
 		createLike,
@@ -61,23 +70,41 @@ const ImageButtons = ({
 		setCommentFocus((prev) => !prev);
 	};
 
+	const torchPost = async () => {
+		try {
+			setFlameHeat((prev) => prev + 1);
+			const flame = await axios.post('/api/flame', {
+				flamerId: userId,
+				imageId,
+			});
+			if (flame.status !== 201) {
+				setFlameHeat((prev) => -1);
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	const commentInputRef = useRef<HTMLInputElement | null>(null);
 
-	const commentClick = async (e: FormEvent) => {
-		if (newComment === '') return;
-		e.preventDefault();
-		const axiosResponse = await axios.post('/api/comment', {
-			userId,
-			imageId,
-			comment: newComment,
-		});
-		const { data } = axiosResponse;
-		if (data.newComment && setComments) {
-			setComments((prev) => [data.newComment, ...prev]);
-			setNewComment('');
-		}
-		return;
-	};
+	const commentClick = useCallback(
+		async (e: FormEvent) => {
+			if (newComment === '') return;
+			e.preventDefault();
+			const axiosResponse = await axios.post('/api/comment', {
+				userId,
+				imageId,
+				comment: newComment,
+			});
+			const { data } = axiosResponse;
+			if (data.newComment && setComments) {
+				setComments((prev) => [data.newComment, ...prev]);
+				setNewComment('');
+			}
+			return;
+		},
+		[userId, imageId, newComment]
+	);
 
 	useEffect(() => {
 		commentInputRef?.current?.focus();
@@ -116,8 +143,14 @@ const ImageButtons = ({
 					<button className={styles.imageButton}>
 						<ImShare />
 					</button>
-					<button className={styles.imageButton}>
+					<button
+						style={{
+							color: `hsl(${0 + flameHeat}%, ${90 - flameHeat / 2}%, 46%)`,
+						}}
+						className={styles.flameButton}
+						onClick={torchPost}>
 						<AiFillFire />
+						<p className={styles.flameNumber}>{flameHeat}</p>
 					</button>
 				</div>
 			</div>

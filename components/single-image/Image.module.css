@@ -11,6 +11,8 @@
 	flex-direction: column;
 	background-color: var(--bg-color);
 	padding: 0.8em;
+	border-right: 4px solid var(--scrollbar-head-color);
+
 	border-top-left-radius: var(--border-radius-main);
 	border-top-right-radius: var(--border-radius-main);
 }
@@ -25,6 +27,8 @@
 	padding: var(--inner-padding);
 	border-bottom-left-radius: var(--border-radius-main);
 	border-bottom-right-radius: var(--border-radius-main);
+	border-bottom: 10px solid var(--scrollbar-head-color);
+	border-right: 4px solid var(--scrollbar-head-color);
 }
 
 .profileBar {
@@ -205,6 +209,12 @@
 	color: var(--bg-grey-400);
 }
 
+@media (min-width: 560px) {
+	.imagePost {
+		border-top: 5px dashed var(--bg-color-main);
+	}
+}
+
 @media (min-width: 700px) {
 	/* .commentsContainer {
 		max-height: 15vh;
@@ -236,6 +246,8 @@
 	.imagePost {
 		width: clamp(100px, 100%, 500px);
 		border-radius: var(--border-radius-main);
+		outline: 5px dashed var(--bg-color-main);
+		border-right: 0px solid var(--scrollbar-head-color);
 	}
 	.sidebar {
 		border-radius: var(--border-radius-main);

@@ -1,8 +1,8 @@
 .header {
-	font-family: IndieStar;
+	font-family: var(--brand-font);
 	font-size: 1.65em;
 	letter-spacing: 0.15ch;
-	padding: 1.2rem 0.6em;
+	padding: 0.4rem 0.6em;
 	background-color: var(--brand-color);
 	color: var(--text-color-400);
 	display: flex;
@@ -11,7 +11,6 @@
 	justify-content: space-between;
 	border-bottom-right-radius: var(--border-radius-main);
 	border-bottom-left-radius: var(--border-radius-main);
-	outline: 5px dashed var(--brand-color);
 }
 
 .profileImgContainer {
@@ -25,6 +24,7 @@
 
 .leftLinks {
 	display: flex;
+	flex-wrap: wrap;
 	gap: 0.5em;
 }
 
@@ -42,6 +42,16 @@
 	left: 50%;
 	top: 0;
 	translate: -50%;
-	width: 75px;
+	width: 60px;
 	aspect-ratio: 1/1;
+}
+
+@media (min-width: 560px) {
+	.header {
+		outline: 5px dashed var(--brand-color);
+		padding: 1rem 0.6em;
+	}
+	.logoContainer {
+		width: 75px;
+	}
 }

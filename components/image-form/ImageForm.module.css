@@ -3,7 +3,6 @@
 	background-color: var(--brand-color);
 	border-radius: var(--border-radius-main);
 	padding: 0.5em;
-	outline: 5px dashed var(--brand-color);
 }
 
 .imageUploadForm {
@@ -16,10 +15,11 @@
 
 .fitButton {
 	padding-block: 0.5em;
-	font-family: var(--main-font);
+	font-size: 1.8em;
+
 	width: 100%;
 	margin-block: var(--row-gap);
-	background-color: var(--brand-color);
+	background-color: var(--brand-color-hover);
 	color: var(--text-color-400);
 }
 
@@ -131,14 +131,19 @@
 }
 
 .submitBtn {
-	padding-block: 0.5em;
+	/* padding-block: 0.5em; */
 	margin-block: 0.5em;
 	width: 100%;
 	background-color: var(--brand-color-hover);
 	border: 2px solid var(--brand-color-hover);
-	font-family: var(--main-font);
 	color: var(--text-color-400);
-	font-family: var(--main-font);
+	font-size: 1.8em;
+}
+
+@media (min-width: 560px) {
+	.main {
+		outline: 5px dashed var(--brand-color);
+	}
 }
 
 @media (min-height: 1200px) {
