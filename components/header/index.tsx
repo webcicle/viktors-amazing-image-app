@@ -33,14 +33,16 @@ const Header = ({ cookie }: Props) => {
 					Explore
 				</Link>
 			</div>
-			<div className={styles.logoContainer}>
-				<Image
-					src={`/viktors-amazing-image-app-logo.png`}
-					width={100}
-					height={100}
-					layout={`responsive`}
-				/>
-			</div>
+			<Link href={'/'}>
+				<div className={styles.logoContainer}>
+					<Image
+						src={`/viktors-amazing-image-app-logo.png`}
+						width={100}
+						height={100}
+						layout={`responsive`}
+					/>
+				</div>
+			</Link>
 			<Link href={`/`} className={`${styles.headerBtn}`}>
 				Home
 			</Link>

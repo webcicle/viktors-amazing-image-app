@@ -11,6 +11,7 @@
 	justify-content: space-between;
 	border-bottom-right-radius: var(--border-radius-main);
 	border-bottom-left-radius: var(--border-radius-main);
+	outline: 2px solid rgb(185, 185, 185);
 }
 
 .profileImgContainer {
@@ -24,6 +25,7 @@
 
 .leftLinks {
 	display: flex;
+	align-items: center;
 	flex-wrap: wrap;
 	gap: 0.5em;
 }
@@ -39,6 +41,7 @@
 
 .logoContainer {
 	position: absolute;
+	cursor: pointer;
 	left: 50%;
 	top: 0;
 	translate: -50%;
@@ -46,12 +49,18 @@
 	aspect-ratio: 1/1;
 }
 
-@media (min-width: 560px) {
+@media (max-width: 350px) {
+	.leftLinks {
+		flex-direction: column;
+	}
+}
+
+@media (min-width: 700px) {
+	.logoContainer {
+		width: 75px;
+	}
 	.header {
 		outline: 5px dashed var(--brand-color);
 		padding: 1rem 0.6em;
-	}
-	.logoContainer {
-		width: 75px;
 	}
 }

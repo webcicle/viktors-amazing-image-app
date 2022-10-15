@@ -51,6 +51,7 @@ export default function ImagePost({ userId, image, index }: Props) {
 					</div>
 				</Link>
 				<ImageButtons
+					flames={image.flames}
 					userId={userId}
 					imageId={image.id}
 					userLike={image.userLike}

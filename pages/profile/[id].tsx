@@ -50,11 +50,17 @@ type Props = {
 };
 
 const ProfilePage: React.FC<Props> = ({ userProfile, uploads, cookie }) => {
+	const isOwnProfile = userProfile.id === cookie;
 	return (
 		<ProfileContextProvider>
 			<MainLayout page={'frontPage'} cookie={cookie}>
 				<Profile userProfile={userProfile} cookie={cookie} />
-				<ImageDisplay feedName={'Your uploads'} images={uploads} />
+				<ImageDisplay
+					feedName={
+						isOwnProfile ? 'Your uploads:' : `${userProfile.alias}'s uploads:`
+					}
+					images={uploads}
+				/>
 			</MainLayout>
 		</ProfileContextProvider>
 	);

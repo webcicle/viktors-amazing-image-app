@@ -9,15 +9,16 @@
 :root {
 	--main-font: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
 		Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-	--brand-font: 'IndieStar';
+	--brand-font: 'IndieStar', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+		Oxygen;
 	--border-radius-main: 7px;
 
 	/* COLORS */
 	--bg-grey-400: #cccccc;
 	--bg-color-main: var(--brand-color);
 	--text-color-400: #fdfdfd;
-	--text-color-contrast: var(--contrast-color);
 	--contrast-color: #1d1c1c;
+	--text-color-contrast: var(--contrast-color);
 	--brand-color: #3c83d0;
 	--brand-color-hover: hsl(211, 70%, 40%);
 	--scrollbar-head-color: hsl(211, 97%, 27%);

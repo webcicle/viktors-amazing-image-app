@@ -140,7 +140,7 @@
 	font-size: 1.8em;
 }
 
-@media (min-width: 560px) {
+@media (min-width: 700px) {
 	.main {
 		outline: 5px dashed var(--brand-color);
 	}

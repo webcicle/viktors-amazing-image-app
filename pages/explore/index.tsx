@@ -14,7 +14,14 @@ interface PageProps {
 const Explore: NextPage<PageProps> = ({ images, cookie }) => {
 	return (
 		<MainLayout page={'frontPage'} cookie={cookie}>
-			<h1 style={{ color: 'var(--text-color-contrast)' }}>Explore new users</h1>
+			<h1
+				style={{
+					color: 'var(--text-color-contrast)',
+					fontFamily: 'var(--brand-font)',
+					fontSize: '2.5rem',
+				}}>
+				Explore new users
+			</h1>
 
 			<div className={styles.imageContainer}>
 				{images?.length > 0 ? (

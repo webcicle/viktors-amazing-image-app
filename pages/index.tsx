@@ -72,6 +72,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 			comments: true,
 			likes: true,
 			dislikes: true,
+			flames: true,
 			uploadedBy: {
 				select: { id: true, alias: true, username: true, profileImage: true },
 			},

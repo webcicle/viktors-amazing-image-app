@@ -25,6 +25,8 @@ const CommentComponent = ({ comment, loggedInUser }: Props) => {
 	const userHasLiked = userLike === undefined ? false : true;
 	const userHasDisliked = userDislike === undefined ? false : true;
 
+	const replyToComment = () => {};
+
 	const [
 		createLike,
 		deleteLike,
@@ -96,7 +98,10 @@ const CommentComponent = ({ comment, loggedInUser }: Props) => {
 					}>
 					<AiFillDislike />
 				</button>
-				<button type='button' className={styles.commentButton}>
+				<button
+					type='button'
+					className={styles.commentButton}
+					onClick={replyToComment}>
 					<FaRegComment />
 				</button>
 			</div>

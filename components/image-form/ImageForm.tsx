@@ -145,8 +145,8 @@ const ImageForm: React.FC<Props> = ({ isUploaded, setIsUploaded }) => {
 					)}
 					{isLoading && (
 						<StatusModule
-							minWidth={'500px'}
-							minHeight={'535px'}
+							minWidth={'85vw'}
+							minHeight={'200px'}
 							type='loading'
 						/>
 					)}
