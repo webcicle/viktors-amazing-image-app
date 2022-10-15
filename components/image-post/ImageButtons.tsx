@@ -1,4 +1,4 @@
-import { Comment, Dislike, Flame, Like } from '@prisma/client';
+import { Dislike, Flame, Like } from '@prisma/client';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import React, {
@@ -22,10 +22,10 @@ type Props = {
 	userId: string;
 	imageId: string;
 	userLike: Like | null | undefined;
-	flames: Flame[] | undefined;
 	userDislike: Dislike | null | undefined;
 	children: ReactNode;
 	setComments?: Dispatch<React.SetStateAction<CommentWithUserAndLikes[]>>;
+	flames?: Flame[] | undefined;
 };
 
 const ImageButtons = ({
