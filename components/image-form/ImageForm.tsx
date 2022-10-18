@@ -19,7 +19,7 @@ const ImageForm: React.FC<Props> = () => {
 	const [tags, setTags] = useState<Tag[]>([] as Tag[]);
 	const [previewFit, setPreviewFit] = useState<any>('cover' as any);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [isUploaded, setIsUploaded] = useState<boolean>(true);
+	const [isUploaded, setIsUploaded] = useState<boolean>(false);
 	const Router = useRouter();
 
 	const changeObjectFit = () => {
