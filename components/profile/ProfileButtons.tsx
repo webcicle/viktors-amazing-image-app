@@ -1,17 +1,10 @@
 import styles from './Profile.module.css';
 import axios from 'axios';
-import {
-	Dispatch,
-	FormEvent,
-	SetStateAction,
-	useContext,
-	useState,
-} from 'react';
+import { useContext, useState } from 'react';
 import { UserWithFollowerCounts } from '../../pages/profile/[id]';
 import { Follows } from '@prisma/client';
 import { ImCheckmark2 } from 'react-icons/im';
 import { FormContextProps, ProfileContext } from './formContext';
-import { useRouter } from 'next/router';
 
 interface ProfileButtonsProps {
 	cookie: string;

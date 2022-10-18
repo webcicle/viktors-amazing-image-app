@@ -1,9 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import useMediaQuery from '../../hooks/useMediaQuery';
-import { UserWithFollowerCounts } from '../../pages/profile/[id]';
 import styles from './Profile.module.css';
 import FormInput from './FormInput';
-import { Follows } from '@prisma/client';
 import { FormContextProps, ProfileContext } from './formContext';
 
 type Props = {};

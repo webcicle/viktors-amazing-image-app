@@ -10,7 +10,7 @@
 	flex-direction: column;
 	gap: var(--row-gap);
 	font-family: var(--main-font);
-	color: var(--text-color-400);
+	color: var(--color-light);
 }
 
 .fitButton {
@@ -20,7 +20,7 @@
 	width: 100%;
 	margin-block: var(--row-gap);
 	background-color: var(--brand-color-hover);
-	color: var(--text-color-400);
+	color: var(--color-light);
 }
 
 .inputLabel {
@@ -28,7 +28,7 @@
 	margin-bottom: 0.4em;
 	font-size: 0.9em;
 	font-family: var(--main-font);
-	color: var(--text-color-contrast);
+	color: var(--color-light);
 }
 
 .inputElement {
@@ -38,7 +38,7 @@
 
 .fileInput {
 	background-color: var(--brand-color);
-	color: var(--text-color-400);
+	color: var(--color-light);
 	font-family: var(--main-font);
 	border-radius: var(--border-radius-main);
 }
@@ -131,12 +131,11 @@
 }
 
 .submitBtn {
-	/* padding-block: 0.5em; */
 	margin-block: 0.5em;
 	width: 100%;
 	background-color: var(--brand-color-hover);
 	border: 2px solid var(--brand-color-hover);
-	color: var(--text-color-400);
+	color: var(--color-light);
 	font-size: 1.8em;
 }
 

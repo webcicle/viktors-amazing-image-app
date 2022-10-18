@@ -145,7 +145,10 @@ const ImageButtons = ({
 					</button>
 					<button
 						style={{
-							color: `hsl(${0 + flameHeat}%, ${90 - flameHeat / 2}%, 46%)`,
+							color:
+								flameHeat === 0
+									? `rgba(255, 119, 0, 5%)`
+									: `rgba(255, 119, ${flameHeat}, ${5 + flameHeat * 10}%)`,
 						}}
 						className={styles.flameButton}
 						onClick={torchPost}>

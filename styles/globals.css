@@ -16,9 +16,10 @@
 	/* COLORS */
 	--bg-grey-400: #cccccc;
 	--bg-color-main: var(--brand-color);
-	--text-color-400: #fdfdfd;
+	--text-color-400: #1d1c1c;
 	--contrast-color: #1d1c1c;
-	--text-color-contrast: var(--contrast-color);
+	--text-color-contrast: #fdfdfd;
+	--color-light: #fdfdfd;
 	--brand-color: #3c83d0;
 	--brand-color-hover: hsl(211, 70%, 40%);
 	--scrollbar-head-color: hsl(211, 97%, 27%);
@@ -108,6 +109,7 @@ textarea {
 		--brand-color-hover: hsl(133, 11%, 8%);
 		--text-color-400: #ede5e5;
 		--text-color-contrast: var(--text-color-400);
+		--text-color-contrast: #1d1c1c;
 		--scrollbar-head-color: #2b962b;
 		--scrollbar-head-hover: #3cad3c;
 	}

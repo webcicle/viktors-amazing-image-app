@@ -7,7 +7,6 @@ import { nanoIdRegex } from '../../lib/helpers/regex';
 import styles from './Image.module.css';
 import { FaRegComment } from 'react-icons/fa';
 import useLikeDislike from '../../hooks/useLikeDislike';
-import { Dislike, Like } from '@prisma/client';
 
 type Props = {
 	comment: CommentWithUserAndLikes;

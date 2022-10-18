@@ -4,14 +4,16 @@
 	letter-spacing: 0.15ch;
 	padding: 0.4rem 0.6em;
 	background-color: var(--brand-color);
-	color: var(--text-color-400);
+	color: var(--color-light);
 	display: flex;
 	gap: 1rem;
 	align-items: center;
 	justify-content: space-between;
 	border-bottom-right-radius: var(--border-radius-main);
 	border-bottom-left-radius: var(--border-radius-main);
-	outline: 2px solid rgb(185, 185, 185);
+	border-bottom: 2px solid rgb(185, 185, 185);
+	border-left: 2px solid rgb(185, 185, 185);
+	border-right: 2px solid rgb(185, 185, 185);
 }
 
 .profileImgContainer {

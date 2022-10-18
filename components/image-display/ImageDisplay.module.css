@@ -24,7 +24,7 @@
 }
 
 .overlay {
-	color: var(--text-color-400);
+	color: #fdfdfd;
 	display: none;
 	transition: opacity 100ms ease-in;
 	opacity: 0;

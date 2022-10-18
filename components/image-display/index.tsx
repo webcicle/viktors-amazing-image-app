@@ -12,7 +12,7 @@ const ImageDisplay = ({ feedName, images }: Props) => {
 		<>
 			<p
 				style={{
-					color: 'var(--text-color-contrast)',
+					color: 'var(--text-color-400)',
 					fontFamily: 'var(--brand-font)',
 					fontSize: '1.8rem',
 					marginBlock: '1.4rem',

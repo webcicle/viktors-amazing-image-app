@@ -4,7 +4,7 @@
 	display: grid;
 	grid-template-columns: 50px 1fr;
 	column-gap: 1rem;
-	color: var(--text-color-contrast);
+	color: var(--text-color-400);
 	grid-template-rows: repeat(3, min-content);
 	border-bottom: 5px dashed var(--brand-color);
 	border-bottom-left-radius: var(--border-radius-main);
@@ -55,7 +55,7 @@
 }
 
 .errorOutput {
-	color: var(--text-color-contrast);
+	color: var(--text-color-400);
 	font-size: 0.5em;
 	margin-block: 0.2em;
 	min-height: 10px;
@@ -110,6 +110,7 @@
 	display: flex;
 	align-items: center;
 	gap: 0.2em;
+	color: var(--text-color-400);
 }
 
 /* StatusBoxes */
@@ -123,7 +124,7 @@
 }
 
 .statBox {
-	color: var(--text-color-contrast);
+	color: var(--text-color-400);
 
 	border-block: 1px solid var(--bg-grey-400);
 	text-align: center;

@@ -16,7 +16,7 @@ const Explore: NextPage<PageProps> = ({ images, cookie }) => {
 		<MainLayout page={'frontPage'} cookie={cookie}>
 			<h1
 				style={{
-					color: 'var(--text-color-contrast)',
+					color: 'var(--text-color-400)',
 					fontFamily: 'var(--brand-font)',
 					fontSize: '2.5rem',
 				}}>

@@ -1,4 +1,4 @@
-import { Follows, Image, User } from '@prisma/client';
+import { Follows } from '@prisma/client';
 import { GetServerSideProps } from 'next';
 import React from 'react';
 import getSignedCloudfrontUrl from '../../aws/getSignedCloudfrontUrl';

@@ -3,8 +3,6 @@ import prisma from '../prisma/client';
 import styles from '../styles/Home.module.css';
 import type { ModdedImage } from './api/image';
 import { ImageForm, ImagePost } from '../components';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
 import getSignedCloudfrontUrl from '../aws/getSignedCloudfrontUrl';
 import MainLayout from '../layouts/main';
 
@@ -14,25 +12,12 @@ interface PageProps {
 }
 
 const Home: NextPage<PageProps> = ({ images, cookie }) => {
-	const [isUploaded, setIsUploaded] = useState<boolean>(false);
-	const [updatedImages, setUpdatedImages] = useState<ModdedImage[]>(images);
-
-	useEffect(() => {
-		if (isUploaded === true) {
-			axios
-				.get('/api/image')
-				.then((data) => setUpdatedImages((prev) => [data.data, ...prev]));
-			return;
-		}
-		return;
-	}, [isUploaded]);
-
 	return (
 		<MainLayout page={'frontPage'} cookie={cookie}>
-			<ImageForm isUploaded={isUploaded} setIsUploaded={setIsUploaded} />
+			<ImageForm />
 			<div className={styles.imageContainer}>
-				{updatedImages?.length > 0 ? (
-					updatedImages.map((image, index) => {
+				{images?.length > 0 ? (
+					images.map((image, index) => {
 						return (
 							<ImagePost
 								userId={cookie}

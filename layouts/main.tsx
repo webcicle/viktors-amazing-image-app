@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import { ReactNode } from 'react';
 import { Header } from '../components';
-import useMediaQuery from '../hooks/useMediaQuery';
 
 type Props = {
 	cookie: string;
@@ -10,8 +9,6 @@ type Props = {
 };
 
 const MainLayout: React.FC<Props> = ({ cookie, children, page }) => {
-	const isDesktop = useMediaQuery(900, true);
-	const isMobile = useMediaQuery(600, false);
 	const styles = {
 		outer: {
 			width:

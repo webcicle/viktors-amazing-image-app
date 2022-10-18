@@ -1,13 +1,7 @@
 import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React, {
-	ChangeEvent,
-	Dispatch,
-	FormEvent,
-	SetStateAction,
-	useState,
-} from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import StatusModule from '../status-modules/StatusModule';
 import styles from './ImageForm.module.css';
 import TagInput from './TagInput';
@@ -17,17 +11,15 @@ export interface Tag {
 	tagName: string;
 }
 
-type Props = {
-	isUploaded: boolean;
-	setIsUploaded: Dispatch<SetStateAction<boolean>>;
-};
+type Props = {};
 
-const ImageForm: React.FC<Props> = ({ isUploaded, setIsUploaded }) => {
+const ImageForm: React.FC<Props> = () => {
 	const [file, setFile] = useState<File>();
 	const [caption, setCaption] = useState<string>('');
 	const [tags, setTags] = useState<Tag[]>([] as Tag[]);
 	const [previewFit, setPreviewFit] = useState<any>('cover' as any);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isUploaded, setIsUploaded] = useState<boolean>(true);
 	const Router = useRouter();
 
 	const changeObjectFit = () => {
@@ -86,7 +78,7 @@ const ImageForm: React.FC<Props> = ({ isUploaded, setIsUploaded }) => {
 						accept='image/*'
 						className={`${styles.inputElement} ${styles.fileInput}`}
 						onChange={handleChange}
-						disabled={isLoading || isUploaded}
+						// disabled={isLoading || isUploaded}
 					/>
 				</div>
 				<div>
@@ -152,8 +144,8 @@ const ImageForm: React.FC<Props> = ({ isUploaded, setIsUploaded }) => {
 					)}
 					{isUploaded && (
 						<StatusModule
-							minWidth={'500px'}
-							minHeight={'535px'}
+							minWidth={'85vw'}
+							minHeight={'200px'}
 							type='success'
 						/>
 					)}
