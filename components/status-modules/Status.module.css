@@ -13,6 +13,14 @@
 		rotate: 360deg;
 	}
 }
+@-webkit-keyframes spinner {
+	from {
+		rotate: 0deg;
+	}
+	to {
+		rotate: 360deg;
+	}
+}
 
 @keyframes fadeIn {
 	from {
@@ -20,6 +28,16 @@
 	}
 	to {
 		opacity: 100;
+	}
+}
+@-webkit-keyframes fadeIn {
+	from {
+		opacity: 0;
+		-webkit-opacity: 0;
+	}
+	to {
+		opacity: 100;
+		-webkit-opacity: 100;
 	}
 }
 
