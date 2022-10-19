@@ -36,8 +36,8 @@
 	display: flex;
 	align-items: center;
 	border-bottom: 1px solid var(--brand-color-hover);
-	padding-bottom: 0.75em;
-	margin-bottom: 1em;
+	padding-bottom: 0.4em;
+	margin-bottom: 0.2em;
 	gap: 0.6rem;
 }
 
@@ -67,7 +67,7 @@
 	flex-shrink: 1;
 	flex-grow: 0;
 	justify-self: flex-start;
-	margin-bottom: 1rem;
+	margin-block: 0.5rem;
 	max-height: 125px;
 	overflow-y: scroll;
 }
@@ -114,6 +114,7 @@
 .commentLink {
 	font-size: 0.8em;
 	color: var(--bg-grey-400);
+	margin-block: 0.2em;
 }
 
 .commentsContainer {

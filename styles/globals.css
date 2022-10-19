@@ -103,6 +103,12 @@ textarea {
 	box-sizing: border-box;
 }
 
+@media (max-width: 1200) {
+	button {
+		padding-inline: 0.25rem;
+	}
+}
+
 @media (prefers-color-scheme: dark) {
 	:root {
 		--brand-color: #252e27;

@@ -123,7 +123,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
 		return {
 			props: {
-				cookie,
+				cookie: cookie ?? null,
 				userProfile: JSON.parse(JSON.stringify(userProfileWOImages)),
 				uploads: JSON.parse(JSON.stringify(images)),
 			},
@@ -131,7 +131,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 	}
 	return {
 		props: {
-			cookie,
+			cookie: cookie ?? null,
 		},
 	};
 };

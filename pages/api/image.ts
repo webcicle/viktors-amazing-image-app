@@ -1,22 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import multer from 'multer';
-import {
-	Comment,
-	Dislike,
-	Flame,
-	Image,
-	Like,
-	Tag,
-	User,
-} from '@prisma/client';
+import { Comment, Dislike, Flame, Image, Like, Tag } from '@prisma/client';
 import prisma from '../../prisma/client';
 import { PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { getSignedUrl as getSignedCloudFrontUrl } from '@aws-sdk/cloudfront-signer';
 import { s3, envVars } from '../../aws/s3';
 import fs from 'fs';
-import path from 'path';
 import { CommentWithUserAndLikes } from '../../components/single-image';
 
 type Data = {
@@ -116,6 +106,7 @@ export default async function handler(
 			};
 
 			const command = new PutObjectCommand(params);
+			const options = { partSize: 10 * 1024 * 1024 };
 
 			const newImage = await s3.send(command);
 
@@ -191,25 +182,6 @@ export default async function handler(
 						: (pemKey as string),
 				keyPairId: process.env.PUBLIC_CLOUDFRONT_KEY_PAIR_ID!,
 			});
-
-			// GET STRAIGHT FROM S3
-			// GET STRAIGHT FROM S3
-			// GET STRAIGHT FROM S3
-
-			// const getObjectParams = {
-			// 	Bucket: envVars.bucketName,
-			// 	Key: newImage.id,
-			// };
-
-			// const command = new GetObjectCommand(getObjectParams);
-			// const url = await getSignedUrl(s3, command, {
-			// 	expiresIn: 3600,
-			// });
-			// newImage.url = url;
-
-			// GET STRAIGHT FROM S3
-			// GET STRAIGHT FROM S3
-			// GET STRAIGHT FROM S3
 
 			newImage.url = url;
 

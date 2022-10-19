@@ -69,16 +69,7 @@ const SingleImage = ({ cookie, image, userLike, userDislike }: Props) => {
 						</Link>
 					</div>
 				</div>
-				<div className={styles.captionContainer}>
-					<p className={styles.caption}>{image.caption}</p>
-				</div>
-				<div className={styles.tagContainer}>
-					{image?.tags?.map((tag: Tag) => (
-						<Link key={tag.id} href={`/tag/${tag.tagName}`}>
-							<a className={styles.imageTag}>{`#${tag.tagName}`}</a>
-						</Link>
-					))}
-				</div>
+
 				<ImageButtons
 					flames={image.flames}
 					userId={cookie}
@@ -87,6 +78,16 @@ const SingleImage = ({ cookie, image, userLike, userDislike }: Props) => {
 					userLike={userLike as Like}
 					userDislike={userDislike as Like}>
 					<div className={styles.commentsContainer}>
+						<div className={styles.captionContainer}>
+							<p className={styles.caption}>{image.caption}</p>
+						</div>
+						<div className={styles.tagContainer}>
+							{image?.tags?.map((tag: Tag) => (
+								<Link key={tag.id} href={`/tag/${tag.tagName}`}>
+									<a className={styles.imageTag}>{`#${tag.tagName}`}</a>
+								</Link>
+							))}
+						</div>
 						{comments.length! >= 1 ? (
 							comments.map((c) => (
 								<CommentComponent
