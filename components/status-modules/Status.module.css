@@ -13,12 +13,12 @@
 		rotate: 360deg;
 	}
 }
-@-webkit-keyframes spinner {
+@-webkit-keyframes webkit-spinner {
 	from {
-		rotate: 0deg;
+		-webkit-transform: rotate(0deg);
 	}
 	to {
-		rotate: 360deg;
+		-webkit-transform: rotate(360deg);
 	}
 }
 
@@ -30,14 +30,12 @@
 		opacity: 100;
 	}
 }
-@-webkit-keyframes fadeIn {
+@-webkit-keyframes webkit-fadeIn {
 	from {
 		opacity: 0;
-		-webkit-opacity: 0;
 	}
 	to {
 		opacity: 100;
-		-webkit-opacity: 100;
 	}
 }
 
@@ -46,7 +44,7 @@
 	animation-timing-function: linear;
 	animation-duration: 500ms;
 	animation-iteration-count: infinite;
-	-webkit-animation-name: spinner;
+	-webkit-animation-name: webkit-spinner;
 	-webkit-animation-timing-function: linear;
 	-webkit-animation-duration: 500ms;
 	-webkit-animation-iteration-count: infinite;
@@ -63,7 +61,7 @@
 	animation-name: fadeIn;
 	animation-timing-function: linear;
 	animation-duration: var(--animation-delay);
-	-webkit-animation-name: fadeIn;
+	-webkit-animation-name: webkit-fadeIn;
 	-webkit-animation-timing-function: linear;
 	-webkit-animation-duration: var(--animation-delay);
 }
